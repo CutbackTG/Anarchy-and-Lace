@@ -45,7 +45,7 @@ html[data-theme="light"]{
 @media (prefers-color-scheme: dark){
   :root{
     --bg-image: url("/static/background_images/anarchylace_background_black.webp");
-    --bg-overlay: rgb(0, 0, 0, 0.01);
+    --bg-overlay: rgb(0, 0, 0, 0.25);
 
 
     --ink: #f4f4f4;
@@ -64,7 +64,7 @@ html[data-theme="light"]{
 /* ---------- MANUAL OVERRIDE: DARK ---------- */
 html[data-theme="dark"]{
   --bg-image: url("/static/background_images/anarchylace_background_black.webp");
-  --bg-overlay: rgba(10,10,10,0.01);
+  --bg-overlay: rgba(10,10,10,0.25);
 
   --ink: #f4f4f4;
   --ink-muted: #b8b8b8;
@@ -225,7 +225,7 @@ a:focus{
    ========================================================= */
 
 .glass-panel{
-  background: var(--panel-bg);
+  background: var(--panel-bg / 15%);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
