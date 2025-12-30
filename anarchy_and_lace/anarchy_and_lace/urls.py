@@ -6,9 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    # later we'll add:
-    # path("", home, name="home"),
-    # path("shop/", include("catalog.urls")),
+    path("shop/", include("catalog.urls")),
 ]
 
 # Serve media files during development only
