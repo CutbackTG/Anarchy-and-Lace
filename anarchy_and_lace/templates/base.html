@@ -5,46 +5,91 @@
   <head>
 
     {% block meta %}
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     {% endblock meta %}
 
-    {% block extra_meta %}
-    {% endblock extra_meta %}
+    {% block extra_meta %}{% endblock extra_meta %}
 
     {% block corecss %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <!-- Bootstrap -->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+      >
+
+      <!-- Google font -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+      <!-- Custom base styles -->
+      <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock corecss %}
 
-    {% block extra_css %}
-    {% endblock extra_css %}
+    {% block extra_css %}{% endblock extra_css %}
 
     {% block corejs %}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+              crossorigin="anonymous"></script>
     {% endblock corejs %}
 
-    {% block extra_js %}
-    {% endblock extra_js %}
+    {% block extra_js %}{% endblock extra_js %}
 
-    <title>Anarchy and Lace {% block extra_title %} {% endblock extra_title %} </title>
-    </head>
-    <body>
-        <header class="container-fluid fixed-top"></header>
-        {% if messages %}
-        <div class="mesage-container"></div>
-        {% endif %}
+    <title>
+      Alchemy &amp; Lace{% block extra_title %}{% endblock extra_title %}
+    </title>
+  </head>
 
-        {% block page_header %}
-        {% endblock page_header %}
+  <body class="bg-white">
 
-        {% block content %}
-        {% endblock content %}
+    <!-- Top navigation / brand bar -->
+    <header class="topbar fixed-top">
+      <div class="container d-flex justify-content-between align-items-center py-3">
+        <a href="/shop/" class="brand text-decoration-none">
+          <span class="brand-mark">Alchemy</span>
+          <span class="brand-amp">&amp;</span>
+          <span class="brand-mark">Lace</span>
+        </a>
 
-        {% block postloadjs %}
-        {% endblock postloadjs %}
+        <nav class="d-flex gap-3 align-items-center">
+          <a href="/shop/" class="nav-link">Shop</a>
+          <a href="/accounts/login/" class="nav-link">Account</a>
+          {% if request.user.is_staff %}
+            <a href="/manager/" class="nav-link nav-link--gold">Manager</a>
+          {% endif %}
+        </nav>
+      </div>
+      <div class="kintsugi-line"></div>
+    </header>
 
-    </body>
+    <!-- Django messages -->
+    {% if messages %}
+      <div class="container message-container mt-5 pt-4">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} glass-panel" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Page header (optional) -->
+    {% block page_header %}
+    {% endblock page_header %}
+
+    <!-- Main content -->
+    <main class="container page mt-5 pt-4">
+      {% block content %}
+      {% endblock content %}
+    </main>
+
+    {% block postloadjs %}
+    {% endblock postloadjs %}
+
+  </body>
 </html>
