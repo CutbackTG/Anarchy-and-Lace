@@ -36,6 +36,15 @@
         {% if messages %}
         <div class="mesage-container"></div>
         {% endif %}
-        
+
+        {% block page_header %}
+        {% endblock page_header %}
+
+        {% block content %}
+        {% endblock content %}
+
+        {% block postloadjs %}
+        {% endblock postloadjs %}
+
     </body>
 </html>
