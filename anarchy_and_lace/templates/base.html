@@ -9,39 +9,47 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% endblock %}
 
-    {% block extra_meta %}
-    {% endblock %}
+    {% block extra_meta %}{% endblock %}
 
     {% block corecss %}
       <!-- Bootstrap -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+      />
 
       <!-- Google font -->
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
 
       <!-- Custom base styles -->
       <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% endblock %}
 
-    {% block extra_css %}
-    {% endblock %}
+    {% block extra_css %}{% endblock %}
 
     {% block corejs %}
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"
+      ></script>
     {% endblock %}
 
-    {% block extra_js %}
-    {% endblock %}
+    {% block extra_js %}{% endblock %}
 
     <title>
-      Alchemy &amp; Lace{% block extra_title %}
-      {% endblock %}
+      Alchemy &amp; Lace{% block extra_title %}{% endblock %}
     </title>
   </head>
 
-  <body class="bg-white">
+  <body>
     <!-- Top navigation / brand bar -->
     <header class="topbar fixed-top">
       <div class="container d-flex justify-content-between align-items-center py-3">
@@ -53,14 +61,31 @@
 
         <nav class="d-flex gap-3 align-items-center">
           <a href="/shop/" class="nav-link">Shop</a>
-          <a href="/accounts/login/" class="nav-link">Account</a>
-          {% if request.user.is_staff %}
+
+          <a href="/accounts/login/" class="nav-link">
+            {% if request.user.is_authenticated %}
+              Account
+            {% else %}
+              Sign in
+            {% endif %}
+          </a>
+
+          {% if request.user.is_authenticated and perms.catalog.change_product %}
             <a href="/manager/" class="nav-link nav-link--gold">Manager</a>
           {% endif %}
 
-          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"><span class="theme-toggle__icon" aria-hidden="true">☾</span></button>
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            <span class="theme-toggle__icon" aria-hidden="true">☾</span>
+          </button>
         </nav>
       </div>
+
       <div class="kintsugi-line"></div>
     </header>
 
@@ -68,26 +93,22 @@
     {% if messages %}
       <div class="container message-container mt-5 pt-4">
         {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} glass-panel" role="alert">{{ message }}</div>
+          <div class="alert alert-{{ message.tags }} glass-panel" role="alert">
+            {{ message }}
+          </div>
         {% endfor %}
       </div>
     {% endif %}
 
-    <!-- Page header (optional) -->
-    {% block page_header %}
-
-    {% endblock %}
+    {% block page_header %}{% endblock %}
 
     <!-- Main content -->
     <main class="container page mt-5 pt-4">
-      {% block content %}
-
-      {% endblock %}
+      {% block content %}{% endblock %}
     </main>
 
     {% block postloadjs %}
-        <script src="{% static 'js/theme.js' %}" defer></script>
-    {% endblock postloadjs %}
-    
+      <script src="{% static 'js/theme.js' %}" defer></script>
+    {% endblock %}
   </body>
 </html>
