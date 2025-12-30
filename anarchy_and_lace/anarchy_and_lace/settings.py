@@ -123,6 +123,8 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # during development only
+
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
@@ -130,6 +132,11 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"  # or: "email"
 ACCOUNT_USERNAME_REQUIRED = True                  # set False if you want email-only
+ACCOUNT_EMAIL_VERification = "mandatory"
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/"
 
 
 # Optional: provider config (replace with real values in a SocialApp in admin, or env vars)
