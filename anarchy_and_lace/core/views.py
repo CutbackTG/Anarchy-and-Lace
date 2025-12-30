@@ -2,4 +2,4 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Anarchy & Lace is live ✨")
+    return render(request, "core/home.html")
