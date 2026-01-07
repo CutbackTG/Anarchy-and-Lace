@@ -152,3 +152,11 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+ACCOUNT_FORMS = {
+    "signup": "core.forms.CustomerSignupForm",
+}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
