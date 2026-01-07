@@ -1,27 +1,35 @@
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# --------------------------------------------------
+# BASE
+# --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# --------------------------------------------------
+# SECURITY
+# --------------------------------------------------
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     "django-insecure-dev-only-change-me",
 )
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-# In production, set DJANGO_ALLOWED_HOSTS="example.com,www.example.com"
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 else:
-    ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if h.strip()]
+    ALLOWED_HOSTS = [
+        h.strip()
+        for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+        if h.strip()
+    ]
 
 
-# Application definition
+# --------------------------------------------------
+# APPLICATIONS
+# --------------------------------------------------
 INSTALLED_APPS = [
     # Django
     "django.contrib.admin",
@@ -32,22 +40,27 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
 
-    # Allauth (accounts + optional social login)
+    # Authentication
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
 
-    # Social providers (ONLY include what you actually use)
+    # Social providers (only those used)
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.apple",
 
+    # Local apps
     "home",
     "core",
     "catalog",
     "manager",
 ]
 
+
+# --------------------------------------------------
+# MIDDLEWARE
+# --------------------------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -58,6 +71,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
+# --------------------------------------------------
+# URLS / TEMPLATES
+# --------------------------------------------------
 ROOT_URLCONF = "anarchy_and_lace.urls"
 
 TEMPLATES = [
@@ -68,7 +85,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
-                "django.template.context_processors.request",  # required by allauth
+                "django.template.context_processors.request",  # REQUIRED by allauth
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -76,11 +93,12 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = "anarchy_and_lace.wsgi.application"
 
 
-# Database
+# --------------------------------------------------
+# DATABASE
+# --------------------------------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -89,7 +107,9 @@ DATABASES = {
 }
 
 
-# Password validation
+# --------------------------------------------------
+# PASSWORD VALIDATION
+# --------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -98,51 +118,67 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# --------------------------------------------------
+# INTERNATIONALIZATION
+# --------------------------------------------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# --------------------------------------------------
+# STATIC / MEDIA
+# --------------------------------------------------
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 
-# Media (uploads) - useful for product images later
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# django-allauth settings
+# --------------------------------------------------
+# AUTHENTICATION (DJANGO + ALLAUTH)
+# --------------------------------------------------
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin
     "django.contrib.auth.backends.ModelBackend",
-    # allauth authentication (email/username)
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # during development only
-
-LOGIN_REDIRECT_URL = "/"
-ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-
-# Choose your preferred style:
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"  # or: "email"
-ACCOUNT_USERNAME_REQUIRED = True                  # set False if you want email-only
-ACCOUNT_EMAIL_VERification = "mandatory"
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
-ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 
-# Optional: provider config (replace with real values in a SocialApp in admin, or env vars)
+# --------------------------------------------------
+# DJANGO-ALLAUTH CORE SETTINGS (CRITICAL)
+# --------------------------------------------------
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+ACCOUNT_EMAIL_VERIFICATION = "none"  # enable later when SMTP is ready
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+ACCOUNT_FORMS = {
+    "signup": "core.forms.CustomerSignupForm",
+}
+
+
+# --------------------------------------------------
+# EMAIL (DEV ONLY)
+# --------------------------------------------------
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+# --------------------------------------------------
+# SOCIAL PROVIDERS (PLACEHOLDERS)
+# --------------------------------------------------
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
@@ -152,11 +188,3 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-
-ACCOUNT_FORMS = {
-    "signup": "core.forms.CustomerSignupForm",
-}
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"

@@ -9,56 +9,15 @@ from core.models import Profile
 
 
 class CustomerSignupForm(SignupForm):
-    """
-    Extended signup form used by django-allauth.
+    # Required profile fields
+    full_name = forms.CharField(max_length=120, required=True, label="Full name")
+    phone_number = forms.CharField(max_length=30, required=True, label="Contact number")
 
-    Adds customer profile fields and validates them before
-    account creation. Profile is created on successful signup.
-    """
-
-    full_name = forms.CharField(
-        max_length=120,
-        required=True,
-        label="Full name"
-    )
-
-    phone_number = forms.CharField(
-        max_length=30,
-        required=True,
-        label="Contact number"
-    )
-
-    address_line1 = forms.CharField(
-        max_length=255,
-        required=True,
-        label="Address line 1"
-    )
-
-    address_line2 = forms.CharField(
-        max_length=255,
-        required=False,
-        label="Address line 2"
-    )
-
-    city = forms.CharField(
-        max_length=80,
-        required=True,
-        label="Town / City"
-    )
-
-    postcode = forms.CharField(
-        max_length=20,
-        required=True,
-        label="Postcode"
-    )
-
-    country = forms.CharField(
-        max_length=60,
-        required=True,
-        label="Country"
-    )
-
-    # ---------- FIELD VALIDATION ----------
+    address_line1 = forms.CharField(max_length=255, required=True, label="Address line 1")
+    address_line2 = forms.CharField(max_length=255, required=False, label="Address line 2")
+    city = forms.CharField(max_length=80, required=True, label="Town / City")
+    postcode = forms.CharField(max_length=20, required=True, label="Postcode")
+    country = forms.CharField(max_length=60, required=True, label="Country")
 
     def clean_full_name(self):
         name = (self.cleaned_data.get("full_name") or "").strip()
@@ -75,18 +34,12 @@ class CustomerSignupForm(SignupForm):
         return phone
 
     def clean_postcode(self):
-        postcode = (self.cleaned_data.get("postcode") or "").strip()
-        if len(postcode) < 3:
+        pc = (self.cleaned_data.get("postcode") or "").strip()
+        if len(pc) < 3:
             raise ValidationError("Please enter a valid postcode.")
-        return postcode.upper()
-
-    # ---------- SAVE ----------
+        return pc.upper()
 
     def save(self, request):
-        """
-        Called by allauth after the form is valid.
-        Creates the user, then the related Profile.
-        """
         user = super().save(request)
 
         Profile.objects.update_or_create(
@@ -101,5 +54,4 @@ class CustomerSignupForm(SignupForm):
                 "country": self.cleaned_data["country"],
             },
         )
-
         return user
