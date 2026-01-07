@@ -73,3 +73,39 @@ class SignupValidationTests(TestCase):
         self.assertEqual(profile.city, "London")
         self.assertEqual(profile.postcode, "SW1A 1AA")
         self.assertEqual(profile.country, "United Kingdom")
+
+        def test_signup_rejects_short_full_name(self):
+            res = self.client.post(
+            self.url,
+            data=self._valid_payload(full_name="Ty")
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "Full name must be at least 3 characters")
+
+    def test_signup_rejects_short_phone_number(self):
+        res = self.client.post(
+            self.url,
+            data=self._valid_payload(phone_number="123")
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "Enter a valid phone number")
+
+    def test_signup_rejects_short_password(self):
+        res = self.client.post(
+            self.url,
+            data=self._valid_payload(
+                password1="abc123",
+                password2="abc123"
+            )
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "This password is too short")
+
+    def test_signup_rejects_short_address(self):
+        res = self.client.post(
+            self.url,
+            data=self._valid_payload(address_line1="1")
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "Address must be at least 5 characters")
+
