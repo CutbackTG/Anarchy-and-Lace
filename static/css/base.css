@@ -243,8 +243,8 @@ a{
    ========================================================= */
 
 .glass-panel{
-  /* True 15% glass in both themes */
-  background: rgb(var(--panel-base) / 15%);
+  /* True 10% glass in both themes */
+  background: rgb(var(--panel-base) / 10%);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -430,4 +430,101 @@ textarea{
   border-top: 1px solid var(--panel-border);
   padding: 20px 0;
   color: var(--ink-muted);
+}
+
+/* =========================================================
+   LANDING PAGE
+   ========================================================= */
+
+.hero{
+  padding-top: clamp(12px, 2vw, 24px);
+}
+
+.hero__panel{
+  padding: clamp(22px, 4vw, 44px);
+}
+
+.hero__top{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.hero__spark{
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+.hero__title{
+  font-size: clamp(34px, 5.5vw, 56px);
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+
+.hero__gold{
+  color: var(--gold);
+}
+
+.hero__lead{
+  font-size: clamp(15px, 2vw, 18px);
+  max-width: 72ch;
+  margin-bottom: 18px;
+}
+
+.hero__actions{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.hero__grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 900px){
+  .hero__grid{ grid-template-columns: 1fr; }
+}
+
+.hero-card{
+  padding: 18px;
+}
+
+.hero-card__title{
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.hero-card__link{
+  display: inline-flex;
+  margin-top: 8px;
+}
+
+.hero__footer{
+  margin-top: 18px;
+}
+
+.hero__fineprint{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--ink-muted);
+  padding: 12px 2px 0;
+}
+
+.hero__dot{
+  opacity: 0.6;
+}
+
+/* Contact page */
+.contact .form-label{
+  color: var(--ink-muted);
+  font-size: 13px;
+  margin-bottom: 6px;
 }
