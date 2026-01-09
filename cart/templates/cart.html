@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="cart">
+  <div class="glass-panel">
+    <h1 class="mb-2">Your Cart</h1>
+    <p class="mb-4">Cart functionality is ready to be wired. For now, this is your cart hub.</p>
+
+    <div class="d-flex gap-2 flex-wrap">
+      <a class="button button--gold" href="{% url 'catalog:product_list' %}">Continue shopping</a>
+      <a class="button" href="{% url 'home:contact' %}">Need help?</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

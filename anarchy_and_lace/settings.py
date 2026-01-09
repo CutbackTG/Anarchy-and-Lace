@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "core",
     "catalog",
     "manager",
+    "cart",
 ]
 
 MIDDLEWARE = [

@@ -21,6 +21,9 @@ urlpatterns = [
 
     # Home / landing pages
     path("", include(("home.urls", "home"), namespace="home")),
+    
+    # Cart
+    path("cart/", include(("cart.urls", "cart"), namespace="cart")),
 ]
 
 # Media files (product images etc.) – dev only
