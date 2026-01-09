@@ -228,7 +228,9 @@ html[data-theme="light"] .brand-logo{
 .brand-text{
   display: inline-flex;
   align-items: center;
+  font-family: "Playfair Display", serif;
   font-weight: 600;
+  font-size: x-large;
   letter-spacing: 0.2px;
 }
 
@@ -614,6 +616,40 @@ textarea{
   padding-top: 14px;
   opacity: 0.9;
 }
+
+/* =========================================================
+   HERO / INDEX LINK HOVER (GOLD)
+   ========================================================= */
+
+/* Base state */
+.hero .glass-panel a{
+  color: var(--ink-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover state */
+.hero .glass-panel a:hover{
+  color: var(--gold);
+}
+
+/* Optional: subtle arrow motion (feels premium) */
+.hero .glass-panel a:hover::after{
+  transform: translateX(2px);
+}
+
+/* Ensure arrow transitions nicely */
+.hero .glass-panel a::after{
+  transition: transform 0.2s ease;
+}
+
+.hero .glass-panel:hover .hero-card__title{
+  color: var(--gold);
+}
+
+
+/* =========================================================
+   HERO RESPONSIVE
+   ========================================================= */
 
 @media (max-width: 900px){
   .hero__grid{ grid-template-columns: 1fr; }
