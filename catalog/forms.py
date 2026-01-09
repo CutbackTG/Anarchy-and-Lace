@@ -14,7 +14,11 @@ class ProductForm(forms.ModelForm):
             "stock_qty",
             "size",
             "fit_notes",
+            "care_instructions",
             "fabric_origin",
             "is_active",
             "collections",
         ]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 4}),
+        }

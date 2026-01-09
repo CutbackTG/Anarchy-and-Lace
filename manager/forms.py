@@ -19,8 +19,6 @@ class ProductForm(forms.ModelForm):
             "is_active",
             "collections",
         ]
-
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
         }
-

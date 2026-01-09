@@ -1,58 +1,87 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block extra_title %}| New Product{% endblock %}
+{% block extra_title %}
+  | {% if mode == "edit" %}Edit Product{% else %}New Product{% endif %}
+{% endblock %}
 
 {% block content %}
 <section class="auth-shell">
   <div class="glass-panel auth-panel">
     <div class="auth-inner">
+
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="auth-title mb-0">New product</h1>
-        <a class="button" href="{% url 'manager:dashboard' %}">Back</a>
+        <h1 class="auth-title mb-0">
+          {% if mode == "edit" %}Edit product{% else %}New product{% endif %}
+        </h1>
+        <a class="button" href="{% url 'manager:product_list' %}">Back</a>
       </div>
 
-      <p class="auth-subtitle">Add a new item to the shop catalogue.</p>
+      <p class="auth-subtitle">
+        {% if mode == "edit" %}
+          Update this item in the shop catalogue.
+        {% else %}
+          Add a new item to the shop catalogue.
+        {% endif %}
+      </p>
 
-      <form method="post" enctype="multipart/form-data" class="auth-form" novalidate>
+      <form method="post" enctype="multipart/form-data" class="auth-form">
         {% csrf_token %}
 
         {% if form.non_field_errors %}
-          <div class="alert alert-danger glass-panel">
-            {{ form.non_field_errors }}
-          </div>
+          <div class="alert alert-danger glass-panel">{{ form.non_field_errors }}</div>
         {% endif %}
 
+        <!-- IMAGE FIRST -->
+        <div class="mb-4">
+          <label class="form-label" for="{{ form.image.id_for_label }}">Product image</label>
+
+          {% if product and product.image %}
+            <div class="mb-2">
+              <img
+                src="{{ product.image.url }}"
+                alt="{{ product.name }}"
+                style="max-width: 180px; height: auto; border-radius: 12px; border: 1px solid var(--panel-border);"
+              />
+              <div class="small mt-1">Current image</div>
+            </div>
+          {% endif %}
+
+          {{ form.image }}
+
+          {% for error in form.image.errors %}
+            <div class="text-danger small mt-1">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- REST OF FIELDS -->
         <div class="auth-fields">
           {% for field in form %}
-            <div class="mb-3 {% if field.name == 'image' %}glass-panel p-3{% endif %}">
-              <label class="form-label" for="{{ field.id_for_label }}">
-                {% if field.name == "image" %}
-                  <span class="fw-semibold">Product image</span>
-                {% else %}
-                  {{ field.label }}
+            {% if field.name != "image" %}
+              <div class="mb-3">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                  <small class="d-block mt-1">{{ field.help_text }}</small>
                 {% endif %}
-              </label>
 
-              {{ field }}
-
-              {% if field.help_text %}
-                <small class="d-block mt-1">{{ field.help_text }}</small>
-              {% endif %}
-
-              {% if field.errors %}
                 {% for error in field.errors %}
                   <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
-              {% endif %}
-            </div>
+              </div>
+            {% endif %}
           {% endfor %}
         </div>
 
         <div class="actions mt-3">
-          <button class="button button--gold" type="submit">Save product</button>
-          <a class="button" href="{% url 'manager:dashboard' %}">Cancel</a>
+          <button class="button button--gold" type="submit">
+            {% if mode == "edit" %}Save changes{% else %}Save product{% endif %}
+          </button>
+          <a class="button" href="{% url 'manager:product_list' %}">Cancel</a>
         </div>
+
       </form>
     </div>
   </div>
