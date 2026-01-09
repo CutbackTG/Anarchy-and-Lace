@@ -2,7 +2,33 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .decorators import staff_required
 from catalog.models import Product
 from catalog.forms import ProductForm
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import PermissionDenied
 
+class StaffOnlyAuthenticationForm(AuthenticationForm):
+    """Normal username/password form, but only allow staff to authenticate."""
+    def confirm_login_allowed(self, user):
+        super().confirm_login_allowed(user)
+        if not user.is_staff:
+            raise PermissionDenied("Staff access only.")
+
+
+class ManagerLoginView(LoginView):
+    template_name = "manager/login.html"
+    authentication_form = StaffOnlyAuthenticationForm
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return "/manager/"
+
+
+@login_required
+def dashboard(request):
+    if not request.user.is_staff:
+        raise PermissionDenied("Staff access only.")
+    return render(request, "manager/dashboard.html")
 
 @staff_required
 def dashboard(request):

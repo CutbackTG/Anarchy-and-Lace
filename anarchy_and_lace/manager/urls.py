@@ -4,6 +4,7 @@ from . import views
 app_name = "manager"
 
 urlpatterns = [
+    path("login/", views.ManagerLoginView.as_view(), name="login"),
     path("", views.dashboard, name="dashboard"),
     path("products/", views.product_list, name="product_list"),
     path("products/new/", views.product_create, name="product_create"),
