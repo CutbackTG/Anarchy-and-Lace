@@ -21,6 +21,6 @@ class ProductForm(forms.ModelForm):
         ]
 
         widgets = {
-    "description": forms.Textarea(attrs={"rows": 4}),
-}
+            "description": forms.Textarea(attrs={"rows": 4}),
+        }
 

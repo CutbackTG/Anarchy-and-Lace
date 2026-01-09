@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}| New Product{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+  <div class="glass-panel auth-panel">
+    <div class="auth-inner">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="auth-title mb-0">New product</h1>
+        <a class="button" href="{% url 'manager:dashboard' %}">Back</a>
+      </div>
+
+      <p class="auth-subtitle">Add a new item to the shop catalogue.</p>
+
+      <form method="post" enctype="multipart/form-data" class="auth-form" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger glass-panel">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <div class="auth-fields">
+          {% for field in form %}
+            <div class="mb-3 {% if field.name == 'image' %}glass-panel p-3{% endif %}">
+              <label class="form-label" for="{{ field.id_for_label }}">
+                {% if field.name == "image" %}
+                  <span class="fw-semibold">Product image</span>
+                {% else %}
+                  {{ field.label }}
+                {% endif %}
+              </label>
+
+              {{ field }}
+
+              {% if field.help_text %}
+                <small class="d-block mt-1">{{ field.help_text }}</small>
+              {% endif %}
+
+              {% if field.errors %}
+                {% for error in field.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="actions mt-3">
+          <button class="button button--gold" type="submit">Save product</button>
+          <a class="button" href="{% url 'manager:dashboard' %}">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
