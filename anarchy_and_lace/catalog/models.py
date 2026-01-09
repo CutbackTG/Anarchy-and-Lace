@@ -20,12 +20,8 @@ class Collection(models.Model):
 
 
 class Product(models.Model):
-    CONDITION_CHOICES = [
-        ("A", "A (Excellent)"),
-        ("B", "B (Very good)"),
-        ("C", "C (Good)"),
-        ("D", "D (Worn)"),
-    ]
+    # Main / hero image (single-file upload from manager form)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
 
     name = models.CharField(max_length=120)
     slug = models.SlugField(max_length=140, unique=True, blank=True)
@@ -37,9 +33,7 @@ class Product(models.Model):
     size = models.CharField(max_length=20, blank=True)  # e.g. S/M/L or "One size"
     fit_notes = models.CharField(max_length=140, blank=True)
     care_instructions = models.CharField(max_length=140, blank=True)
-
     fabric_origin = models.CharField(max_length=140, blank=True)  # e.g. "Taisho-era kimono silk"
-    condition_grade = models.CharField(max_length=1, choices=CONDITION_CHOICES, default="B")
 
     is_active = models.BooleanField(default=True)
     collections = models.ManyToManyField(Collection, blank=True, related_name="products")
@@ -60,6 +54,7 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
+    # Optional gallery images
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="products/")
     alt_text = models.CharField(max_length=120, blank=True)
@@ -73,7 +68,9 @@ class ProductImage(models.Model):
         return f"Image for {self.product.sku}"
 
     def save(self, *args, **kwargs):
-        # Ensure only one primary image per product
         if self.is_primary:
-            ProductImage.objects.filter(product=self.product, is_primary=True).exclude(pk=self.pk).update(is_primary=False)
+            ProductImage.objects.filter(
+                product=self.product,
+                is_primary=True,
+            ).exclude(pk=self.pk).update(is_primary=False)
         super().save(*args, **kwargs)
