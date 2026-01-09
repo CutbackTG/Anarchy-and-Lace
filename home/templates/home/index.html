@@ -5,23 +5,19 @@
 <section class="hero">
   <div class="glass-panel hero__panel">
     <div class="hero__top">
-      <span class="badge badge--gold">Handpicked drops • Limited runs</span>
-      <span class="hero__spark">✦</span>
-      <span class="badge">UK shipping</span>
+      
     </div>
 
     <h1 class="hero__title">
-      Dark romance. Clean lines. <span class="hero__gold">Alchemy</span> in every stitch.
+        <span class="hero__gold"></span>
     </h1>
 
     <p class="hero__lead">
-      Welcome to Alchemy &amp; Lace: a boutique edit of statement pieces, soft armour, and elegant trouble.
-      Browse the shop, save your favourites, and move like you mean it.
+      Welcome to Anarchy &amp; Lace: A boutique of statement pieces, 
+      <br>Soft armour crafted from vintage Japanese kimono silk and salvaged denims.
+    
     </p>
 
-    <div class="hero__actions">
-      <a class="button button--gold" href="{% url 'catalog:product_list' %}">Enter the Shop</a>
-      <a class="button" href="{% url 'home:contact' %}">Contact</a>
 
       {% if request.user.is_authenticated %}
         <a class="button" href="{% url 'cart:cart' %}">View Cart</a>
@@ -32,33 +28,27 @@
 
     <div class="hero__grid">
       <div class="glass-panel hero-card">
-        <h3 class="hero-card__title">Shop the edit</h3>
-        <p>Curated pieces with a strong silhouette and a soft landing.</p>
-        <a class="nav-link hero-card__link" href="{% url 'catalog:product_list' %}">Browse products →</a>
+        <h3 class="hero-card__title">Shop our exclusive range</h3>
+        <p>Curated pieces with a strong silhouette and a soft footprint</p>
+        <a class="nav-link hero-card__link hero__gold" href="{% url 'catalog:product_list' %}">Browse products →</a>
       </div>
 
       <div class="glass-panel hero-card">
-        <h3 class="hero-card__title">Returns &amp; care</h3>
-        <p>Clear policies. Honest materials. We keep it simple.</p>
-        <a class="nav-link hero-card__link" href="{% url 'home:contact' %}">Ask a question →</a>
+        <h3 class="hero-card__title">Authentic, Vintage Japanese Kimono Silk</h3>
+        <p>Preserving historic beauty and art through fashion</p>
+        <a class="nav-link hero-card__link" href="{% url 'home:contact' %}">Materials →</a>
       </div>
 
       <div class="glass-panel hero-card">
-        <h3 class="hero-card__title">New drops</h3>
-        <p>Limited runs. When it’s gone, it becomes folklore.</p>
-        <a class="nav-link hero-card__link" href="{% url 'catalog:product_list' %}">See what’s new →</a>
+        <h3 class="hero-card__title">Bespoke Commissions</h3>
+        <p>Have an idea for a personal piece, custom project or special event?</p>
+        <a class="nav-link hero-card__link" href="{% url 'home:contact' %}">Share your vision →</a>
       </div>
     </div>
   </div>
 
   <div class="hero__footer">
     <div class="kintsugi-line"></div>
-    <div class="hero__fineprint">
-      <span>Secure checkout (when enabled)</span>
-      <span class="hero__dot">•</span>
-      <span>Members get saved carts</span>
-      <span class="hero__dot">•</span>
-      <span>Made to feel expensive</span>
     </div>
   </div>
 </section>

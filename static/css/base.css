@@ -1,17 +1,7 @@
-/* =========================================================
-   ALCHEMY & LACE — BASE DESIGN SYSTEM
-   Light / Dark + Kintsugi + Glass UI
-   ========================================================= */
-
-/* =========================================================
-   THEME TOKENS
-   ========================================================= */
-
-/* Default theme tokens (light) */
 :root{
   /* Background */
   --bg-image: url("/static/background_images/anarchylace_background_white.webp");
-  --bg-overlay: rgba(255,255,255,0.25);
+  --bg-overlay: rgb(255, 255, 255);
 
   /* Text */
   --ink: #141414;
@@ -20,7 +10,7 @@
   /* Glass system:
      --panel-base is RGB triplet used with alpha at point of use */
   --panel-base: 255 255 255;          /* white glass */
-  --panel-bg: rgba(255,255,255,0.52); /* solid-ish surface for inputs/buttons */
+  --panel-bg: rgb(255, 255, 255); /* solid-ish surface for inputs/buttons */
   --panel-border: rgba(20,20,20,0.10);
 
   /* Accent */
@@ -243,8 +233,8 @@ a{
    ========================================================= */
 
 .glass-panel{
-  /* True 10% glass in both themes */
-  background: rgb(var(--panel-base) / 10%);
+  /* True 8% glass in both themes */
+  background: rgb(var(--panel-base) / 8%);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -483,7 +473,11 @@ textarea{
 .hero__grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 20px;
+}
+
+.glass-panel + .glass-panel{
+  margin-top: 16px;
 }
 
 @media (max-width: 900px){
@@ -492,6 +486,7 @@ textarea{
 
 .hero-card{
   padding: 18px;
+  border-color: #e0b45f;
 }
 
 .hero-card__title{
