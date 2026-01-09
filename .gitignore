@@ -1,0 +1,82 @@
+# ================================
+# Python / Django
+# ================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django database
+db.sqlite3
+db.sqlite3-journal
+
+# Django migrations (keep __init__.py)
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# ================================
+# Virtual Environments
+# ================================
+.venv/
+venv/
+env/
+ENV/
+
+# ================================
+# Environment Variables
+# ================================
+.env
+.env.*
+*.env
+
+# ================================
+# Static & Media (generated files)
+# ================================
+staticfiles/
+media/
+
+# ================================
+# Django collected static
+# ================================
+static/
+
+# ================================
+# IDE / Editor
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# ================================
+# OS Files
+# ================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ================================
+# Logs
+# ================================
+*.log
+
+# ================================
+# Test / Coverage
+# ================================
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# ================================
+# Packaging / Build
+# ================================
+build/
+dist/
+*.egg-info/
+
+# ================================
+# Git Noise
+# ================================
+.git/
+.gitignore~
