@@ -9,26 +9,30 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% endblock %}
 
-    {% block extra_meta %}{% endblock %}
+    {% block extra_meta %}
+    {% endblock %}
 
     {% block corecss %}
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-      <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/base.css' %}?v=3" />
     {% endblock %}
 
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}
+    {% endblock %}
 
     {% block corejs %}
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     {% endblock %}
 
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    {% endblock %}
 
     <title>
-      Anarchy &amp; Lace{% block extra_title %}{% endblock %}
+      Anarchy &amp; Lace{% block extra_title %}
+      {% endblock %}
     </title>
   </head>
 
@@ -36,9 +40,12 @@
     <header class="topbar fixed-top">
       <div class="container d-flex justify-content-between align-items-center py-3">
         <a href="{% url 'home:home' %}" class="brand text-decoration-none">
-          <span class="brand-mark">Anarchy</span>
-          <span class="brand-amp">&amp;</span>
-          <span class="brand-mark">Lace</span>
+          <img src="{% static 'logos/anarchy_and_lace_logo_plain_black.png' %}" alt="Anarchy and Lace" class="brand-logo" />
+          <span class="brand-text">
+            <span class="brand-mark">Anarchy </span>
+            <span class="brand-amp">&amp;</span>
+            <span class="brand-mark">Lace</span>
+          </span>
         </a>
 
         <nav class="d-flex gap-2 gap-md-3 align-items-center flex-wrap justify-content-end">
@@ -59,9 +66,7 @@
             <a href="/accounts/login/" class="nav-link">Sign in</a>
           {% endif %}
 
-          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-            <span class="theme-toggle__icon" aria-hidden="true">☾</span>
-          </button>
+          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"><span class="theme-toggle__icon" aria-hidden="true">☾</span></button>
         </nav>
       </div>
 
@@ -76,10 +81,12 @@
       </div>
     {% endif %}
 
-    {% block page_header %}{% endblock %}
+    {% block page_header %}
+    {% endblock %}
 
     <main class="container page">
-      {% block content %}{% endblock %}
+      {% block content %}
+      {% endblock %}
     </main>
 
     {% block postloadjs %}

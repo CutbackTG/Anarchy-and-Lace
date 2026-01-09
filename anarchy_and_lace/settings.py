@@ -107,6 +107,9 @@ USE_TZ = True
 
 # Static files (CSS, JS)
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Media (uploads, product images)
