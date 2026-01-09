@@ -91,22 +91,29 @@ html[data-theme="dark"]{
 
 *{ box-sizing: border-box; }
 
-html, body{ height: 100%; }
+html, body{ min-height: 100%; }
+
+html{
+  background:
+    linear-gradient(var(--bg-overlay), var(--bg-overlay)),
+    var(--bg-image) center / cover no-repeat fixed;
+  background-color: var(--bg-overlay); /* fallback */
+}
 
 body{
   margin: 0;
+  min-height: 100vh;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--ink);
   padding-top: var(--header-gap);
 
-  background:
-    linear-gradient(var(--bg-overlay), var(--bg-overlay)),
-    var(--bg-image) center / cover no-repeat fixed;
+  background: transparent; /* let html paint the full page */
 }
+
 
 /* Reduce jank on mobile */
 @media (max-width: 768px){
-  body{ background-attachment: scroll; }
+  html{ background-attachment: scroll; }
 }
 
 /* Accessibility: visible focus on keyboard nav */
