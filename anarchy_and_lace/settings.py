@@ -169,3 +169,18 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     },
 }
+
+# =========================================================
+# EMAIL (LOCAL DEVELOPMENT)
+# =========================================================
+
+# Print emails to the runserver console instead of trying to use SMTP.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+DEFAULT_FROM_EMAIL = "no-reply@anarchyandlace.local"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+# If you want to keep verification flows, leave these as-is (or set them explicitly):
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # or "optional"
+
