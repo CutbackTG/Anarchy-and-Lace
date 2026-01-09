@@ -1,20 +1,16 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404, redirect, render
 
+from catalog.models import Product
 from .decorators import staff_required
 from .forms import ProductForm
-from catalog.models import Product
 
-
-# =========================
-# Staff-only authentication
-# =========================
 
 class StaffOnlyAuthenticationForm(AuthenticationForm):
-    """Username/password login restricted to staff users."""
+    """Normal username/password form, but only allow staff to authenticate."""
     def confirm_login_allowed(self, user):
         super().confirm_login_allowed(user)
         if not user.is_staff:
@@ -30,10 +26,6 @@ class ManagerLoginView(LoginView):
         return "/manager/"
 
 
-# =========================
-# Manager dashboard
-# =========================
-
 @staff_required
 def dashboard(request):
     product_count = Product.objects.count()
@@ -45,10 +37,6 @@ def dashboard(request):
     }
     return render(request, "manager/dashboard.html", context)
 
-
-# =========================
-# Product management
-# =========================
 
 @staff_required
 def product_list(request):
@@ -66,7 +54,7 @@ def product_create(request):
     else:
         form = ProductForm()
 
-    return render(request, "manager/product_form.html", {"form": form})
+    return render(request, "manager/product_form.html", {"form": form, "mode": "create"})
 
 
 @staff_required
@@ -81,11 +69,7 @@ def product_edit(request, pk):
     else:
         form = ProductForm(instance=product)
 
-    return render(
-        request,
-        "manager/product_form.html",
-        {"form": form, "product": product},
-    )
+    return render(request, "manager/product_form.html", {"form": form, "product": product, "mode": "edit"})
 
 
 @staff_required
@@ -96,8 +80,4 @@ def product_delete(request, pk):
         product.delete()
         return redirect("manager:product_list")
 
-    return render(
-        request,
-        "manager/product_confirm_delete.html",
-        {"product": product},
-    )
+    return render(request, "manager/product_confirm_delete.html", {"product": product})
