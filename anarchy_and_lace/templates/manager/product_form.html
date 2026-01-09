@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_title %}
+  | New Product
+{% endblock %}
+
+{% block content %}
+  <section class="auth-shell">
+    <div class="glass-panel auth-panel">
+      <div class="auth-inner">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h1 class="auth-title mb-0">New product</h1>
+          <a class="button" href="/manager/">Back</a>
+        </div>
+
+        <p class="auth-subtitle">Add a new item to the shop catalogue.</p>
+
+        <form method="post" enctype="multipart/form-data" class="auth-form">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger glass-panel">{{ form.non_field_errors }}</div>
+          {% endif %}
+
+          <div class="auth-fields">
+            {% for field in form %}
+              <div class="mb-3">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                  <small class="d-block mt-1">{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="actions mt-3">
+            <button class="button button--gold" type="submit">Save product</button>
+            <a class="button" href="/manager/">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}
