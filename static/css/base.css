@@ -144,8 +144,10 @@ a{
    ========================================================= */
 
 .page{
+  padding-top: calc(var(--header-gap) + 1rem);
   padding-bottom: 64px;
 }
+
 
 /* For any non-bootstrap wrapper if needed */
 .shell{
@@ -287,14 +289,22 @@ html[data-theme="light"] .brand-logo{
    ========================================================= */
 
 .glass-panel{
-  /* True 8% glass in both themes */
-  background: rgb(var(--panel-base) / 8%);
+  /* Edge-fade glass */
+  background:
+    radial-gradient(
+      120% 120% at 50% 40%,
+      rgb(var(--panel-base) / 12%) 5%,
+      rgb(var(--panel-base) / 8%) 45%,
+      rgb(var(--panel-base) / 2%) 100%
+    );
+
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
   padding: 22px;
 }
+
 
 /* Buttons */
 .button{
