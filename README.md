@@ -17,9 +17,61 @@ From an administrative perspective, Anarchy & Lace includes a secure manager int
 
 In addition to core e-commerce functionality, the platform places a strong emphasis on storytelling and material provenance. A curated fabric gallery and supporting content allow design-focused customers to explore the history and craftsmanship of kimono textiles, supporting informed purchasing decisions and commission enquiries.
 
-### Features
+### Core Features
 
-### Future Work
+#### Public Browsing
+
+Visitors can browse the boutique’s product catalogue without creating an account.
+Featured kimono fabrics are showcased through a curated gallery that highlights material quality and craftsmanship.
+Clear navigation allows users to explore products, fabric history, and contact information freely.
+
+#### User Authentication & Accounts
+
+Users can create accounts using email-based registration.
+Secure login and logout functionality is provided through Django Allauth.
+Returning users can access their accounts and resume activity without data loss.
+
+#### Shopping Cart & Checkout
+
+Authenticated users can add products to a persistent shopping cart.
+Cart contents are retained between sessions for returning customers.
+Users can review, update, and remove items before proceeding to checkout.
+
+#### Secure Payments
+
+Stripe integration enables secure online payments using industry-standard payment methods.
+Payment processing is handled externally to ensure sensitive card data is never stored on the application server.
+Successful transactions trigger order confirmation workflows.
+
+#### Product & Inventory Management
+
+A secure manager interface allows authorised users to manage the product catalogue.
+Products can be created, edited, and removed without modifying application code.
+Pricing, descriptions, and availability can be updated dynamically.
+
+#### Design & Theming
+
+A custom glass-inspired design system creates a distinctive boutique aesthetic.
+Light and dark themes are supported and can be toggled by the user.
+Responsive layouts ensure usability across desktop, tablet, and mobile devices.
+
+#### Storytelling & Commission Enquiries
+
+Informational content explores the history and cultural significance of kimono fabrics.
+Design-focused users can engage with material storytelling before making commission enquiries.
+The platform supports both direct purchasing and bespoke commission interest.
+
+## Future Development Roadmap
+
+| Feature Area | Description | Priority | Intended Outcome |
+|-------------|-------------|----------|------------------|
+| Wishlist Functionality | Allow registered users to save products to a personal wishlist for future reference. | High | Improve user retention and support considered purchasing decisions. |
+| Order History & Tracking | Provide users with access to previous orders and current order statuses. | High | Enhance post-purchase experience and transparency. |
+| Commission Request System | Introduce structured commission enquiry forms with supporting details and attachments. | Medium | Support bespoke garment requests and streamline communication with customers. |
+| Enhanced Fabric Archive | Expand the fabric gallery into a searchable archive with detailed historical and material metadata. | Medium | Strengthen storytelling, education, and brand identity. |
+| User Reviews & Testimonials | Enable customers to leave reviews and ratings on purchased products. | Medium | Build trust and provide social proof for new customers. |
+| Analytics & Reporting | Add dashboards for tracking sales, popular products, and user engagement. | Low | Support data-driven business and marketing decisions. |
+| Performance & Scalability Improvements | Optimise database queries, caching, and media delivery for increased traffic. | Low | Ensure long-term scalability and site reliability. |
 
 ### Tech Stack
 
@@ -59,50 +111,6 @@ Security & Configuration
 Environment Variables (.env / Heroku Config Vars) — Secure storage of sensitive configuration such as secret keys and Stripe credentials.
 Django CSRF Protection — Built-in protection against cross-site request forgery.
 HTTPS (via Heroku) — Secure encrypted connections in production.
-
-### Core Features
-
-Public Browsing
-
-Visitors can browse the boutique’s product catalogue without creating an account.
-Featured kimono fabrics are showcased through a curated gallery that highlights material quality and craftsmanship.
-Clear navigation allows users to explore products, fabric history, and contact information freely.
-
-User Authentication & Accounts
-
-Users can create accounts using email-based registration.
-Secure login and logout functionality is provided through Django Allauth.
-Returning users can access their accounts and resume activity without data loss.
-
-Shopping Cart & Checkout
-
-Authenticated users can add products to a persistent shopping cart.
-Cart contents are retained between sessions for returning customers.
-Users can review, update, and remove items before proceeding to checkout.
-
-Secure Payments
-
-Stripe integration enables secure online payments using industry-standard payment methods.
-Payment processing is handled externally to ensure sensitive card data is never stored on the application server.
-Successful transactions trigger order confirmation workflows.
-
-Product & Inventory Management
-
-A secure manager interface allows authorised users to manage the product catalogue.
-Products can be created, edited, and removed without modifying application code.
-Pricing, descriptions, and availability can be updated dynamically.
-
-Design & Theming
-
-A custom glass-inspired design system creates a distinctive boutique aesthetic.
-Light and dark themes are supported and can be toggled by the user.
-Responsive layouts ensure usability across desktop, tablet, and mobile devices.
-
-Storytelling & Commission Enquiries
-
-Informational content explores the history and cultural significance of kimono fabrics.
-Design-focused users can engage with material storytelling before making commission enquiries.
-The platform supports both direct purchasing and bespoke commission interest.
 
 ## Deployment & Configuration
 
