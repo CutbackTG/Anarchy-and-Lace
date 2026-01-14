@@ -1,56 +1,56 @@
 # Anarchy-and-Lace
 High fashion apparel website featuring one-off bespoke items and a stripe payment system
 
-# GitHub: @CutbackTG
-# Project Link: https://github.com/CutbackTG/Anarchy-and-Lace
-# Deployment URL: 
+### GitHub: @CutbackTG
+### Project Link: https://github.com/CutbackTG/Anarchy-and-Lace
+### Deployment URL: 
 
 ## Project Overview
 
-# Features
+### Features
 
-# Future Work
+### Future Work
 
-# Tech Stack
+### Tech Stack
 
-# Core Features
+### Core Features
 
 Development & Tooling
 Virtual Environment (venv) – Isolated development environment
 pip – Python package management
 Git & GitHub – Version control and collaboration
 
-# Deployment
+## Deployment
 
-# User Stories
+## User Stories
 
-# 1. New User — Browsing the Collection
+### 1. New User — Browsing the Collection
 
 As a first-time visitor,
 I want to browse the boutique’s products and featured fabrics without creating an account,
 so that I can explore the aesthetic, materials, and pricing before deciding whether to engage further.
 
-# 2. Interested Customer — Creating an Account
+### 2. Interested Customer — Creating an Account
 
 As an interested customer,
 I want to create an account using my email address,
 so that I can save my details, and return easily in the future.
 
 
-# 3. Returning Customer — Shopping
+### 3. Returning Customer — Shopping
 
 As a returning customer,
 I want to log in and access my saved shopping cart,
 so that I can continue shopping without losing items I previously selected.
 
 
-# 4. Boutique Owner / Manager — Managing Products
+### 4. Boutique Owner / Manager — Managing Products
 
 As a boutique manager,
 I want to create, edit, and manage products through a secure manager interface,
 so that I can update stock, pricing, and product details without modifying code.
 
-# 5. Design-Focused Customer — Exploring Materials & commission work
+### 5. Design-Focused Customer — Exploring Materials & commission work
 
 As a design-conscious customer,
 I want to explore the history of kimono fabrics,
