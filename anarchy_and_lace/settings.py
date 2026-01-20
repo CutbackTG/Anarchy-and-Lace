@@ -5,14 +5,17 @@ Django settings for Anarchy & Lace.
 - Production (e.g. Heroku) uses environment variables + DATABASE_URL + WhiteNoise
 """
 
-from pathlib import Path
+from __future__ import annotations
+
 import os
+from pathlib import Path
 
 import dj_database_url
 
-# Optional: load .env locally (safe if python-dotenv isn't installed on Heroku yet)
+# Optional: load .env locally (safe to ignore if not present / not installed)
 try:
     from dotenv import load_dotenv  # type: ignore
+
     load_dotenv()
 except Exception:
     pass
@@ -31,28 +34,38 @@ SECRET_KEY = os.environ.get(
     "django-insecure-dev-only-change-me",
 )
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+# NOTE: default False so you don't accidentally ship DEBUG=True
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+
+# Heroku sets DYNO in the environment
+ON_HEROKU = "DYNO" in os.environ
 
 
 # ---------------------------------------------------------
 # Hosts / Security
 # ---------------------------------------------------------
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
-
-if DEBUG:
+if DEBUG and not ON_HEROKU:
+    # Local dev
     ALLOWED_HOSTS = [
         "127.0.0.1",
         "localhost",
         "testserver",
     ]
 else:
-    ALLOWED_HOSTS = [
-        ".herokuapp.com",
-    ]
+    # Production / Heroku (or when running DEBUG on Heroku for diagnostics)
+    env_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS", "")
+    ALLOWED_HOSTS = [h.strip() for h in env_hosts.split(",") if h.strip()]
 
+    # Always allow Heroku app subdomains when on Heroku
+    if ON_HEROKU and ".herokuapp.com" not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(".herokuapp.com")
 
-# Needed for HTTPS domains on Heroku (set as comma-separated list)
+    # Safety fallback so we never end up with an empty list
+    if not ALLOWED_HOSTS:
+        ALLOWED_HOSTS = [".herokuapp.com"]
+
+# Needed for HTTPS domains (set as comma-separated list)
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
     for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
@@ -76,7 +89,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-
     # Allauth
     "allauth",
     "allauth.account",
@@ -84,7 +96,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.apple",
-
     # Local apps
     "home",
     "core",
@@ -174,7 +185,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]  # your local static folder
-STATIC_ROOT = BASE_DIR / "staticfiles"    # collectstatic target on Heroku/production
+STATIC_ROOT = BASE_DIR / "staticfiles"  # collectstatic target on Heroku/production
 
 STORAGES = {
     "staticfiles": {
@@ -212,8 +223,9 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 
-# Verification: for local dev, "mandatory" is fine because we print emails to console.
-# If you want signup to complete without clicking email links, switch to "optional" or "none".
+# Verification:
+# - local dev is fine as "mandatory" because emails print to console
+# - for easier testing without clicking links, set env ACCOUNT_EMAIL_VERIFICATION=optional (or none)
 ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION", "mandatory")
 
 # Use your custom signup form (profile fields)
