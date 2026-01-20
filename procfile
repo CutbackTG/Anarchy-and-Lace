@@ -1,1 +1,1 @@
-web: gunicorn anarchy_and_lace.wsgi
+web: gunicorn anarchy_and_lace.wsgi:application
