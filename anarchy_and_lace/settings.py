@@ -38,14 +38,19 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 # Hosts / Security
 # ---------------------------------------------------------
 
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+
 if DEBUG:
-    ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
+    ALLOWED_HOSTS = [
+        "127.0.0.1",
+        "localhost",
+        "testserver",
+    ]
 else:
     ALLOWED_HOSTS = [
-        h.strip()
-        for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
-        if h.strip()
+        ".herokuapp.com",
     ]
+
 
 # Needed for HTTPS domains on Heroku (set as comma-separated list)
 CSRF_TRUSTED_ORIGINS = [
