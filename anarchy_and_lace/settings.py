@@ -176,6 +176,17 @@ TIME_ZONE = "Europe/London"
 USE_I18N = True
 USE_TZ = True
 
+# ---------------------------------------------------------
+# Storages
+# ---------------------------------------------------------
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # ---------------------------------------------------------
 # Static & Media
