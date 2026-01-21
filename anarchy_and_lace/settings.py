@@ -1,21 +1,18 @@
 """
 Django settings for Anarchy & Lace.
 
-- Local dev uses .env (optional) + SQLite + console email
-- Production (e.g. Heroku) uses environment variables + DATABASE_URL + WhiteNoise
+- Local dev: optional .env + SQLite + console email
+- Heroku: env vars + DATABASE_URL + WhiteNoise
 """
 
-from __future__ import annotations
-
-import os
 from pathlib import Path
+import os
 
 import dj_database_url
 
-# Optional: load .env locally (safe to ignore if not present / not installed)
+# Optional: load .env locally (safe on Heroku)
 try:
     from dotenv import load_dotenv  # type: ignore
-
     load_dotenv()
 except Exception:
     pass
@@ -24,62 +21,43 @@ except Exception:
 # ---------------------------------------------------------
 # Base
 # ---------------------------------------------------------
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ENV = os.environ.get("DJANGO_ENV", "development").lower()
-
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    "django-insecure-dev-only-change-me",
-)
-
-# NOTE: default False so you don't accidentally ship DEBUG=True
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-dev-only-change-me")
 DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
-
-# Heroku sets DYNO in the environment
-ON_HEROKU = "DYNO" in os.environ
 
 
 # ---------------------------------------------------------
 # Hosts / Security
 # ---------------------------------------------------------
-
-if DEBUG and not ON_HEROKU:
-    # Local dev
-    ALLOWED_HOSTS = [
-        "127.0.0.1",
-        "localhost",
-        "testserver",
-    ]
+if DEBUG:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
 else:
-    # Production / Heroku (or when running DEBUG on Heroku for diagnostics)
-    env_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS", "")
-    ALLOWED_HOSTS = [h.strip() for h in env_hosts.split(",") if h.strip()]
+    # Heroku apps live on *.herokuapp.com (and later your custom domain)
+    ALLOWED_HOSTS = [".herokuapp.com"]
 
-    # Always allow Heroku app subdomains when on Heroku
-    if ON_HEROKU and ".herokuapp.com" not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(".herokuapp.com")
+# If you add a custom domain later, set:
+# DJANGO_ALLOWED_HOSTS="anarchyandlace.co.uk,www.anarchyandlace.co.uk"
+extra_hosts = [
+    h.strip()
+    for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+    if h.strip()
+]
+ALLOWED_HOSTS += extra_hosts
 
-    # Safety fallback so we never end up with an empty list
-    if not ALLOWED_HOSTS:
-        ALLOWED_HOSTS = [".herokuapp.com"]
-
-# Needed for HTTPS domains (set as comma-separated list)
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
     for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if o.strip()
 ]
 
-# Recommended when behind a proxy (Heroku)
+# Heroku proxy/HTTPS
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # ---------------------------------------------------------
 # Applications
 # ---------------------------------------------------------
-
 INSTALLED_APPS = [
     # Django
     "django.contrib.admin",
@@ -89,6 +67,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+
     # Allauth
     "allauth",
     "allauth.account",
@@ -96,6 +75,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.apple",
+
     # Local apps
     "home",
     "core",
@@ -106,7 +86,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # static files in production
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # static files on Heroku
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -120,18 +100,17 @@ MIDDLEWARE = [
 # ---------------------------------------------------------
 # URLs / Templates / WSGI
 # ---------------------------------------------------------
-
 ROOT_URLCONF = "anarchy_and_lace.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # shared templates folder
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
-                "django.template.context_processors.request",  # required by allauth
+                "django.template.context_processors.request",  # allauth needs this
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -145,14 +124,11 @@ WSGI_APPLICATION = "anarchy_and_lace.wsgi.application"
 # ---------------------------------------------------------
 # Database
 # ---------------------------------------------------------
-# Heroku provides DATABASE_URL automatically when Postgres is attached.
-# Locally we fall back to SQLite if DATABASE_URL is not set.
-
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=False,
+        ssl_require=not DEBUG,
     )
 }
 
@@ -160,7 +136,6 @@ DATABASES = {
 # ---------------------------------------------------------
 # Password validation
 # ---------------------------------------------------------
-
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -172,7 +147,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # ---------------------------------------------------------
 # Internationalization
 # ---------------------------------------------------------
-
 LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "Europe/London"
 USE_I18N = True
@@ -182,10 +156,9 @@ USE_TZ = True
 # ---------------------------------------------------------
 # Static & Media
 # ---------------------------------------------------------
-
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]  # your local static folder
-STATIC_ROOT = BASE_DIR / "staticfiles"  # collectstatic target on Heroku/production
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STORAGES = {
     "staticfiles": {
@@ -200,14 +173,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 # ---------------------------------------------------------
 # Defaults
 # ---------------------------------------------------------
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # ---------------------------------------------------------
 # Sites / Auth / Allauth
 # ---------------------------------------------------------
-
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
@@ -218,53 +189,35 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-# --- Updated Allauth settings (avoids the deprecation warnings you saw) ---
-# Email-only login:
+# New-style allauth (no deprecated settings):
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 
-# Verification:
-# - local dev is fine as "mandatory" because emails print to console
-# - for easier testing without clicking links, set env ACCOUNT_EMAIL_VERIFICATION=optional (or none)
+# Important: if verification is mandatory, email MUST be required
+# (avoids AssertionError in allauth app_settings). :contentReference[oaicite:1]{index=1}
 ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION", "mandatory")
+ACCOUNT_EMAIL_REQUIRED = True
 
-# Use your custom signup form (profile fields)
 ACCOUNT_FORMS = {
     "signup": "core.forms.CustomerSignupForm",
 }
 
-# Social provider config (optional; real keys can also be set via SocialApp in admin)
 SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
-            "secret": os.environ.get("GOOGLE_CLIENT_SECRET", ""),
-            "key": "",
-        }
-    },
-    "facebook": {
-        "APP": {
-            "client_id": os.environ.get("FACEBOOK_CLIENT_ID", ""),
-            "secret": os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
-            "key": "",
-        }
-    },
-    "apple": {
-        "APP": {
-            "client_id": os.environ.get("APPLE_CLIENT_ID", ""),
-            "secret": os.environ.get("APPLE_CLIENT_SECRET", ""),
-            "key": "",
-        }
-    },
+    "google": {"APP": {"client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
+                       "secret": os.environ.get("GOOGLE_CLIENT_SECRET", ""),
+                       "key": ""}},
+    "facebook": {"APP": {"client_id": os.environ.get("FACEBOOK_CLIENT_ID", ""),
+                         "secret": os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
+                         "key": ""}},
+    "apple": {"APP": {"client_id": os.environ.get("APPLE_CLIENT_ID", ""),
+                      "secret": os.environ.get("APPLE_CLIENT_SECRET", ""),
+                      "key": ""}},
 }
 
 
 # ---------------------------------------------------------
 # Email
 # ---------------------------------------------------------
-# Local dev: print emails to console so Allauth doesn't crash when verifying.
-# Production later: swap to SMTP via env vars.
-
 EMAIL_BACKEND = os.environ.get(
     "DJANGO_EMAIL_BACKEND",
     "django.core.mail.backends.console.EmailBackend",
@@ -273,7 +226,6 @@ EMAIL_BACKEND = os.environ.get(
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@anarchyandlace.local")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-# If you set DJANGO_EMAIL_BACKEND to SMTP in the future, these will be used:
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
@@ -282,9 +234,8 @@ EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
 
 
 # ---------------------------------------------------------
-# Stripe (placeholders for later)
+# Stripe (placeholders)
 # ---------------------------------------------------------
-
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
