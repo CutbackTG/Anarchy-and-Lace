@@ -7,7 +7,8 @@
   --ink: #141414;
   --ink-muted: #5f5f5f;
 
-  /* Glass system */
+  /* Glass system:
+     --panel-base is RGB triplet used with alpha at point of use */
   --panel-base: 255 255 255;
   --panel-bg: rgba(255,255,255,0.78);
   --panel-border: rgba(20,20,20,0.10);
@@ -25,7 +26,7 @@
   --focus: 0 0 0 4px var(--gold-soft);
 
   /* Layout */
-  --header-gap: 5rem;
+  --header-gap: 5rem; /* used to offset fixed header */
   --container-max: 1100px;
 }
 
@@ -49,7 +50,7 @@
   }
 }
 
-/* Manual theme override */
+/* Manual theme override (JS sets html[data-theme="light|dark"]) */
 html[data-theme="light"]{
   --bg-image: url("/static/background_images/anarchylace_background_white.webp");
   --bg-overlay: rgba(255,255,255,0.25);
@@ -96,7 +97,7 @@ html{
   background:
     linear-gradient(var(--bg-overlay), var(--bg-overlay)),
     var(--bg-image) center / cover no-repeat fixed;
-  background-color: var(--bg-overlay);
+  background-color: var(--bg-overlay); /* fallback */
 }
 
 body{
@@ -105,13 +106,17 @@ body{
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--ink);
   padding-top: var(--header-gap);
-  background: transparent;
+
+  background: transparent; /* let html paint the full page */
 }
 
+
+/* Reduce jank on mobile */
 @media (max-width: 768px){
   html{ background-attachment: scroll; }
 }
 
+/* Accessibility: visible focus on keyboard nav */
 a:focus,
 button:focus,
 input:focus,
@@ -150,6 +155,8 @@ a{
   padding-bottom: 64px;
 }
 
+
+/* For any non-bootstrap wrapper if needed */
 .shell{
   width: min(var(--container-max), calc(100% - 48px));
   margin-left: auto;
@@ -169,9 +176,6 @@ a{
 .brand{
   font-weight: 600;
   letter-spacing: 0.2px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .brand-amp{
@@ -179,27 +183,47 @@ a{
   margin: 0 4px;
 }
 
+/* =========================================================
+   BRAND / LOGO
+   ========================================================= */
+
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .brand-logo{
-  height: 60px;
+  height: 60px;            /* ideal for nav */
   width: auto;
   display: block;
+}
+
+/* =========================================================
+   LOGO THEME SWAP
+   ========================================================= */
+
+/* Default: light theme uses dark logo */
+.brand-logo{
   content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
 }
 
-/* System dark mode logo */
+/* System dark mode */
 @media (prefers-color-scheme: dark){
   .brand-logo{
     content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
   }
 }
 
-/* Manual override logo */
+/* Manual override (JS-driven theme toggle wins) */
 html[data-theme="dark"] .brand-logo{
   content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
 }
+
 html[data-theme="light"] .brand-logo{
   content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
 }
+
 
 .brand-text{
   display: inline-flex;
@@ -211,7 +235,10 @@ html[data-theme="light"] .brand-logo{
 }
 
 @media (max-width: 480px){
-  .brand-text{ display: none; }
+  /* Optional: hide text on very small screens */
+  .brand-text{
+    display: none;
+  }
 }
 
 .nav-link{
@@ -253,10 +280,43 @@ html[data-theme="light"] .brand-logo{
 }
 
 /* =========================================================
+   HERO FABRIC GALLERY PANEL
+   ========================================================= */
+
+.hero__panel--gallery{
+  padding: 22px;
+  padding-top: clamp(6px, 1.2vw, 12px);
+  border-color: rgba(200,161,74,0.55);
+}
+
+.fabric-card__img{
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.02);
+  gap: 20px;
+}
+
+/* =========================================================
+   KINTSUGI LINE
+   ========================================================= */
+
+.kintsugi-line{
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gold) 60%, transparent),
+    transparent
+  );
+}
+
+/* =========================================================
    GLASS PANELS & UI
    ========================================================= */
 
 .glass-panel{
+  /* Edge-fade glass */
   background:
     radial-gradient(
       120% 120% at 50% 40%,
@@ -264,12 +324,14 @@ html[data-theme="light"] .brand-logo{
       rgb(var(--panel-base) / 8%) 45%,
       rgb(var(--panel-base) / 2%) 100%
     );
+
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
   padding: 22px;
 }
+
 
 /* Buttons */
 .button{
@@ -381,7 +443,7 @@ textarea{
 .auth-panel{
   width: 100%;
   max-width: 560px;
-  padding: 0;
+  padding: 0; /* auth-inner controls spacing */
 }
 
 .auth-inner{
@@ -455,6 +517,7 @@ textarea{
   padding-top: clamp(6px, 1.2vw, 12px);
 }
 
+/* Large hero panel */
 .hero__panel{
   margin-top: 10px;
   margin-bottom: clamp(22px, 3vw, 36px);
@@ -462,12 +525,7 @@ textarea{
   border-color: #fcd078;
 }
 
-.hero__panel--gallery{
-  padding: 22px;
-  padding-top: clamp(6px, 1.2vw, 12px);
-  border-color: rgba(200,161,74,0.55);
-}
-
+/* Badge row */
 .hero__top{
   display: flex;
   align-items: center;
@@ -481,6 +539,7 @@ textarea{
   opacity: 0.9;
 }
 
+/* Title: tighter + premium */
 .hero__title{
   font-size: clamp(34px, 5.2vw, 56px);
   letter-spacing: -0.02em;
@@ -507,6 +566,7 @@ textarea{
   z-index: -1;
 }
 
+/* Lead */
 .hero__lead{
   font-size: clamp(15px, 2vw, 18px);
   max-width: 72ch;
@@ -514,6 +574,7 @@ textarea{
   opacity: 0.92;
 }
 
+/* CTA row */
 .hero__actions{
   display: flex;
   gap: 12px;
@@ -521,6 +582,7 @@ textarea{
   margin-bottom: 18px;
 }
 
+/* Card grid */
 .hero__grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -528,6 +590,7 @@ textarea{
   align-items: stretch;
 }
 
+/* Cards */
 .hero-card{
   padding: 20px;
   border-color: #fcd078;
@@ -554,19 +617,27 @@ textarea{
   opacity: 0.9;
 }
 
+/* =========================================================
+   HERO / INDEX LINK HOVER (GOLD)
+   ========================================================= */
+
+/* Base state */
 .hero .glass-panel a{
   color: var(--ink-muted);
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
+/* Hover state */
 .hero .glass-panel a:hover{
   color: var(--gold);
 }
 
+/* Optional: subtle arrow motion (feels premium) */
 .hero .glass-panel a:hover::after{
   transform: translateX(2px);
 }
 
+/* Ensure arrow transitions nicely */
 .hero .glass-panel a::after{
   transition: transform 0.2s ease;
 }
@@ -575,11 +646,19 @@ textarea{
   color: var(--gold);
 }
 
+
+/* =========================================================
+   HERO RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 900px){
   .hero__grid{ grid-template-columns: 1fr; }
 }
 
-.hero__footer{ margin-top: 18px; }
+/* Footer fineprint */
+.hero__footer{
+  margin-top: 18px;
+}
 
 .hero__fineprint{
   display: flex;
@@ -591,20 +670,8 @@ textarea{
   padding: 12px 2px 0;
 }
 
-.hero__dot{ opacity: 0.6; }
-
-/* =========================================================
-   KINTSUGI LINE
-   ========================================================= */
-
-.kintsugi-line{
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--gold) 60%, transparent),
-    transparent
-  );
+.hero__dot{
+  opacity: 0.6;
 }
 
 /* =========================================================
