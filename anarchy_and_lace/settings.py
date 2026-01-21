@@ -179,9 +179,14 @@ USE_TZ = True
 # ---------------------------------------------------------
 # Storages
 # ---------------------------------------------------------
+
 STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
 
 # ---------------------------------------------------------
@@ -189,20 +194,14 @@ STORAGES = {
 # ---------------------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    }
-}
 
 # Media note:
 # Heroku filesystem is ephemeral. MEDIA_* is fine locally,
-# but use Cloudinary/S3 (or static seed images) for staging uploads.
+# but use Cloudinary/S3 for real uploads.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 # ---------------------------------------------------------
