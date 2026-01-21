@@ -9,14 +9,9 @@
   </header>
 
   <nav class="collections">
-    <a href="{% url 'catalog:product_list' %}"
-       class="{% if not current_collection %}active{% endif %}">
-      All
-    </a>
-
+    <a href="{% url 'catalog:product_list' %}" class="{% if not current_collection %}active{% endif %}">All</a>
     {% for collection in collections %}
-      <a href="?collection={{ collection.slug }}"
-         class="{% if current_collection == collection.slug %}active{% endif %}">
+      <a href="?collection={{ collection.slug }}" class="{% if current_collection == collection.slug %}active{% endif %}">
         {{ collection.name }}
       </a>
     {% endfor %}
@@ -31,16 +26,11 @@
               <img
                 src="{{ img.image.url }}"
                 alt="{{ img.alt_text|default:product.name }}"
-                class="product-image"
+                class="product-img"
                 loading="lazy"
-              />
+              >
             {% else %}
-              <img
-                src="{% static 'logos/anarchy_and_lace_logo_plain_circle.png' %}"
-                alt="{{ product.name }}"
-                class="product-image product-image--fallback"
-                loading="lazy"
-              />
+              <div class="img-placeholder">No image yet</div>
             {% endif %}
           {% endwith %}
         </div>
@@ -50,7 +40,6 @@
           <p class="product-price">£{{ product.price }}</p>
         </div>
       </a>
-
     {% empty %}
       <p>No products found.</p>
     {% endfor %}

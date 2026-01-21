@@ -79,6 +79,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "cloudinary",
+    "cloudinary_storage",
     # Allauth
     "allauth",
     "allauth.account",
@@ -182,12 +184,13 @@ USE_TZ = True
 
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
 
 # ---------------------------------------------------------
 # Static & Media
