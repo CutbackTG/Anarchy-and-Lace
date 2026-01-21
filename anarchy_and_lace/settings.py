@@ -1,8 +1,10 @@
 """
 Django settings for Anarchy & Lace.
 
+Goals:
 - Local dev: optional .env + SQLite + console email
-- Heroku: env vars + DATABASE_URL + WhiteNoise
+- Heroku staging: env vars + DATABASE_URL (Postgres) + WhiteNoise static
+- Minimal + reversible config changes
 """
 
 from pathlib import Path
@@ -10,21 +12,30 @@ import os
 
 import dj_database_url
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# ---------------------------------------------------------
+# Environment helpers
+# ---------------------------------------------------------
+def env_bool(name: str, default: bool = False) -> bool:
+    return os.environ.get(name, str(default)).lower() in ("1", "true", "yes", "on")
+
+
 # Optional: load .env locally (safe on Heroku)
 try:
     from dotenv import load_dotenv  # type: ignore
+
     load_dotenv()
 except Exception:
     pass
 
 
 # ---------------------------------------------------------
-# Base
+# Core settings
 # ---------------------------------------------------------
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-dev-only-change-me")
-DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+DEBUG = env_bool("DJANGO_DEBUG", False)
 
 
 # ---------------------------------------------------------
@@ -36,7 +47,7 @@ else:
     # Heroku apps live on *.herokuapp.com (and later your custom domain)
     ALLOWED_HOSTS = [".herokuapp.com"]
 
-# If you add a custom domain later, set:
+# Optional additional hosts, comma-separated:
 # DJANGO_ALLOWED_HOSTS="anarchyandlace.co.uk,www.anarchyandlace.co.uk"
 extra_hosts = [
     h.strip()
@@ -45,14 +56,18 @@ extra_hosts = [
 ]
 ALLOWED_HOSTS += extra_hosts
 
+# CSRF trusted origins (recommended on Heroku/custom domains)
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
     for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if o.strip()
 ]
 
-# Heroku proxy/HTTPS
+# Heroku proxy/HTTPS header
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Keep staging flexible: only force HTTPS if you explicitly enable it
+SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", False)
 
 
 # ---------------------------------------------------------
@@ -83,6 +98,7 @@ INSTALLED_APPS = [
     "manager",
     "cart",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -124,13 +140,31 @@ WSGI_APPLICATION = "anarchy_and_lace.wsgi.application"
 # ---------------------------------------------------------
 # Database
 # ---------------------------------------------------------
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=not DEBUG,
-    )
-}
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    # Heroku uses DATABASE_URL for Postgres
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+        )
+    }
+
+    # IMPORTANT:
+    # Only require SSL for Postgres. Do NOT force sslmode on SQLite.
+    if DATABASE_URL.startswith("postgres"):
+        DATABASES["default"].setdefault("OPTIONS", {})
+        DATABASES["default"]["OPTIONS"]["sslmode"] = "require"
+
+else:
+    # Local default: SQLite
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # ---------------------------------------------------------
@@ -157,7 +191,6 @@ USE_TZ = True
 # Static & Media
 # ---------------------------------------------------------
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STORAGES = {
@@ -166,6 +199,9 @@ STORAGES = {
     }
 }
 
+# Media note:
+# Heroku filesystem is ephemeral. MEDIA_* is fine locally,
+# but you'll want Cloudinary/S3 (or static seed images) for staging.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -189,29 +225,39 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-# New-style allauth (no deprecated settings):
+# New-style allauth (avoid deprecated settings):
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 
-# Important: if verification is mandatory, email MUST be required
-# (avoids AssertionError in allauth app_settings). :contentReference[oaicite:1]{index=1}
-ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION", "mandatory")
-ACCOUNT_EMAIL_REQUIRED = True
+# Staging-friendly default: "mandatory" can be painful unless email is configured
+ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION", "optional")
 
 ACCOUNT_FORMS = {
     "signup": "core.forms.CustomerSignupForm",
 }
 
 SOCIALACCOUNT_PROVIDERS = {
-    "google": {"APP": {"client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
-                       "secret": os.environ.get("GOOGLE_CLIENT_SECRET", ""),
-                       "key": ""}},
-    "facebook": {"APP": {"client_id": os.environ.get("FACEBOOK_CLIENT_ID", ""),
-                         "secret": os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
-                         "key": ""}},
-    "apple": {"APP": {"client_id": os.environ.get("APPLE_CLIENT_ID", ""),
-                      "secret": os.environ.get("APPLE_CLIENT_SECRET", ""),
-                      "key": ""}},
+    "google": {
+        "APP": {
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET", ""),
+            "key": "",
+        }
+    },
+    "facebook": {
+        "APP": {
+            "client_id": os.environ.get("FACEBOOK_CLIENT_ID", ""),
+            "secret": os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
+            "key": "",
+        }
+    },
+    "apple": {
+        "APP": {
+            "client_id": os.environ.get("APPLE_CLIENT_ID", ""),
+            "secret": os.environ.get("APPLE_CLIENT_SECRET", ""),
+            "key": "",
+        }
+    },
 }
 
 
@@ -230,7 +276,7 @@ EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
-EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 
 
 # ---------------------------------------------------------

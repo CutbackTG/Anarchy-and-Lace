@@ -1,0 +1,9 @@
+﻿[
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "image": "products/white_kimono_jacket_front_mbhQlzQ.png",
+    "name": "Shiro jacket",
+    "slug": "shiro-jacket",
+    "description": 
