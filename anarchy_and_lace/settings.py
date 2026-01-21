@@ -1,14 +1,16 @@
 """
 Django settings for Anarchy & Lace.
 
-Goals:
+Staging-first goals:
 - Local dev: optional .env + SQLite + console email
 - Heroku staging: env vars + DATABASE_URL (Postgres) + WhiteNoise static
-- Minimal + reversible config changes
+- Minimal + reversible changes
 """
 
-from pathlib import Path
+from __future__ import annotations
+
 import os
+from pathlib import Path
 
 import dj_database_url
 
@@ -16,10 +18,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # ---------------------------------------------------------
-# Environment helpers
+# Helpers
 # ---------------------------------------------------------
 def env_bool(name: str, default: bool = False) -> bool:
-    return os.environ.get(name, str(default)).lower() in ("1", "true", "yes", "on")
+    return os.environ.get(name, str(default)).strip().lower() in ("1", "true", "yes", "on")
+
+
+def env_list(name: str, default: list[str] | None = None) -> list[str]:
+    """
+    Comma-separated env var -> list of stripped, non-empty values.
+    """
+    raw = os.environ.get(name, "")
+    if not raw:
+        return default or []
+    return [x.strip() for x in raw.split(",") if x.strip()]
 
 
 # Optional: load .env locally (safe on Heroku)
@@ -32,7 +44,7 @@ except Exception:
 
 
 # ---------------------------------------------------------
-# Core settings
+# Core
 # ---------------------------------------------------------
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-dev-only-change-me")
 DEBUG = env_bool("DJANGO_DEBUG", False)
@@ -41,32 +53,17 @@ DEBUG = env_bool("DJANGO_DEBUG", False)
 # ---------------------------------------------------------
 # Hosts / Security
 # ---------------------------------------------------------
-if DEBUG:
-    ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
-else:
-    # Heroku apps live on *.herokuapp.com (and later your custom domain)
-    ALLOWED_HOSTS = [".herokuapp.com"]
+# Heroku can route via randomized hostnames like:
+# anarchy-and-lace-staging-<hash>.herokuapp.com
+# so we allow the whole herokuapp.com domain in non-debug.
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"] if DEBUG else [".herokuapp.com"]
+ALLOWED_HOSTS += env_list("DJANGO_ALLOWED_HOSTS")
 
-# Optional additional hosts, comma-separated:
-# DJANGO_ALLOWED_HOSTS="anarchyandlace.co.uk,www.anarchyandlace.co.uk"
-extra_hosts = [
-    h.strip()
-    for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
-    if h.strip()
-]
-ALLOWED_HOSTS += extra_hosts
+# CSRF trusted origins (recommended for login/forms on custom domains)
+# You can also set DJANGO_CSRF_TRUSTED_ORIGINS="https://example.com,https://www.example.com"
+CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS", default=["https://*.herokuapp.com"])
 
-# CSRF trusted origins (recommended on Heroku/custom domains)
-CSRF_TRUSTED_ORIGINS = [
-    o.strip()
-    for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
-    if o.strip()
-]
-
-# Heroku proxy/HTTPS header
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# Keep staging flexible: only force HTTPS if you explicitly enable it
 SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", False)
 
 
@@ -82,7 +79,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-
     # Allauth
     "allauth",
     "allauth.account",
@@ -90,7 +86,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.apple",
-
     # Local apps
     "home",
     "core",
@@ -143,22 +138,17 @@ WSGI_APPLICATION = "anarchy_and_lace.wsgi.application"
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
-    # Heroku uses DATABASE_URL for Postgres
     DATABASES = {
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600,
         )
     }
-
-    # IMPORTANT:
-    # Only require SSL for Postgres. Do NOT force sslmode on SQLite.
+    # Only require SSL options when using Postgres
     if DATABASE_URL.startswith("postgres"):
         DATABASES["default"].setdefault("OPTIONS", {})
         DATABASES["default"]["OPTIONS"]["sslmode"] = "require"
-
 else:
-    # Local default: SQLite
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -201,7 +191,7 @@ STORAGES = {
 
 # Media note:
 # Heroku filesystem is ephemeral. MEDIA_* is fine locally,
-# but you'll want Cloudinary/S3 (or static seed images) for staging.
+# but use Cloudinary/S3 (or static seed images) for staging uploads.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -215,7 +205,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ---------------------------------------------------------
 # Sites / Auth / Allauth
 # ---------------------------------------------------------
-SITE_ID = 1
+SITE_ID = int(os.environ.get("SITE_ID", "1"))
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -225,11 +215,9 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-# New-style allauth (avoid deprecated settings):
+# Allauth (new-style, avoids deprecated ACCOUNT_EMAIL_REQUIRED)
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
-
-# Staging-friendly default: "mandatory" can be painful unless email is configured
 ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION", "optional")
 
 ACCOUNT_FORMS = {
