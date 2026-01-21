@@ -1,41 +1,59 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-  <section class="shop">
-    <header class="shop-header">
-      <h1>Kimono fabric Jackets</h1>
-      <p>Vintage Japanese textiles, reworked.</p>
-    </header>
+<section class="shop">
+  <header class="shop-header">
+    <h1>Kimono fabric Jackets</h1>
+    <p>Vintage Japanese textiles, reworked.</p>
+  </header>
 
-    <nav class="collections">
-      <a href="{% url 'catalog:product_list' %}" class="{% if not current_collection %}active{% endif %}">All</a>
-      {% for collection in collections %}
-        <a href="?collection={{ collection.slug }}" class="{% if current_collection == collection.slug %}active{% endif %}">{{ collection.name }}</a>
-      {% endfor %}
-    </nav>
+  <nav class="collections">
+    <a href="{% url 'catalog:product_list' %}"
+       class="{% if not current_collection %}active{% endif %}">
+      All
+    </a>
 
-    <div class="product-grid">
-      {% for product in products %}
-        <a class="product-card" href="{% url 'catalog:product_detail' product.slug %}">
-          <div class="product-media">
-            {% with img=product.images.first %}
-              {% if img and img.image %}
-                <img src="{% image.image %}" alt="{{ img.alt_text|default:product.name }}" class="product-image" />
-              {% else %}
-                <div class="product-image placeholder"></div>
-              {% endif %}
-            {% endwith %}
-          </div>
+    {% for collection in collections %}
+      <a href="?collection={{ collection.slug }}"
+         class="{% if current_collection == collection.slug %}active{% endif %}">
+        {{ collection.name }}
+      </a>
+    {% endfor %}
+  </nav>
 
-          <div class="product-meta">
-            <h2 class="product-title">{{ product.name }}</h2>
-            <p class="product-price">£{{ product.price }}</p>
-          </div>
-        </a>
-      {% empty %}
-        <p>No products found.</p>
-      {% endfor %}
-    </div>
-  </section>
+  <div class="product-grid">
+    {% for product in products %}
+      <a class="product-card" href="{% url 'catalog:product_detail' product.slug %}">
+        <div class="product-media">
+          {% with img=product.images.first %}
+            {% if img and img.image %}
+              <img
+                src="{{ img.image.url }}"
+                alt="{{ img.alt_text|default:product.name }}"
+                class="product-image"
+                loading="lazy"
+              />
+            {% else %}
+              <img
+                src="{% static 'logos/anarchy_and_lace_logo_plain_circle.png' %}"
+                alt="{{ product.name }}"
+                class="product-image product-image--fallback"
+                loading="lazy"
+              />
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        <div class="product-meta">
+          <h2 class="product-title">{{ product.name }}</h2>
+          <p class="product-price">£{{ product.price }}</p>
+        </div>
+      </a>
+
+    {% empty %}
+      <p>No products found.</p>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}
