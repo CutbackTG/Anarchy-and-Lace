@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
@@ -14,19 +13,15 @@ from .forms import ProductForm
 @staff_required
 @require_POST
 def product_image_delete(request, product_id, image_id):
-    """
-    Delete a ProductImage and redirect back to the manager product edit page.
-    """
     product = get_object_or_404(Product, pk=product_id)
     image = get_object_or_404(ProductImage, pk=image_id, product=product)
 
     image.delete()
     messages.success(request, "Image deleted.")
-    return redirect(f"/manager/products/{product.id}/edit/")
+    return redirect("manager:product_edit", pk=product.id)
 
 
 class StaffOnlyAuthenticationForm(AuthenticationForm):
-    """Normal username/password form, but only allow staff to authenticate."""
     def confirm_login_allowed(self, user):
         super().confirm_login_allowed(user)
         if not user.is_staff:
@@ -47,11 +42,10 @@ def dashboard(request):
     product_count = Product.objects.count()
     low_stock = Product.objects.filter(stock_qty__lte=2)
 
-    context = {
+    return render(request, "manager/dashboard.html", {
         "product_count": product_count,
         "low_stock": low_stock,
-    }
-    return render(request, "manager/dashboard.html", context)
+    })
 
 
 @staff_required
@@ -63,14 +57,18 @@ def product_list(request):
 @staff_required
 def product_create(request):
     if request.method == "POST":
-        form = ProductForm(request.POST, request.FILES)
+        form = ProductForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("manager:product_list")
+            product = form.save()
+            messages.success(request, "Product created.")
+            return redirect("manager:product_edit", pk=product.id)
     else:
         form = ProductForm()
 
-    return render(request, "manager/product_form.html", {"form": form, "mode": "create"})
+    return render(request, "manager/product_form.html", {
+        "form": form,
+        "mode": "create",
+    })
 
 
 @staff_required
@@ -78,18 +76,27 @@ def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
 
     if request.method == "POST":
-        form = ProductForm(request.POST, request.FILES, instance=product)
+        form = ProductForm(request.POST, instance=product)
+
+        # handle image upload separately
+        if "image" in request.FILES:
+            ProductImage.objects.create(
+                product=product,
+                image=request.FILES["image"]
+            )
+
         if form.is_valid():
             form.save()
-            return redirect("manager:product_list")
+            messages.success(request, "Product updated.")
+            return redirect("manager:product_edit", pk=product.id)
     else:
         form = ProductForm(instance=product)
 
-    return render(
-        request,
-        "manager/product_form.html",
-        {"form": form, "product": product, "mode": "edit"},
-    )
+    return render(request, "manager/product_form.html", {
+        "form": form,
+        "product": product,
+        "mode": "edit",
+    })
 
 
 @staff_required
@@ -98,6 +105,7 @@ def product_delete(request, pk):
 
     if request.method == "POST":
         product.delete()
+        messages.success(request, "Product deleted.")
         return redirect("manager:product_list")
 
     return render(request, "manager/product_confirm_delete.html", {"product": product})
