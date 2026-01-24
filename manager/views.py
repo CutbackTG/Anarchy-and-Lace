@@ -1,29 +1,27 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
+
+from catalog.models import Product, ProductImage
 from .decorators import staff_required
 from .forms import ProductForm
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
-from django.views.decorators.http import require_POST
-from catalog.models import Product, ProductImage
 
 
-@login_required
+@staff_required
 @require_POST
 def product_image_delete(request, product_id, image_id):
-    product = get_object_or_404(Product, id=product_id)
-    img = get_object_or_404(ProductImage, id=image_id, product=product)
+    """
+    Delete a ProductImage and redirect back to the manager product edit page.
+    """
+    product = get_object_or_404(Product, pk=product_id)
+    image = get_object_or_404(ProductImage, pk=image_id, product=product)
 
-    # Optional: simple permission gate (adjust to your rules)
-    if not request.user.is_staff:
-        return HttpResponseForbidden("Not allowed")
-
-    img.delete()
-    messages.success(request, "Image removed.")
+    image.delete()
+    messages.success(request, "Image deleted.")
     return redirect(f"/manager/products/{product.id}/edit/")
 
 
@@ -87,7 +85,11 @@ def product_edit(request, pk):
     else:
         form = ProductForm(instance=product)
 
-    return render(request, "manager/product_form.html", {"form": form, "product": product, "mode": "edit"})
+    return render(
+        request,
+        "manager/product_form.html",
+        {"form": form, "product": product, "mode": "edit"},
+    )
 
 
 @staff_required
