@@ -28,29 +28,40 @@ def _cart_count(cart: dict[str, int]) -> int:
 def cart_view(request):
     cart = _get_cart(request.session)
 
-    product_ids = [int(pid) for pid in cart.keys()] if cart else []
-    products = Product.objects.filter(id__in=product_ids)
+    product_ids: list[int] = []
+    for pid in cart.keys():
+        try:
+            product_ids.append(int(pid))
+        except (TypeError, ValueError):
+            continue
 
-    # Keep stable ordering like the session keys
+    products = Product.objects.filter(id__in=product_ids)
     product_map = {p.id: p for p in products}
 
     items = []
     subtotal = Decimal("0.00")
 
     for pid_str, qty in cart.items():
-        pid = int(pid_str)
+        try:
+            pid = int(pid_str)
+            qty_int = int(qty)
+        except (TypeError, ValueError):
+            continue
+
+        if qty_int <= 0:
+            continue
+
         product = product_map.get(pid)
         if not product:
             continue
 
-        qty = int(qty)
-        line_total = (product.price or Decimal("0.00")) * qty
+        line_total = (product.price or Decimal("0.00")) * qty_int
         subtotal += line_total
 
         items.append(
             {
                 "product": product,
-                "qty": qty,
+                "qty": qty_int,
                 "line_total": line_total,
             }
         )
@@ -75,12 +86,13 @@ def cart_add(request, product_id: int):
 
     messages.success(request, f"Added {product.name} to your cart.")
 
-    # Redirect back to where the user came from (product page), fallback to cart
+    # Keep user on product page if possible
     next_url = request.POST.get("next") or request.META.get("HTTP_REFERER")
     if next_url:
         return redirect(next_url)
 
     return redirect("cart:cart")
+
 
 @require_POST
 def cart_remove(request, product_id: int):
@@ -106,7 +118,7 @@ def cart_set_qty(request, product_id: int):
 
     try:
         qty = int(request.POST.get("qty", "1"))
-    except ValueError:
+    except (TypeError, ValueError):
         qty = 1
 
     if qty <= 0:

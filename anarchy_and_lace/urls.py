@@ -24,6 +24,9 @@ urlpatterns = [
     
     # Cart
     path("cart/", include(("cart.urls", "cart"), namespace="cart")),
+
+    # Payments
+    path("payments/", include(("payments.urls", "payments"), namespace="payments")),
 ]
 
 # Media files (product images etc.) – dev only

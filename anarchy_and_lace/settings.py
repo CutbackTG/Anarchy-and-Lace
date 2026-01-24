@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     "catalog",
     "manager",
     "cart",
+    "payments",  # Added payments app
 ]
 
 
@@ -181,7 +182,6 @@ USE_TZ = True
 # ---------------------------------------------------------
 # Storages
 # ---------------------------------------------------------
-
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -204,7 +204,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # but use Cloudinary/S3 for real uploads.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
 
 
 # ---------------------------------------------------------
@@ -265,7 +264,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # ---------------------------------------------------------
 EMAIL_BACKEND = os.environ.get(
     "DJANGO_EMAIL_BACKEND",
-    "django.core.mail.backends.console.EmailBackend",
+    "django.core.mail.backends.smtp.EmailBackend",
 )
 
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@anarchyandlace.local")
@@ -285,25 +284,5 @@ STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {"class": "logging.StreamHandler"},
-    },
-    "loggers": {
-        # Logs Django 500 errors with tracebacks
-        "django.request": {
-            "handlers": ["console"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-        # Optional: useful during staging debugging
-        "django": {
-            "handlers": ["console"],
-            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
-            "propagate": True,
-        },
-    },
-}
+STRIPE_SHIPPING_RATE_STANDARD = os.environ.get("STRIPE_SHIPPING_RATE_STANDARD", "")
+STRIPE_SHIPPING_RATE_TRACKED24 = os.environ.get("STRIPE_SHIPPING_RATE_TRACKED24", "")

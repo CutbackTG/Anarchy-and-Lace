@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="payment-success">
+  <div class="glass-panel">
+    <h1>Thank you for your purchase!</h1>
+    <p>Your payment was successful. We are processing your order.</p>
+    <a class="button button--gold" href="{% url 'catalog:product_list' %}">Continue Shopping</a>
+  </div>
+</section>
+{% endblock %}
