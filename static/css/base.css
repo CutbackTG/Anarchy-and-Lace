@@ -691,6 +691,10 @@ textarea{
 
 .product-card{
   display: block;
+  width: 100%;
+  max-width: 300px;   /* 👈 controls card size */
+  margin: 0 auto;     /* 👈 centers when only 1 product */
+
   border-radius: var(--radius);
   overflow: hidden;
 
@@ -707,6 +711,7 @@ textarea{
 
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
+
 
 .product-card:hover{
   transform: translateY(-3px);
