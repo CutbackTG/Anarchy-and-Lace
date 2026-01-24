@@ -25,7 +25,7 @@
   --focus: 0 0 0 4px var(--gold-soft);
 
   /* Layout */
-  --header-gap: 5rem; /* fixed header offset */
+  --header-gap: 8.25rem; /* fixed header offset */
   --container-max: 1100px;
 }
 
@@ -494,7 +494,7 @@ textarea{
 }
 
 .hero__panel{
-  margin-top: 10px;
+  margin-top: 40px;
   margin-bottom: clamp(22px, 3vw, 36px);
   padding: clamp(22px, 3vw, 36px);
   border-color: #fcd078;
@@ -762,4 +762,29 @@ textarea{
   opacity: 0.9;
   color: var(--ink-muted);
   font-size: 0.95rem;
+}
+
+/* =========================================================
+   SHOP IMAGE VISIBILITY OVERRIDE (put at very bottom)
+   ========================================================= */
+
+.product-media{
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 280px;          /* ensures a visible box even if aspect-ratio fails */
+  overflow: hidden;
+  position: relative;
+  background: rgb(var(--panel-base) / 6%);
+}
+
+.product-img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none;            /* removes any accidental transforms */
+  position: relative;
+  z-index: 1;
 }
