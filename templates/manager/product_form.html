@@ -26,32 +26,28 @@
       </p>
 
       {% if product %}
-      <div class="mb-4">
-        <label class="form-label">Existing images</label>
+        <div class="mb-4">
+          <label class="form-label">Existing images</label>
 
-        {% for image in product.images.all %}
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-            <img
-              src="{{ image.image.url }}"
-              alt="{{ product.name }}"
-              style="max-width:160px;border-radius:12px;border:1px solid var(--panel-border);"
-            >
+          {% for image in product.images.all %}
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <img
+                src="{{ image.image.url }}"
+                alt="{{ product.name }}"
+                style="max-width:160px;border-radius:12px;border:1px solid var(--panel-border);"
+              />
 
-            <form method="post"
-                  action="{% url 'manager:product_image_delete' product.id image.id %}"
-                  onsubmit="return confirm('Delete this image?');">
-              {% csrf_token %}
-              <button class="button button--danger" type="submit">
-                Delete
-              </button>
-            </form>
-          </div>
-        {% empty %}
-          <p class="small" style="color:var(--ink-muted);">
-            No images uploaded yet.
-          </p>
-        {% endfor %}
-      </div>
+              <form method="post"
+                    action="{% url 'manager:product_image_delete' product.id image.id %}"
+                    onsubmit="return confirm('Delete this image?');">
+                {% csrf_token %}
+                <button class="button button--danger" type="submit">Delete</button>
+              </form>
+            </div>
+          {% empty %}
+            <p class="small" style="color:var(--ink-muted);">No images uploaded yet.</p>
+          {% endfor %}
+        </div>
       {% endif %}
 
       <form method="post" enctype="multipart/form-data" class="auth-form">
@@ -64,29 +60,34 @@
         {% endif %}
 
         {% if product %}
-        <div class="mb-4">
-          <label class="form-label">Add new image</label>
-          <input type="file" name="image" class="form-control">
-        </div>
+          <div class="mb-4">
+            <label class="form-label" for="id_new_image">Add new image</label>
+            <input type="file" name="image" id="id_new_image" class="form-control" accept="image/*">
+            <small class="d-block mt-1" style="color:var(--ink-muted);">
+              This will add a new image to the product gallery.
+            </small>
+          </div>
         {% endif %}
 
         <div class="auth-fields">
           {% for field in form %}
-            <div class="mb-3">
-              <label class="form-label" for="{{ field.id_for_label }}">
-                {{ field.label }}
-              </label>
+            {% if field.name != "image" %}
+              <div class="mb-3">
+                <label class="form-label" for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                </label>
 
-              {{ field }}
+                {{ field }}
 
-              {% if field.help_text %}
-                <small class="d-block mt-1">{{ field.help_text }}</small>
-              {% endif %}
+                {% if field.help_text %}
+                  <small class="d-block mt-1">{{ field.help_text }}</small>
+                {% endif %}
 
-              {% for error in field.errors %}
-                <div class="text-danger small mt-1">{{ error }}</div>
-              {% endfor %}
-            </div>
+                {% for error in field.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
           {% endfor %}
         </div>
 
