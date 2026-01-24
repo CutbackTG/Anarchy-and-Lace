@@ -8,7 +8,7 @@
   --ink-muted: #5f5f5f;
 
   /* Glass system */
-  --panel-base: 255 255 255;
+  --panel-base: 255 255 255;            /* RGB triplet */
   --panel-bg: rgba(255,255,255,0.78);
   --panel-border: rgba(20,20,20,0.10);
 
@@ -25,7 +25,7 @@
   --focus: 0 0 0 4px var(--gold-soft);
 
   /* Layout */
-  --header-gap: 5rem;
+  --header-gap: 5rem;                  /* offset fixed header */
   --container-max: 1100px;
 }
 
@@ -144,7 +144,7 @@ a{
    ========================================================= */
 
 .page{
-  padding-top: 40px;
+  padding-top: var(--header-gap);
   padding-bottom: 64px;
 }
 
@@ -223,24 +223,17 @@ a{
   height: 60px;
   width: auto;
   display: block;
-  content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
+  filter: none;
 }
 
-/* System dark mode */
+/* Logo dark mode handling.
+   Use ONE logo src in HTML (black) and invert in dark mode for reliability. */
 @media (prefers-color-scheme: dark){
-  .brand-logo{
-    content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
-  }
+  .brand-logo{ filter: invert(1) hue-rotate(180deg); }
 }
 
-/* Manual override (JS-driven theme toggle wins) */
-html[data-theme="dark"] .brand-logo{
-  content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
-}
-
-html[data-theme="light"] .brand-logo{
-  content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
-}
+html[data-theme="dark"] .brand-logo{ filter: invert(1) hue-rotate(180deg); }
+html[data-theme="light"] .brand-logo{ filter: none; }
 
 .brand-text{
   display: inline-flex;
@@ -253,24 +246,6 @@ html[data-theme="light"] .brand-logo{
 
 @media (max-width: 480px){
   .brand-text{ display: none; }
-}
-
-/* =========================================================
-   HERO FABRIC GALLERY PANEL
-   ========================================================= */
-
-.hero__panel--gallery{
-  padding: 22px;
-  padding-top: clamp(6px, 1.2vw, 12px);
-  border-color: rgba(200,161,74,0.55);
-}
-
-.fabric-card__img{
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  filter: saturate(1.05) contrast(1.02);
-  gap: 20px;
 }
 
 /* =========================================================
@@ -299,7 +274,6 @@ html[data-theme="light"] .brand-logo{
       rgb(var(--panel-base) / 8%) 45%,
       rgb(var(--panel-base) / 2%) 100%
     );
-
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -584,7 +558,7 @@ textarea{
   opacity: 0.9;
 }
 
-/* Hero / index link hover (gold) */
+/* Hero links */
 .hero .glass-panel a{
   color: var(--ink-muted);
   transition: color 0.2s ease, transform 0.2s ease;
@@ -594,12 +568,12 @@ textarea{
   color: var(--gold);
 }
 
-.hero .glass-panel a:hover::after{
-  transform: translateX(2px);
-}
-
 .hero .glass-panel a::after{
   transition: transform 0.2s ease;
+}
+
+.hero .glass-panel a:hover::after{
+  transform: translateX(2px);
 }
 
 .hero .glass-panel:hover .hero-card__title{
@@ -638,7 +612,7 @@ textarea{
 
 /* =========================================================
    SHOP (single, consistent block)
-   Matches template classes: .product-grid .product-card .product-media .product-img
+   Matches template classes: .product-card .product-media .product-img
    ========================================================= */
 
 .shop{
@@ -677,11 +651,10 @@ textarea{
 
 .collections a.active{
   border-color: var(--gold-soft);
-  background: color-mix(in srgb, var(--gold) 18%, transparent);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
   color: var(--ink);
 }
 
-/* Grid */
 .product-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -690,25 +663,23 @@ textarea{
   align-items: stretch;
 }
 
-/* Card */
 .product-card{
   display: block;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--panel-border);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 
   background:
-    radial-gradient(
-      120% 120% at 50% 35%,
+    radial-gradient(120% 120% at 50% 30%,
       rgb(var(--panel-base) / 14%) 0%,
       rgb(var(--panel-base) / 8%) 55%,
-      rgb(var(--panel-base) / 3%) 100%
-    );
+      rgb(var(--panel-base) / 3%) 100%);
 
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
 .product-card:hover{
@@ -717,24 +688,24 @@ textarea{
   box-shadow: 0 22px 60px rgba(0,0,0,0.25);
 }
 
-/* Media frame: gives the image a guaranteed box */
+/* Guaranteed image box */
 .product-media{
   width: 100%;
   aspect-ratio: 4 / 5;
+  min-height: 240px;
   overflow: hidden;
   background: rgb(var(--panel-base) / 6%);
   border-bottom: 1px solid var(--panel-border);
-  position: relative;
 }
 
-/* The actual image (template uses .product-img) */
+/* Template uses .product-img */
 .product-img{
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
-  filter: saturate(1.05) contrast(1.03);
   transform: scale(1.001);
+  filter: saturate(1.05) contrast(1.03);
   transition: transform 220ms ease, filter 220ms ease;
 }
 
@@ -744,8 +715,7 @@ textarea{
 }
 
 .img-placeholder{
-  position: absolute;
-  inset: 0;
+  height: 100%;
   display: grid;
   place-items: center;
   color: var(--ink-muted);
