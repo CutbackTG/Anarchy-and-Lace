@@ -74,8 +74,13 @@ def cart_add(request, product_id: int):
     request.session.modified = True
 
     messages.success(request, f"Added {product.name} to your cart.")
-    return redirect("cart:cart")
 
+    # Redirect back to where the user came from (product page), fallback to cart
+    next_url = request.POST.get("next") or request.META.get("HTTP_REFERER")
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("cart:cart")
 
 @require_POST
 def cart_remove(request, product_id: int):
