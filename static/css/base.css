@@ -139,6 +139,57 @@ a{
   text-decoration: none;
 }
 
+/* =========================
+   DJANGO MESSAGES
+   ========================= */
+
+.messages{
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.message{
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gold-soft);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+}
+
+/* Success → gold instead of green */
+.message.success{
+  border-color: var(--gold-soft);
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+  color: var(--ink);
+}
+
+/* Error still red */
+.message.error{
+  border-color: rgba(180,50,50,0.4);
+  background: rgba(180,50,50,0.15);
+  color: var(--ink);
+}
+
+/* Info / warning fallback */
+.message.info,
+.message.warning{
+  border-color: var(--panel-border);
+  background: var(--panel-bg);
+}
+
+.message{
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.message-hide{
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+
 /* =========================================================
    LAYOUT HELPERS
    ========================================================= */

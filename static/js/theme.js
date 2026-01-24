@@ -38,3 +38,19 @@
 
   document.addEventListener("DOMContentLoaded", init);
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const messages = document.querySelectorAll(".message");
+
+  if (!messages.length) return;
+
+  setTimeout(() => {
+    messages.forEach(msg => {
+      msg.classList.add("message-hide");
+
+      setTimeout(() => {
+        msg.remove();
+      }, 400);
+    });
+  }, 3000);
+});
