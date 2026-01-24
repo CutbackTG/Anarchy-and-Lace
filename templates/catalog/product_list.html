@@ -22,6 +22,7 @@
             {% with img=product.images.all|first %}
               {% if img and img.image %}
                 <img src="{{ img.image.url }}" alt="{{ product.name }}" class="product-img" />
+                <small style="display:block; padding:6px 10px; color:#666; word-break:break-all;">{{ img.image.url }}</small>
               {% else %}
                 <div class="img-placeholder">No image yet</div>
               {% endif %}
