@@ -25,7 +25,7 @@
   --focus: 0 0 0 4px var(--gold-soft);
 
   /* Layout */
-  --header-gap: 8.25rem; /* fixed header offset */
+  --header-gap: 6.25rem; /* fixed header offset */
   --container-max: 1100px;
 }
 
@@ -494,7 +494,7 @@ textarea{
 }
 
 .hero__panel{
-  margin-top: 40px;
+  margin-top: 10px;
   margin-bottom: clamp(22px, 3vw, 36px);
   padding: clamp(22px, 3vw, 36px);
   border-color: #fcd078;
