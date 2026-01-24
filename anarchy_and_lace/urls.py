@@ -27,6 +27,10 @@ urlpatterns = [
 
     # Payments
     path("payments/", include(("payments.urls", "payments"), namespace="payments")),
+
+    # Orders
+    path("orders/", include("orders.urls")),
+
 ]
 
 # Media files (product images etc.) – dev only
