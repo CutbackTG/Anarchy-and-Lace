@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/base.css' %}" />
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,6 @@
     {% endblock %}
 
     {% block extra_meta %}
-
     {% endblock %}
 
     {% block corecss %}
@@ -23,7 +22,6 @@
     {% endblock %}
 
     {% block extra_css %}
-
     {% endblock %}
 
     {% block corejs %}
@@ -31,12 +29,10 @@
     {% endblock %}
 
     {% block extra_js %}
-
     {% endblock %}
 
     <title>
       Anarchy &amp; Lace{% block extra_title %}
-
       {% endblock %}
     </title>
   </head>
@@ -45,10 +41,10 @@
     <header class="topbar fixed-top">
       <div class="container d-flex justify-content-between align-items-center py-3">
         <a href="{% url 'home:home' %}" class="brand text-decoration-none">
-          <img class="brand-logo" src="{% static 'logos/anarchy_and_lace_logo_plain_black.png' %}" alt="Anarchy &amp; Lace" />
+          <img class="brand-logo" src="{% static 'logos/anarchy_and_lace_logo_plain_black.png' %}" alt="Anarchy &amp; Lace">
 
           <span class="brand-text">
-            <span class="brand-mark">Anarchy</span>
+            <span class="brand-mark">Anarchy </span>
             <span class="brand-amp">&amp;</span>
             <span class="brand-mark">Lace</span>
           </span>
@@ -80,20 +76,18 @@
     </header>
 
     {% if messages %}
-      <div class="shell" style="padding-top: 12px;">
+      <div class="container message-container mt-5 pt-4">
         {% for message in messages %}
-          <div class="glass-panel" style="padding: 12px 14px; margin-bottom: 10px;">{{ message }}</div>
+          <div class="alert alert-{{ message.tags }} glass-panel" role="alert">{{ message }}</div>
         {% endfor %}
       </div>
     {% endif %}
 
     {% block page_header %}
-
     {% endblock %}
 
     <main class="container page">
       {% block content %}
-
       {% endblock %}
     </main>
 
