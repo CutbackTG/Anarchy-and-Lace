@@ -3,17 +3,19 @@
 
 {% block content %}
   <section class="shop">
-    <header class="shop-header">
-      <h1>Kimono fabric Jackets</h1>
-      <p>Vintage Japanese textiles, reworked.</p>
-    </header>
+    <div class="shop-top glass-panel">
+      <header class="shop-header">
+        <h1>Kimono fabric Jackets</h1>
+        <p>Vintage Japanese textiles, reworked.</p>
+      </header>
 
-    <nav class="collections">
-      <a href="{% url 'catalog:product_list' %}" class="{% if not current_collection %}active{% endif %}">All</a>
-      {% for collection in collections %}
-        <a href="?collection={{ collection.slug }}" class="{% if current_collection == collection.slug %}active{% endif %}">{{ collection.name }}</a>
-      {% endfor %}
-    </nav>
+      <nav class="collections">
+        <a href="{% url 'catalog:product_list' %}" class="{% if not current_collection %}active{% endif %}">All</a>
+        {% for collection in collections %}
+          <a href="?collection={{ collection.slug }}" class="{% if current_collection == collection.slug %}active{% endif %}">{{ collection.name }}</a>
+        {% endfor %}
+      </nav>
+    </div>
 
     <div class="product-grid">
       {% for product in products %}
