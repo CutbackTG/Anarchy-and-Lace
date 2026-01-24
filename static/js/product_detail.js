@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", (e) => {
 
-    /* Handle thumbnail clicks */
+    /* Thumbnail switching */
     const thumb = e.target.closest(".pd-thumb");
     if (thumb) {
       const src = thumb.getAttribute("data-src");
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* Handle Fit / Fill / Zoom buttons */
+    /* Fit / Fill buttons */
     const btn = e.target.closest(".pd-viewerbtn");
     if (!btn) return;
 
@@ -20,15 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewer = document.querySelector(".pd-main");
     if (!viewer) return;
 
-    // Remove existing modes
-    viewer.classList.remove("is-fill", "is-zoom");
+    // Reset state
+    viewer.classList.remove("is-fill");
 
-    // Apply selected mode
+    // Apply mode
     if (mode === "fill") viewer.classList.add("is-fill");
-    if (mode === "zoom") viewer.classList.add("is-zoom");
 
-    // Update active button state
-    document.querySelectorAll(".pd-viewerbtn").forEach(b => b.classList.remove("is-active"));
+    // Active button styling
+    document.querySelectorAll(".pd-viewerbtn").forEach(b =>
+      b.classList.remove("is-active")
+    );
     btn.classList.add("is-active");
 
   });

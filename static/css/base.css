@@ -883,22 +883,6 @@ textarea{
   padding: 0;
 }
 
-/* Mode: ZOOM (contain, larger, pan via scroll) */
-.pd-main.is-zoom{
-  overflow: auto;            /* allows panning */
-  cursor: zoom-in;
-}
-
-.pd-main.is-zoom .pd-main-img{
-  width: auto;
-  height: auto;
-  max-width: none;
-  max-height: none;
-  padding: 18px;
-  transform: scale(1.6);     /* zoom level */
-  transform-origin: center;
-}
-
 /* Placeholder */
 .pd-main-placeholder{
   color: var(--ink-muted);
