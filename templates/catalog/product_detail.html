@@ -5,7 +5,16 @@
 <section class="pd">
   {# Amazon-style gallery #}
   <div class="pd-gallery glass-panel">
-    <div class="pd-main">
+
+    {# Viewer controls #}
+    <div class="pd-viewerbar" aria-label="Image view controls">
+      <button type="button" class="pd-viewerbtn is-active" data-mode="fit">Fit</button>
+      <button type="button" class="pd-viewerbtn" data-mode="fill">Fill</button>
+      <button type="button" class="pd-viewerbtn" data-mode="zoom">Zoom</button>
+    </div>
+
+    {# Main viewer (default is FIT, so no classes needed) #}
+    <div class="pd-main" aria-label="Main product image viewer">
       {% with first=product.images.first %}
         {% if first %}
           <img
@@ -14,14 +23,15 @@
             src="{{ first.image.url }}"
             alt="{{ product.name }}"
             loading="eager"
-          >
+          />
         {% else %}
           <div class="pd-main-placeholder">No image yet</div>
         {% endif %}
       {% endwith %}
     </div>
 
-    {% if product.images.exists %}
+    {# Thumbnails #}
+    {% if product.images.count %}
       <div class="pd-thumbs" aria-label="Product image thumbnails">
         {% for img in product.images.all %}
           <button
@@ -34,11 +44,12 @@
               src="{{ img.image.url }}"
               alt="{{ product.name }} thumbnail {{ forloop.counter }}"
               loading="lazy"
-            >
+            />
           </button>
         {% endfor %}
       </div>
     {% endif %}
+
   </div>
 
   {# Product info #}
@@ -67,5 +78,6 @@
   </div>
 </section>
 
+{# Keep JS at end so DOM exists before it runs #}
 <script src="{% static 'js/product_detail.js' %}"></script>
 {% endblock %}
