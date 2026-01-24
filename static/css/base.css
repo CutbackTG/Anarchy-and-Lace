@@ -120,6 +120,46 @@ textarea:focus{
 }
 
 /* =========================================================
+   FLASH MESSAGES (always visible under fixed navbar)
+   ========================================================= */
+
+.flash-stack{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(var(--header-gap) + 10px); /* sits just below navbar */
+  width: min(900px, calc(100% - 28px));
+  z-index: 2000; /* above navbar + panels */
+  display: grid;
+  gap: 10px;
+  pointer-events: none; /* clicks pass through background */
+}
+
+.flash{
+  pointer-events: auto; /* but the toast itself can be clicked if needed */
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--gold) 35%, var(--panel-border));
+  background: color-mix(in srgb, var(--panel-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Optional: different tones by tag */
+.flash--error,
+.flash--danger{
+  color: #b44545;
+  border-color: rgba(180, 69, 69, 0.35);
+}
+
+.flash--success{
+  color: var(--gold); /* keep success as gold, per your request */
+}
+
+
+/* =========================================================
    TYPOGRAPHY
    ========================================================= */
 

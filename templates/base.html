@@ -79,13 +79,15 @@
       <div class="kintsugi-line"></div>
     </header>
 
-    {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-          <div class="message {{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-      </div>
-    {% endif %}
+    <div class="flash-stack" aria-live="polite" aria-atomic="true">
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
 
     {% block page_header %}
 
