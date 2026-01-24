@@ -7,8 +7,7 @@
   --ink: #141414;
   --ink-muted: #5f5f5f;
 
-  /* Glass system:
-     --panel-base is RGB triplet used with alpha at point of use */
+  /* Glass system */
   --panel-base: 255 255 255;
   --panel-bg: rgba(255,255,255,0.78);
   --panel-border: rgba(20,20,20,0.10);
@@ -26,7 +25,7 @@
   --focus: 0 0 0 4px var(--gold-soft);
 
   /* Layout */
-  --header-gap: 5rem; /* used to offset fixed header */
+  --header-gap: 5rem;
   --container-max: 1100px;
 }
 
@@ -94,22 +93,16 @@ html[data-theme="dark"]{
 html, body{ min-height: 100%; }
 
 html{
+  min-height: 100%;
   background:
     linear-gradient(var(--bg-overlay), var(--bg-overlay)),
     var(--bg-image) center / cover no-repeat fixed;
-  background-color: var(--bg-overlay); /* fallback */
 }
 
 body{
-  margin: 0;
-  min-height: 100vh;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: var(--ink);
-  padding-top: var(--header-gap);
-
-  background: transparent; /* let html paint the full page */
+  min-height: 100%;
+  background: transparent;
 }
-
 
 /* Reduce jank on mobile */
 @media (max-width: 768px){
@@ -155,8 +148,6 @@ a{
   padding-bottom: 64px;
 }
 
-
-/* For any non-bootstrap wrapper if needed */
 .shell{
   width: min(var(--container-max), calc(100% - 48px));
   margin-left: auto;
@@ -171,74 +162,6 @@ a{
   background: rgba(255,255,255,0.01);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--panel-border);
-}
-
-.brand{
-  font-weight: 600;
-  letter-spacing: 0.2px;
-}
-
-.brand-amp{
-  color: var(--gold);
-  margin: 0 4px;
-}
-
-/* =========================================================
-   BRAND / LOGO
-   ========================================================= */
-
-.brand{
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.brand-logo{
-  height: 60px;            /* ideal for nav */
-  width: auto;
-  display: block;
-}
-
-/* =========================================================
-   LOGO THEME SWAP
-   ========================================================= */
-
-/* Default: light theme uses dark logo */
-.brand-logo{
-  content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
-}
-
-/* System dark mode */
-@media (prefers-color-scheme: dark){
-  .brand-logo{
-    content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
-  }
-}
-
-/* Manual override (JS-driven theme toggle wins) */
-html[data-theme="dark"] .brand-logo{
-  content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
-}
-
-html[data-theme="light"] .brand-logo{
-  content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
-}
-
-
-.brand-text{
-  display: inline-flex;
-  align-items: center;
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-  font-size: x-large;
-  letter-spacing: 0.2px;
-}
-
-@media (max-width: 480px){
-  /* Optional: hide text on very small screens */
-  .brand-text{
-    display: none;
-  }
 }
 
 .nav-link{
@@ -280,6 +203,59 @@ html[data-theme="light"] .brand-logo{
 }
 
 /* =========================================================
+   BRAND / LOGO
+   ========================================================= */
+
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.brand-amp{
+  color: var(--gold);
+  margin: 0 4px;
+}
+
+.brand-logo{
+  height: 60px;
+  width: auto;
+  display: block;
+  content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
+}
+
+/* System dark mode */
+@media (prefers-color-scheme: dark){
+  .brand-logo{
+    content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
+  }
+}
+
+/* Manual override (JS-driven theme toggle wins) */
+html[data-theme="dark"] .brand-logo{
+  content: url("/static/logos/anarchy_and_lace_logo_plain_white.png");
+}
+
+html[data-theme="light"] .brand-logo{
+  content: url("/static/logos/anarchy_and_lace_logo_plain_black.png");
+}
+
+.brand-text{
+  display: inline-flex;
+  align-items: center;
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  font-size: x-large;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 480px){
+  .brand-text{ display: none; }
+}
+
+/* =========================================================
    HERO FABRIC GALLERY PANEL
    ========================================================= */
 
@@ -316,7 +292,6 @@ html[data-theme="light"] .brand-logo{
    ========================================================= */
 
 .glass-panel{
-  /* Edge-fade glass */
   background:
     radial-gradient(
       120% 120% at 50% 40%,
@@ -331,7 +306,6 @@ html[data-theme="light"] .brand-logo{
   backdrop-filter: blur(12px);
   padding: 22px;
 }
-
 
 /* Buttons */
 .button{
@@ -443,7 +417,7 @@ textarea{
 .auth-panel{
   width: 100%;
   max-width: 560px;
-  padding: 0; /* auth-inner controls spacing */
+  padding: 0;
 }
 
 .auth-inner{
@@ -517,7 +491,6 @@ textarea{
   padding-top: clamp(6px, 1.2vw, 12px);
 }
 
-/* Large hero panel */
 .hero__panel{
   margin-top: 10px;
   margin-bottom: clamp(22px, 3vw, 36px);
@@ -525,7 +498,6 @@ textarea{
   border-color: #fcd078;
 }
 
-/* Badge row */
 .hero__top{
   display: flex;
   align-items: center;
@@ -539,7 +511,6 @@ textarea{
   opacity: 0.9;
 }
 
-/* Title: tighter + premium */
 .hero__title{
   font-size: clamp(34px, 5.2vw, 56px);
   letter-spacing: -0.02em;
@@ -566,7 +537,6 @@ textarea{
   z-index: -1;
 }
 
-/* Lead */
 .hero__lead{
   font-size: clamp(15px, 2vw, 18px);
   max-width: 72ch;
@@ -574,7 +544,6 @@ textarea{
   opacity: 0.92;
 }
 
-/* CTA row */
 .hero__actions{
   display: flex;
   gap: 12px;
@@ -582,7 +551,6 @@ textarea{
   margin-bottom: 18px;
 }
 
-/* Card grid */
 .hero__grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -590,7 +558,6 @@ textarea{
   align-items: stretch;
 }
 
-/* Cards */
 .hero-card{
   padding: 20px;
   border-color: #fcd078;
@@ -617,27 +584,20 @@ textarea{
   opacity: 0.9;
 }
 
-/* =========================================================
-   HERO / INDEX LINK HOVER (GOLD)
-   ========================================================= */
-
-/* Base state */
+/* Hero / index link hover (gold) */
 .hero .glass-panel a{
   color: var(--ink-muted);
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* Hover state */
 .hero .glass-panel a:hover{
   color: var(--gold);
 }
 
-/* Optional: subtle arrow motion (feels premium) */
 .hero .glass-panel a:hover::after{
   transform: translateX(2px);
 }
 
-/* Ensure arrow transitions nicely */
 .hero .glass-panel a::after{
   transition: transform 0.2s ease;
 }
@@ -646,16 +606,10 @@ textarea{
   color: var(--gold);
 }
 
-
-/* =========================================================
-   HERO RESPONSIVE
-   ========================================================= */
-
 @media (max-width: 900px){
   .hero__grid{ grid-template-columns: 1fr; }
 }
 
-/* Footer fineprint */
 .hero__footer{
   margin-top: 18px;
 }
@@ -670,9 +624,7 @@ textarea{
   padding: 12px 2px 0;
 }
 
-.hero__dot{
-  opacity: 0.6;
-}
+.hero__dot{ opacity: 0.6; }
 
 /* =========================================================
    CONTACT PAGE
@@ -685,7 +637,8 @@ textarea{
 }
 
 /* =========================================================
-   SHOP PAGE (DEDUPED + MATCHES TEMPLATE CLASSES)
+   SHOP (single, consistent block)
+   Matches template classes: .product-grid .product-card .product-media .product-img
    ========================================================= */
 
 .shop{
@@ -702,7 +655,7 @@ textarea{
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 10px 0 16px;
+  margin: 12px 0 16px;
 }
 
 .collections a{
@@ -713,7 +666,7 @@ textarea{
   border: 1px solid var(--panel-border);
   background: rgb(var(--panel-base) / 10%);
   color: var(--ink-muted);
-  transition: border-color 160ms ease, transform 160ms ease, color 160ms ease;
+  transition: border-color 160ms ease, transform 160ms ease, color 160ms ease, background 160ms ease;
 }
 
 .collections a:hover{
@@ -728,145 +681,34 @@ textarea{
   color: var(--ink);
 }
 
-.product-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-  padding: 18px 0;
-}
-
-/* Transparent “glass” product cards */
-.product-card{
-  display: block;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--panel-border);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  /* faint edge-fade glass */
-  background:
-    radial-gradient(
-      120% 120% at 50% 40%,
-      rgb(var(--panel-base) / 12%) 5%,
-      rgb(var(--panel-base) / 8%) 45%,
-      rgb(var(--panel-base) / 2%) 100%
-    );
-
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-}
-
-.product-card:hover{
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--gold) 28%, var(--panel-border));
-  box-shadow: 0 26px 70px rgba(0,0,0,0.25);
-}
-
-/* image frame */
-.product-media{
-  aspect-ratio: 4 / 5;
-  width: 100%;
-  overflow: hidden;
-  background: rgb(var(--panel-base) / 6%);
-  border-bottom: 1px solid var(--panel-border);
-}
-
-.product-image{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: saturate(1.05) contrast(1.03);
-  transform: scale(1.001);
-  transition: transform 220ms ease, filter 220ms ease;
-}
-
-.product-card:hover .product-image{
-  transform: scale(1.03);
-  filter: saturate(1.08) contrast(1.05);
-}
-
-/* fallback logo should feel intentional, not “missing file” */
-.product-image--fallback{
-  object-fit: contain;
-  padding: 22px;
-  opacity: 0.85;
-  filter: none;
-}
-
-.product-meta{
-  padding: 14px 14px 16px;
-}
-
-.product-title{
-  margin: 0 0 8px;
-  font-size: 1.05rem;
-  letter-spacing: 0.2px;
-  color: var(--ink);
-}
-
-.product-price{
-  margin: 0;
-  opacity: 0.9;
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-}
-
-/* =========================
-   SHOP
-   ========================= */
-
-.shop-header{
-  margin-bottom: 1.25rem;
-}
-
-.collections{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 14px 0 10px;
-}
-
-.collections a{
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--panel-border);
-  background: rgb(var(--panel-base) / 10%);
-  color: var(--ink-muted);
-}
-
-.collections a.active,
-.collections a:hover{
-  border-color: var(--gold-soft);
-  background: color-mix(in srgb, var(--gold) 16%, transparent);
-  color: var(--ink);
-}
-
+/* Grid */
 .product-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
   padding: 18px 0 6px;
+  align-items: stretch;
 }
 
+/* Card */
 .product-card{
   display: block;
   border-radius: var(--radius);
   overflow: hidden;
-
-  background:
-    radial-gradient(120% 120% at 50% 30%,
-      rgb(var(--panel-base) / 14%) 0%,
-      rgb(var(--panel-base) / 8%) 55%,
-      rgb(var(--panel-base) / 3%) 100%);
-
   border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: var(--shadow);
 
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  background:
+    radial-gradient(
+      120% 120% at 50% 35%,
+      rgb(var(--panel-base) / 14%) 0%,
+      rgb(var(--panel-base) / 8%) 55%,
+      rgb(var(--panel-base) / 3%) 100%
+    );
+
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .product-card:hover{
@@ -875,22 +717,35 @@ textarea{
   box-shadow: 0 22px 60px rgba(0,0,0,0.25);
 }
 
+/* Media frame: gives the image a guaranteed box */
 .product-media{
+  width: 100%;
   aspect-ratio: 4 / 5;
-  background: rgba(0,0,0,0.14);
   overflow: hidden;
+  background: rgb(var(--panel-base) / 6%);
+  border-bottom: 1px solid var(--panel-border);
+  position: relative;
 }
 
+/* The actual image (template uses .product-img) */
 .product-img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.03);
   transform: scale(1.001);
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.product-card:hover .product-img{
+  transform: scale(1.03);
+  filter: saturate(1.08) contrast(1.05);
 }
 
 .img-placeholder{
-  height: 100%;
+  position: absolute;
+  inset: 0;
   display: grid;
   place-items: center;
   color: var(--ink-muted);
@@ -905,10 +760,12 @@ textarea{
   margin: 0 0 8px;
   font-size: 1.05rem;
   letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 .product-price{
   margin: 0;
   opacity: 0.9;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
 }
-
