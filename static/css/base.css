@@ -793,3 +793,85 @@ textarea{
   position: relative;
   z-index: 1;
 }
+
+/* =========================
+   PRODUCT DETAIL (Amazon-style viewer)
+   ========================= */
+
+.pd{
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 2rem 0;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 900px){
+  .pd{ grid-template-columns: 1fr; }
+}
+
+/* Gallery card */
+.pd-gallery{
+  padding: 18px;
+}
+
+/* Main image viewer */
+.pd-main{
+  width: 100%;
+  aspect-ratio: 1 / 1;       /* Amazon-like square viewer */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  background: rgb(var(--panel-base) / 6%);
+  display: grid;
+  place-items: center;
+}
+
+/* Contain = no cropping, looks like Amazon */
+.pd-main-img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 14px;             /* nice breathing room */
+}
+
+/* Placeholder */
+.pd-main-placeholder{
+  color: var(--ink-muted);
+}
+
+/* Thumbnails row */
+.pd-thumbs{
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 10px;
+}
+
+/* Thumbnail button */
+.pd-thumb{
+  border: 1px solid var(--panel-border);
+  background: rgb(var(--panel-base) / 8%);
+  border-radius: 12px;
+  padding: 6px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.pd-thumb:hover{
+  transform: translateY(-1px);
+  border-color: var(--gold-soft);
+}
+
+.pd-thumb img{
+  width: 100%;
+  height: 62px;
+  object-fit: cover;         /* thumbs can crop, that’s normal */
+  border-radius: 10px;
+  display: block;
+}
