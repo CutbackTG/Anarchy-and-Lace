@@ -25,7 +25,7 @@
           {% endif %}
         </p>
 
-        {# Existing images + delete buttons (outside the main edit form) #}
+        {# Existing images + delete buttons #}
         <div class="mb-4">
           <label class="form-label">Existing images</label>
 
@@ -40,7 +40,7 @@
 
                 <form
                   method="post"
-                  action="{% url 'manager:manager_product_image_delete' product.id image.id %}"
+                  action="{% url 'manager:product_image_delete' product.id image.id %}"
                   onsubmit="return confirm('Delete this image?');"
                 >
                   {% csrf_token %}
@@ -63,7 +63,6 @@
             <div class="alert alert-danger glass-panel">{{ form.non_field_errors }}</div>
           {% endif %}
 
-          <!-- UPLOAD NEW IMAGE -->
           <div class="mb-4">
             <label class="form-label" for="{{ form.image.id_for_label }}">Add new image</label>
             {{ form.image }}
@@ -73,13 +72,11 @@
             {% endfor %}
           </div>
 
-          <!-- REST OF FIELDS -->
           <div class="auth-fields">
             {% for field in form %}
               {% if field.name != 'image' %}
                 <div class="mb-3">
                   <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-
                   {{ field }}
 
                   {% if field.help_text %}
