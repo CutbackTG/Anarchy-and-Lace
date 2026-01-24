@@ -74,6 +74,58 @@
         </button>
       </div>
     </form>
+
+    <!-- REVIEW CTA -->
+    <div style="margin-top:18px;">
+      {% if user.is_authenticated %}
+        <a class="button button--gold" href="{% url 'reviews:review_product' product.id %}">
+          Write / edit review
+        </a>
+      {% else %}
+        <p style="opacity:.85;">
+          <a href="{% url 'account_login' %}">Log in</a> to leave a review.
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- REVIEWS -->
+    <div style="margin-top:24px;">
+      <h3>Reviews</h3>
+
+      {% if product.reviews.all %}
+        <ul style="list-style:none; padding-left:0; margin-top:10px;">
+          {% for r in product.reviews.all %}
+            <li style="padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+
+              <!-- Stars -->
+              <div style="font-size:1.2rem; color:#d4af37; letter-spacing:2px;">
+                {{ "★★★★★"|slice:":r.rating" }}
+                <span style="color:rgba(255,255,255,0.25);">
+                  {{ "★★★★★"|slice:"r.rating:" }}
+                </span>
+              </div>
+
+              <div style="margin-top:4px; font-weight:600;">
+                {{ r.user }}
+              </div>
+
+              {% if r.text %}
+                <div style="margin-top:6px; opacity:.9;">
+                  {{ r.text }}
+                </div>
+              {% endif %}
+
+              <div style="margin-top:4px; font-size:.85rem; opacity:.7;">
+                {{ r.created_at|date:"j M Y" }}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p style="opacity:.8; margin-top:8px;">No reviews yet.</p>
+      {% endif %}
+    </div>
+
   </div>
 </section>
 

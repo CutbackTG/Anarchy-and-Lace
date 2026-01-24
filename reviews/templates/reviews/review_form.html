@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="shop">
+  <div class="glass-panel" style="padding:18px;">
+    <h1>Review: {{ product.name }}</h1>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div style="margin-top:10px;">
+        <label><strong>Rating</strong></label>
+        <div>{{ form.rating }}</div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label><strong>Text (optional)</strong></label>
+        <div>{{ form.text }}</div>
+        <div style="opacity:.75; font-size:.9rem;">Max 300 characters.</div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button class="button button--gold" type="submit">Save review</button>
+        <a class="button" href="{% url 'catalog:product_detail' product.id %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

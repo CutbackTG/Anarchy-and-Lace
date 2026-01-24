@@ -31,6 +31,9 @@ urlpatterns = [
     # Orders
     path("orders/", include("orders.urls")),
 
+    # Reviews
+    path("reviews/", include("reviews.urls")),
+
 ]
 
 # Media files (product images etc.) – dev only
