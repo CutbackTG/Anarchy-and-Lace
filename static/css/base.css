@@ -1031,237 +1031,54 @@ textarea{
   display: block;
 }
 
-/* Magazine style Kimono page */
-/* Magazine page base */
-.mag-page {
-  max-width: 1100px;
+/* =========================================================
+   MAGAZINE: KIMONO HISTORY PAGE
+   ========================================================= */
+
+.mag-page{
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 2.2rem 1.2rem 3rem;
 }
 
-.mag-kicker {
+/* Type */
+.mag-kicker{
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.78rem;
   opacity: 0.75;
   margin: 0 0 0.6rem;
+  color: var(--ink-muted);
 }
 
-.mag-title {
+.mag-title{
   font-size: clamp(2rem, 4vw, 3.2rem);
   line-height: 1.05;
   margin: 0 0 0.8rem;
+  color: var(--ink);
 }
 
-.mag-dek {
-  font-size: 1.05rem;
-  opacity: 0.9;
-  max-width: 60ch;
-}
-
-.mag-meta {
+.mag-meta{
   margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.mag-tag {
+.mag-tag{
   font-size: 0.8rem;
   padding: 0.35rem 0.6rem;
-  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 999px;
-}
-
-/* Hero */
-.mag-hero {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1.6rem;
-  align-items: start;
-  margin-bottom: 2rem;
-}
-
-.mag-hero__image{
-  max-height: 520px;
-  overflow: hidden;
-  border-radius: 22px;
-}
-
-.mag-hero__image img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.mag-hero__image figcaption {
-  font-size: 0.85rem;
-  opacity: 0.75;
-  margin-top: 0.6rem;
-}
-
-/* Two column sections */
-.mag-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1.6rem;
-  align-items: start;
-  margin: 2.2rem 0;
-}
-
-.mag-body h2, .mag-body h3 {
-  margin-top: 0;
-}
-
-.mag-list {
-  padding-left: 1.1rem;
-}
-
-.mag-aside {
-  position: relative;
-}
-
-/* Notes */
-.mag-note {
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 18px;
-  padding: 1rem 1rem;
-  backdrop-filter: blur(6px);
-  margin-bottom: 1.2rem;
-}
-
-.mag-note--cta {
-  position: sticky;
-  top: 1.2rem;
-}
-
-/* Pull quote */
-.mag-quote {
-  margin: 2.4rem 0;
-  padding: 1.6rem 1.2rem;
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,0.18);
-}
-
-.mag-quote blockquote {
-  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
-  line-height: 1.2;
-  margin: 0;
-}
-
-.mag-quote__byline {
-  margin: 0.8rem 0 0;
-  opacity: 0.7;
-  font-size: 0.9rem;
-}
-
-/* Timeline */
-.mag-timeline h2 {
-  margin-bottom: 1rem;
-}
-
-.timeline {
-  display: grid;
-  gap: 1rem;
-}
-
-.timeline__item {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 18px;
-}
-
-.timeline__date {
-  font-weight: 700;
-  opacity: 0.9;
-}
-
-.timeline__content h3 {
-  margin: 0 0 0.35rem;
-}
-
-/* Image strip */
-.mag-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin: 2.2rem 0;
-}
-
-.mag-figure figcaption {
-  font-size: 0.85rem;
-  opacity: 0.75;
-  margin-top: 0.6rem;
-}
-
-/* Image placeholders */
-.img-placeholder {
-  border-radius: 18px;
-  border: 1px dashed rgba(255,255,255,0.28);
-  min-height: 220px;
-  display: grid;
-  place-items: center;
-  opacity: 0.85;
-}
-
-.img-placeholder--tall {
-  min-height: 420px;
-}
-
-/* End section variant */
-.mag-grid--end {
-  margin-top: 2.6rem;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .mag-hero, .mag-grid {
-    grid-template-columns: 1fr;
-  }
-  .timeline__item {
-    grid-template-columns: 1fr;
-  }
-  .mag-strip {
-    grid-template-columns: 1fr;
-  }
-  .mag-note--cta {
-    position: static;
-  }
-}
-
-.mag-hero__text{
-  background:
-    radial-gradient(
-      120% 120% at 50% 40%,
-      rgb(var(--panel-base) / 12%) 5%,
-      rgb(var(--panel-base) / 8%) 45%,
-      rgb(var(--panel-base) / 2%) 100%
-    );
   border: 1px solid var(--panel-border);
-  border-radius: calc(var(--radius) + 2px);
-  padding: 22px;
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  box-shadow: var(--shadow);
-}
-
-.mag-meta .mag-tag{
   background: rgb(var(--panel-base) / 10%);
-  border: 1px solid var(--panel-border);
-  border-radius: 999px;
+  color: var(--ink);
 }
 
+/* =========================================================
+   Shared glass panel base for this page
+   ========================================================= */
 
-/* Glass panel treatment for kimono page content */
-
-.mag-body,
-.mag-note,
-.mag-quote,
-.timeline__item{
+.mag-glass{
   background:
     radial-gradient(
       120% 120% at 50% 40%,
@@ -1271,27 +1088,148 @@ textarea{
     );
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
-  padding: 22px;
+  box-shadow: var(--shadow);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
-  box-shadow: var(--shadow);
 }
 
-/* Pull quote special treatment */
-.mag-quote {
-  text-align: center;
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.mag-hero{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.6rem;
+  align-items: start;
+  margin-bottom: 2rem;
 }
 
-/* Caption chip */
-.mag-figure figcaption{
-  background: rgb(var(--panel-base) / 10%);
+.mag-hero__text{
+  padding: 22px;
+  border-radius: calc(var(--radius) + 2px);
   border: 1px solid var(--panel-border);
-  border-radius: var(--radius-sm);
-  padding: 0.45rem 0.65rem;
-  display: inline-block;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  background:
+    radial-gradient(
+      120% 120% at 50% 40%,
+      rgb(var(--panel-base) / 12%) 5%,
+      rgb(var(--panel-base) / 8%) 45%,
+      rgb(var(--panel-base) / 2%) 100%
+    );
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
 }
+
+.mag-dek{
+  font-size: 1.05rem;
+  opacity: 0.95;
+  max-width: 62ch;
+  color: var(--ink-muted);
+}
+
+/* Now that .mag-dek contains multiple <p> and blockquotes */
+.mag-dek p{
+  margin: 0 0 0.9rem;
+}
+
+.mag-dek p:last-child{
+  margin-bottom: 0;
+}
+
+/* Hero figure */
+.mag-hero__image{
+  margin: 0; /* remove default figure margins */
+}
+
+/* IMPORTANT: clip only the image, not the caption
+   Wrap your img with <div class="mag-hero__frame"> ... </div> */
+.mag-hero__frame{
+  max-height: 520px;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid var(--panel-border);
+  background: rgb(var(--panel-base) / 6%);
+}
+
+.mag-hero__frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mag-hero__image figcaption{
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   TWO-COLUMN SECTIONS
+   ========================================================= */
+
+.mag-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.6rem;
+  align-items: start;
+  margin: 2.2rem 0;
+}
+
+.mag-body,
+.mag-note,
+.mag-quote,
+.timeline__item{
+  padding: 22px;
+  background:
+    radial-gradient(
+      120% 120% at 50% 40%,
+      rgb(var(--panel-base) / 12%) 5%,
+      rgb(var(--panel-base) / 8%) 45%,
+      rgb(var(--panel-base) / 2%) 100%
+    );
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+.mag-body h2,
+.mag-body h3{
+  margin-top: 0;
+}
+
+.mag-body p{
+  max-width: 68ch;
+}
+
+.mag-list{
+  padding-left: 1.1rem;
+  margin: 0.6rem 0 0;
+}
+
+.mag-aside{
+  position: relative;
+}
+
+/* Featured note styling */
+.mag-note--featured{
+  border-left: 3px solid var(--gold);
+  padding-left: 1.4rem;
+}
+
+/* Sticky CTA note */
+.mag-note--cta{
+  position: sticky;
+  top: 1.2rem;
+}
+
+/* =========================================================
+   INLINE QUOTES (small pull cards inside text)
+   ========================================================= */
 
 .mag-quote-inline{
   margin: 1rem 0;
@@ -1310,10 +1248,148 @@ textarea{
   margin-top: 8px;
   font-size: 0.9rem;
   color: var(--ink-muted);
+  line-height: 1.4;
 }
 
 .mag-quote-inline footer span{
   display: block;
   margin-top: 2px;
   opacity: 0.9;
+}
+
+/* =========================================================
+   PULL QUOTE (full-width)
+   ========================================================= */
+
+.mag-quote{
+  margin: 2.4rem 0;
+  text-align: center;
+}
+
+.mag-quote blockquote{
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  line-height: 1.2;
+  margin: 0;
+  color: var(--ink);
+}
+
+.mag-quote__byline{
+  margin: 0.8rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.mag-timeline h2{
+  margin-bottom: 1rem;
+}
+
+.timeline{
+  display: grid;
+  gap: 1rem;
+}
+
+.timeline__item{
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem;
+}
+
+.timeline__date{
+  font-weight: 700;
+  color: var(--ink);
+  opacity: 0.95;
+}
+
+.timeline__content h3{
+  margin: 0 0 0.35rem;
+}
+
+/* =========================================================
+   FIGURES + IMAGE STRIP
+   ========================================================= */
+
+.mag-strip{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2.2rem 0;
+}
+
+/* Avoid collision with the shop .img-placeholder */
+.mag-page .img-placeholder{
+  border-radius: var(--radius);
+  border: 1px dashed color-mix(in srgb, var(--panel-border) 60%, transparent);
+  min-height: 220px;
+  height: auto;
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+  background: rgb(var(--panel-base) / 6%);
+}
+
+.mag-page .img-placeholder--tall{
+  min-height: 420px;
+}
+
+.mag-figure{
+  margin: 0; /* figures can add margin by default in some resets */
+}
+
+.mag-figure img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  border: 1px solid var(--panel-border);
+}
+
+.mag-figure figcaption{
+  margin-top: 0.6rem;
+  background: rgb(var(--panel-base) / 10%);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.65rem;
+  display: inline-block;
+  color: var(--ink-muted);
+  line-height: 1.4;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* End section spacing */
+.mag-grid--end{
+  margin-top: 2.6rem;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px){
+  .mag-hero,
+  .mag-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .timeline__item{
+    grid-template-columns: 1fr;
+  }
+
+  .mag-strip{
+    grid-template-columns: 1fr;
+  }
+
+  .mag-note--cta{
+    position: static;
+  }
+
+  .timeline__item{
+    padding: 18px;
+  }
 }
