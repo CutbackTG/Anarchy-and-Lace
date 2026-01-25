@@ -35,14 +35,14 @@
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
-                  <form method="post" action="{% url 'cart:set_qty' item.product.slug %}" style="display:flex; gap:8px; align-items:center;">
+                  <form method="post" action="{% url 'cart:set_qty' item.product.id %}" style="display:flex; gap:8px; align-items:center;">
                     {% csrf_token %}
                     <label class="small" style="color:var(--ink-muted); margin:0;">Qty</label>
                     <input type="number" name="qty" min="0" max="99" value="{{ item.qty }}" style="width:86px;" />
                     <button class="button" type="submit">Update</button>
                   </form>
 
-                  <form method="post" action="{% url 'cart:remove' item.product.slug %}">
+                  <form method="post" action="{% url 'cart:remove' item.product.id %}">
                     {% csrf_token %}
                     <button class="button button--danger" type="submit">Remove</button>
                   </form>
