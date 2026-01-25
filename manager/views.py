@@ -78,12 +78,15 @@ def product_edit(request, pk):
     if request.method == "POST":
         form = ProductForm(request.POST, instance=product)
 
-        # handle image upload separately
-        if "image" in request.FILES:
-            ProductImage.objects.create(
-                product=product,
-                image=request.FILES["image"]
-            )
+        try:
+            if "image" in request.FILES:
+                ProductImage.objects.create(
+            product=product,
+            image=request.FILES["image"]
+        )
+        except Exception as e:
+            messages.error(request, f"Error uploading image: {str(e)}")
+            return redirect("manager:product_edit", pk=product.pk)
 
         if form.is_valid():
             form.save()
