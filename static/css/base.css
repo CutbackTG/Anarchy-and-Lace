@@ -409,11 +409,11 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
   transform: scale(1.02);
 }
 
-/* Mobile: even smaller */
+/* Mobile */
 @media (max-width: 768px){
   .image_button{
-    width: 112px;
-    height: 96px;
+    width: 300px;
+    height: 150px;
   }
 }
 
