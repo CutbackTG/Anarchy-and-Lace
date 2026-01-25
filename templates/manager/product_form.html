@@ -38,7 +38,7 @@
               />
 
               <form method="post"
-                    action="{% url 'manager:product_image_delete' product.slug image.id %}"
+                    action="{% url 'manager:product_image_delete' product.id image.id %}"
                     onsubmit="return confirm('Delete this image?');">
                 {% csrf_token %}
                 <button class="button button--danger" type="submit">Delete</button>
