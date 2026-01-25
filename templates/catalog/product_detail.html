@@ -2,132 +2,89 @@
 {% load static %}
 
 {% block content %}
-<section class="pd">
-  <div class="pd-gallery glass-panel">
+<section class="product-list">
+  <div class="container">
+    <h1 class="section-title">Our Products</h1>
 
-    <div class="pd-viewerbar" aria-label="Image view controls">
-      <button type="button" class="pd-viewerbtn is-active" data-mode="fit">Fit</button>
-      <button type="button" class="pd-viewerbtn" data-mode="fill">Fill</button>
+    <!-- Filters (Optional) -->
+    <div class="filters">
+      <h4>Filter Products:</h4>
+      <form method="get" action="{% url 'catalog:product_list' %}">
+        <div class="filter-category">
+          <label for="category">Category:</label>
+          <select name="category" id="category">
+            <option value="">All</option>
+            {% for category in categories %}
+              <option value="{{ category.id }}" {% if category.id == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-price">
+          <label for="min_price">Price Range:</label>
+          <input type="number" name="min_price" id="min_price" placeholder="Min" value="{{ request.GET.min_price }}">
+          <input type="number" name="max_price" id="max_price" placeholder="Max" value="{{ request.GET.max_price }}">
+        </div>
+
+        <button type="submit" class="filter-button">Apply Filters</button>
+      </form>
     </div>
 
-    <div class="pd-main" aria-label="Main product image viewer">
-      {% with first=product.images.first %}
-        {% if first %}
-          <img
-            id="pdMainImg"
-            class="pd-main-img"
-            src="{{ first.image.url }}"
-            alt="{{ product.name }}"
-            loading="eager"
-          />
-        {% else %}
-          <div class="pd-main-placeholder">No image yet</div>
-        {% endif %}
-      {% endwith %}
-    </div>
-
-    {% if product.images.count %}
-      <div class="pd-thumbs" aria-label="Product image thumbnails">
-        {% for img in product.images.all %}
-          <button
-            class="pd-thumb"
-            type="button"
-            data-src="{{ img.image.url }}"
-            aria-label="View image {{ forloop.counter }}"
-          >
-            <img
-              src="{{ img.image.url }}"
-              alt="{{ product.name }} thumbnail {{ forloop.counter }}"
-              loading="lazy"
-            />
-          </button>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-  </div>
-
-  <div class="pd-info glass-panel">
-    <h1 class="pd-title">{{ product.name }}</h1>
-    <p class="pd-price">£{{ product.price }}</p>
-
-    {% if product.description %}
-      <p class="pd-desc">{{ product.description }}</p>
-    {% endif %}
-
-    <ul class="pd-meta">
-      {% if product.fabric_origin %}
-        <li><strong>Fabric:</strong> {{ product.fabric_origin }}</li>
-      {% endif %}
-      <li><strong>Condition:</strong> {{ product.get_condition_grade_display }}</li>
-      {% if product.size %}
-        <li><strong>Size:</strong> {{ product.size }}</li>
-      {% endif %}
-    </ul>
-
-    <form method="post" action="{% url 'cart:add' product.id %}">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ request.get_full_path }}">
-      <div class="pd-actions">
-        <button class="button button--gold" type="submit">
-          Add to cart
-        </button>
-      </div>
-    </form>
-
-    <!-- REVIEW CTA -->
-    <div style="margin-top:18px;">
-      {% if user.is_authenticated %}
-        <a class="button button--gold" href="{% url 'reviews:review_product' product.id %}">
-          Write / edit review
-        </a>
-      {% else %}
-        <p style="opacity:.85;">
-          <a href="{% url 'account_login' %}">Log in</a> to leave a review.
-        </p>
-      {% endif %}
-    </div>
-
-    <!-- REVIEWS -->
-    <div style="margin-top:24px;">
-      <h3>Reviews</h3>
-
-      {% if product.reviews.all %}
-        <ul style="list-style:none; padding-left:0; margin-top:10px;">
-          {% for r in product.reviews.all %}
-            <li style="padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-
-              <!-- Stars -->
-              <div style="font-size:1.2rem; color:#d4af37; letter-spacing:2px;">
-                {{ "★★★★★"|slice:":r.rating" }}
-                <span style="color:rgba(255,255,255,0.25);">
-                  {{ "★★★★★"|slice:"r.rating:" }}
-                </span>
+    <!-- Product List -->
+    <div class="product-gallery">
+      {% if products %}
+        <div class="product-items">
+          {% for product in products %}
+            <div class="product-item">
+              <div class="product-image">
+                {% if product.images.first %}
+                  <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                {% else %}
+                  <div class="no-image-placeholder">No image</div>
+                {% endif %}
               </div>
+              <div class="product-info">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-price">£{{ product.price }}</p>
 
-              <div style="margin-top:4px; font-weight:600;">
-                {{ r.user }}
-              </div>
-
-              {% if r.text %}
-                <div style="margin-top:6px; opacity:.9;">
-                  {{ r.text }}
+                <div class="product-condition">
+                  <strong>Condition:</strong> {{ product.get_condition_grade_display }}
                 </div>
-              {% endif %}
 
-              <div style="margin-top:4px; font-size:.85rem; opacity:.7;">
-                {{ r.created_at|date:"j M Y" }}
+                {% if product.description %}
+                  <p class="product-desc">{{ product.description|truncatewords:20 }}</p>
+                {% endif %}
+
+                <div class="product-actions">
+                  <a href="{% url 'catalog:product_detail' product.id %}" class="button button--view">View Details</a>
+                  <form method="post" action="{% url 'cart:add' product.id %}" class="add-to-cart-form">
+                    {% csrf_token %}
+                    <button type="submit" class="button button--add-to-cart">Add to Cart</button>
+                  </form>
+                </div>
               </div>
-            </li>
+            </div>
           {% endfor %}
-        </ul>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          {% if products.has_previous %}
+            <a href="?page=1" class="pagination-link">First</a>
+            <a href="?page={{ products.previous_page_number }}" class="pagination-link">Prev</a>
+          {% endif %}
+          <span class="current-page">Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
+          {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}" class="pagination-link">Next</a>
+            <a href="?page={{ products.paginator.num_pages }}" class="pagination-link">Last</a>
+          {% endif %}
+        </div>
       {% else %}
-        <p style="opacity:.8; margin-top:8px;">No reviews yet.</p>
+        <p>No products found matching your criteria.</p>
       {% endif %}
     </div>
-
   </div>
 </section>
 
-<script src="{% static 'js/product_detail.js' %}"></script>
+<script src="{% static 'js/product_list.js' %}"></script>
 {% endblock %}

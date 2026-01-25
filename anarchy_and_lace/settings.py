@@ -96,7 +96,7 @@ INSTALLED_APPS = [
     "cart",
     "payments",  # Added payments app
     "orders.apps.OrdersConfig",
-    "reviews.apps.ReviewsConfig"
+    "reviews.apps.ReviewsConfig",
 ]
 
 

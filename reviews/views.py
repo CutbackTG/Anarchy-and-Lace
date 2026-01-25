@@ -1,42 +1,22 @@
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.db.models import Exists, OuterRef
-from django.shortcuts import get_object_or_404, redirect, render
-
-from catalog.models import Product
-from orders.models import Order, OrderItem
-from .forms import ReviewForm
+from django.shortcuts import render, get_object_or_404
 from .models import Review
+from catalog.models import Product
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-
-def _user_has_purchased(user, product) -> bool:
-    return OrderItem.objects.filter(
-        order__user=user,
-        order__status=Order.Status.PAID,
-        product=product,
-    ).exists()
-
-
-@login_required
-def create_or_update_review(request, product_id: int):
+def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    reviews = product.reviews.all()
 
-    if not _user_has_purchased(request.user, product):
-        messages.error(request, "You can only review items you’ve purchased.")
-        return redirect("catalog:product_detail", product.id)
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        rating = int(request.POST.get('rating'))
+        Review.objects.create(
+            product=product,
+            user=request.user,
+            text=text,
+            rating=rating
+        )
+        return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
 
-    review = Review.objects.filter(product=product, user=request.user).first()
-
-    if request.method == "POST":
-        form = ReviewForm(request.POST, instance=review)
-        if form.is_valid():
-            r = form.save(commit=False)
-            r.product = product
-            r.user = request.user
-            r.save()
-            messages.success(request, "Review saved. Thank you!")
-            return redirect("catalog:product_detail", product.id)
-    else:
-        form = ReviewForm(instance=review)
-
-    return render(request, "reviews/review_form.html", {"product": product, "form": form, "review": review})
+    return render(request, 'product_detail.html', {'product': product, 'reviews': reviews})

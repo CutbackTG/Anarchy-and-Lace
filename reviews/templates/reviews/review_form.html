@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
 <section class="shop">
   <div class="glass-panel" style="padding:18px;">
@@ -7,17 +8,31 @@
     <form method="post">
       {% csrf_token %}
 
-      <div style="margin-top:10px;">
-        <label><strong>Rating</strong></label>
+      <!-- Rating Field -->
+      <div class="form-group" style="margin-top:10px;">
+        <label for="id_rating"><strong>Rating</strong></label>
         <div>{{ form.rating }}</div>
       </div>
 
-      <div style="margin-top:12px;">
-        <label><strong>Text (optional)</strong></label>
+      <!-- Text Field -->
+      <div class="form-group" style="margin-top:12px;">
+        <label for="id_text"><strong>Text (optional)</strong></label>
         <div>{{ form.text }}</div>
         <div style="opacity:.75; font-size:.9rem;">Max 300 characters.</div>
       </div>
 
+      <!-- Error Messages -->
+      {% if form.errors %}
+        <div class="form-errors" style="color: red; margin-top: 12px;">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Submit Button and Cancel Link -->
       <div style="margin-top:14px;">
         <button class="button button--gold" type="submit">Save review</button>
         <a class="button" href="{% url 'catalog:product_detail' product.id %}">Cancel</a>

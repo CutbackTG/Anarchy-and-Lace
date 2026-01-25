@@ -1,21 +1,13 @@
-from django.conf import settings
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-
+from django.contrib.auth.models import User
+from catalog.models import Product
 
 class Review(models.Model):
-    product = models.ForeignKey("catalog.Product", on_delete=models.CASCADE, related_name="reviews")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reviews")
-
-    rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
-    )
-    text = models.CharField(max_length=300, blank=True)  # limited text entry
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
+    text = models.TextField()
+    rating = models.PositiveIntegerField(default=5)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ("product", "user")  # one review per user per product
-        ordering = ["-created_at"]
-
     def __str__(self):
-        return f"{self.product} - {self.user} ({self.rating})"
+        return f"Review for {self.product.name} by {self.user.username}"
