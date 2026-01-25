@@ -10,22 +10,14 @@ from .models import Review
 
 
 @login_required
-def review_product(request, product_id: int):
-    """
-    Create or edit a review for a product.
+def review_product(request, slug: str):
+    product = get_object_or_404(Product, slug=slug)
 
-    Rules:
-    - User must be logged in
-    - User must have purchased the product
-    - One review per user per product
-    """
-    product = get_object_or_404(Product, id=product_id)
-
-    # Only allow reviews if user bought this product
+    # Only allow reviews if the user bought this product on a PAID order
     has_bought = OrderItem.objects.filter(
         order__user=request.user,
-        order__status__in=["paid", "complete"],
-        product_id=product_id,
+        order__status="paid",
+        product=product,
     ).exists()
 
     if not has_bought:
