@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<article class="mag-page">
+
+  <!-- HERO -->
+  <header class="mag-hero">
+    <div class="mag-hero__text">
+      <p class="mag-kicker">A textile editorial</p>
+      <h1 class="mag-title">A Short History of Kimono Fabric</h1>
+      <p class="mag-dek">
+        From court silk to everyday cotton, kimono textiles carry maps of trade, craft, status, and seasons.
+        This page is built to grow, swap images, and evolve into a living archive for Anarchy & Lace.
+      </p>
+
+      <div class="mag-meta">
+        <span class="mag-tag">Textiles</span>
+        <span class="mag-tag">Japan</span>
+        <span class="mag-tag">Craft</span>
+      </div>
+    </div>
+
+    <figure class="mag-hero__image">
+      <!-- Replace with your hero image -->
+      <!-- <img src="{% static 'img/kimono/hero.jpg' %}" alt="Kimono silk detail"> -->
+      <div class="img-placeholder">
+        <span>Hero image slot (wide)</span>
+      </div>
+      <figcaption>Hero caption goes here. Keep it short, like a magazine.</figcaption>
+    </figure>
+  </header>
+
+  <!-- TWO COLUMN INTRO -->
+  <section class="mag-grid">
+    <div class="mag-body">
+      <h2>Cloth as Language</h2>
+      <p>
+        Kimono fabric is less “material” and more “message”. Motifs can signal the season, the wearer’s age,
+        or a celebration. Even weave and dye method can hint at region and social setting.
+      </p>
+      <p>
+        Historically, textile rules and tastes shifted with politics, trade, and technology, while artisans
+        refined dyeing, resist, embroidery, and weaving into recognisable schools of craft.
+      </p>
+
+      <h3>Key Materials</h3>
+      <ul class="mag-list">
+        <li><strong>Silk</strong> for formal kimono, prized for dye brilliance and drape.</li>
+        <li><strong>Hemp &amp; ramie</strong> for summer wear, breathable with crisp texture.</li>
+        <li><strong>Cotton</strong> for everyday yukata and workwear, especially in warmer months.</li>
+      </ul>
+    </div>
+
+    <aside class="mag-aside">
+      <div class="mag-note">
+        <h3>Collector’s note</h3>
+        <p>
+          A single garment can mix techniques: woven base, resist-dyed patterning, then embroidered accents.
+          That layering is part of the magic.
+        </p>
+      </div>
+
+      <figure class="mag-figure">
+        <!-- <img src="{% static 'img/kimono/detail_1.jpg' %}" alt="Weave detail"> -->
+        <div class="img-placeholder img-placeholder--tall">
+          <span>Image slot (portrait)</span>
+        </div>
+        <figcaption>Detail caption. Eg: “Resist dye reveals crisp edges.”</figcaption>
+      </figure>
+    </aside>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <section class="mag-quote">
+    <blockquote>
+      “In kimono, pattern is never only decoration. It’s timing, place, and intention.”
+    </blockquote>
+    <p class="mag-quote__byline">Anarchy &amp; Lace textile notes</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="mag-timeline">
+    <h2>Timeline: Techniques &amp; Eras</h2>
+
+    <div class="timeline">
+      <div class="timeline__item">
+        <div class="timeline__date">Heian period</div>
+        <div class="timeline__content">
+          <h3>Layered colour and court aesthetics</h3>
+          <p>Layering and colour harmony become a visual culture, influencing textile taste for centuries.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__date">Edo period</div>
+        <div class="timeline__content">
+          <h3>Urban craft, bold pattern, refined restraint</h3>
+          <p>Merchant culture grows. Dyeing and pattern flourish alongside subtle, controlled luxury.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__date">Meiji onward</div>
+        <div class="timeline__content">
+          <h3>Industrial materials meet artisan skill</h3>
+          <p>New dyes and production methods arrive; traditional schools adapt and persist.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE STRIP -->
+  <section class="mag-strip">
+    <figure class="mag-figure">
+      <div class="img-placeholder"><span>Image slot</span></div>
+      <figcaption>Motif close-up</figcaption>
+    </figure>
+    <figure class="mag-figure">
+      <div class="img-placeholder"><span>Image slot</span></div>
+      <figcaption>Weave close-up</figcaption>
+    </figure>
+    <figure class="mag-figure">
+      <div class="img-placeholder"><span>Image slot</span></div>
+      <figcaption>Drape / full panel</figcaption>
+    </figure>
+  </section>
+
+  <!-- FINISHING SECTION -->
+  <section class="mag-grid mag-grid--end">
+    <div class="mag-body">
+      <h2>Why it matters to Anarchy & Lace</h2>
+      <p>
+        When you work with kimono textiles, you’re not just choosing “a nice pattern”.
+        You’re selecting a lineage: fibre, region, technique, and the quiet decisions of hands that knew the loom.
+      </p>
+      <p>
+        This page can evolve into a gallery, a sourcing journal, or a lookbook companion as your collection grows.
+      </p>
+    </div>
+
+    <aside class="mag-aside">
+      <div class="mag-note mag-note--cta">
+        <h3>Image-ready blocks</h3>
+        <p>Add your kimono silk shots into the placeholders when ready. The layout adapts automatically.</p>
+      </div>
+    </aside>
+  </section>
+
+</article>
+{% endblock %}
