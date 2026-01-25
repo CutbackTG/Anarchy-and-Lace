@@ -1,16 +1,15 @@
 from django import forms
 from .models import Review
 
-
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ["rating", "text"]
         widgets = {
-            "rating": forms.RadioSelect(choices=[(i, "★" * i) for i in range(1, 6)]),
-            "text": forms.Textarea(attrs={"rows": 3, "maxlength": 300, "placeholder": "Keep it short and sharp…"}),
+            "text": forms.Textarea(attrs={
+                "rows": 5,
+                "maxlength": 300,
+                "placeholder": "Keep it short and sharp…",
+                "style": "width:100%; border-radius:14px; padding:12px; border:1px solid var(--panel-border);",
+            }),
         }
-
-    def clean_text(self):
-        text = (self.cleaned_data.get("text") or "").strip()
-        return text
