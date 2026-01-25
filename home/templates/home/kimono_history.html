@@ -1,146 +1,162 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-<article class="mag-page">
+  <article class="mag-page">
+    <!-- HERO -->
+    <header class="mag-hero">
+      <div class="mag-hero__text">
+        <p class="mag-kicker">A textile editorial</p>
+        <h1 class="mag-title">A Short History of Kimono Fabric</h1>
+        <p class="mag-dek">Kimono fabric has long been treated as a form of visual poetry. Before clothing was called kimono (着物), garments known as koromo (衣) expressed season, rank, and emotion through colour and pattern. Literature shows that textiles were read as carefully as verse. In The Tale of Genji, clothing is described as a language of feeling:
 
-  <!-- HERO -->
-  <header class="mag-hero">
-    <div class="mag-hero__text">
-      <p class="mag-kicker">A textile editorial</p>
-      <h1 class="mag-title">A Short History of Kimono Fabric</h1>
-      <p class="mag-dek">
-        Kimono textiles are wearable archives: fibre, dye, region, season, and status stitched into one surface.
-        This page is built to grow as you add garments and close-up fabric photography.
-      </p>
+          「女の着たる衣の色合ひ、いと今めかしく、をかし」 “The lady’s robes, in their layered colours, were exquisitely beautiful.” — Genji Monogatari Reference: Murasaki Shikibu, The Tale of Genji
 
-      <div class="mag-meta">
-        <span class="mag-tag">Textiles</span>
-        <span class="mag-tag">Japan</span>
-        <span class="mag-tag">Craft</span>
-      </div>
-    </div>
+          As techniques advanced, fabric became a painted surface. Artisans dyed rivers, clouds, and flowers into silk, echoing the imagery of classical poetry. The Man’yōshū, Japan’s earliest poetry anthology, links cloth directly to nature:
 
-    <figure class="mag-hero__image">
-      <img src="{% static 'img/kimono/kimono_hero.webp' %}" alt="Kimono silk detail">
-      <div class="img-placeholder">
-        <span>Hero image slot (wide)</span>
-      </div>
-      <figcaption>Caption slot: technique, era, or motif note.</figcaption>
-    </figure>
-  </header>
+          「わが衣 手に取り持ちて 春霞」 “Holding my robe in my hands, like spring mist…” — Man’yōshū, poem 91
 
-  <!-- INTRO GRID -->
-  <section class="mag-grid">
-    <div class="mag-body">
-      <h2>Cloth as a social language</h2>
-      <p>
-        In kimono, pattern and technique aren’t just decoration. They can signal season, formality, celebration,
-        region, or even subtle personal taste.
-      </p>
-      <p>
-        Across centuries, changes in trade, technology, and law shaped what could be worn, by whom, and how boldly.
-        The result: an evolving design culture with deep technical roots.
-      </p>
+          Today, kimono fabric endures as wearable literature. Its motifs still speak in inherited symbols: blossoms for renewal, flowing water for continuity, cranes for long life. The cloth remembers what poetry once wrote.</p>
 
-      <h3>Core fibres you’ll see</h3>
-      <ul class="mag-list">
-        <li><strong>Silk</strong> for formal wear, prized for dye brilliance and drape.</li>
-        <li><strong>Hemp / ramie</strong> for summer, crisp and breathable.</li>
-        <li><strong>Cotton</strong> for everyday yukata and practical garments.</li>
-      </ul>
-    </div>
-
-    <aside class="mag-aside">
-      <div class="mag-note">
-        <h3>Collector’s note</h3>
-        <p>
-          Many pieces layer methods: woven base texture, resist-dyed patterning, then embroidery or couching on top.
-          That “stacked craftsmanship” is part of the luxury.
-        </p>
-      </div>
-
-      <figure class="mag-figure">
-        <div class="img-placeholder img-placeholder--tall">
-          <span>Image slot (portrait)</span>
+        <div class="mag-meta">
+          <span class="mag-tag">Textiles</span>
+          <span class="mag-tag">Japan</span>
+          <span class="mag-tag">Craft</span>
         </div>
-        <figcaption>Detail caption slot.</figcaption>
+      </div>
+
+      <figure class="mag-hero__image">
+        <img src="{% static 'img/kimono/kimono_hero.webp' %}" alt="Kimono silk detail" />
+        <div class="img-placeholder">
+          <span>Hero image slot (wide)</span>
+        </div>
+        <figcaption>Caption slot: technique, era, or motif note.</figcaption>
       </figure>
-    </aside>
-  </section>
+    </header>
 
-  <!-- PULL QUOTE -->
-  <section class="mag-quote">
-    <blockquote>
-      “Kimono fabric doesn’t just show taste. It shows time.”
-    </blockquote>
-    <p class="mag-quote__byline">Anarchy &amp; Lace textile notes</p>
-  </section>
+    <!-- INTRO GRID -->
+    <section class="mag-grid">
+      <div class="mag-body">
+        <h2>Cloth as a social language</h2>
+        <p>Kimono fabric was never made as surface decoration alone. It was designed to be read through season, symbol, and craftsmanship. Patterns of water, cloud, and blossom follow the same logic found in classical verse, where nature carries meaning beyond itself.</p>
 
-  <!-- TIMELINE -->
-  <section class="mag-timeline">
-    <h2>Timeline: eras and technique</h2>
+        <h3>Core fibres you’ll see</h3>
+        <ul class="mag-list">
+          <li>
+            <strong>Silk</strong> for formal wear, prized for dye brilliance and drape.
+          </li>
+          <li>
+            <strong>Hemp / ramie</strong> for summer, crisp and breathable.
+          </li>
+          <li>
+            <strong>Cotton</strong> for everyday yukata and practical garments.
+          </li>
+        </ul>
+      </div>
 
-    <div class="timeline">
-      <div class="timeline__item">
-        <div class="timeline__date">Heian period</div>
-        <div class="timeline__content">
-          <h3>Layering, harmony, and court aesthetics</h3>
-          <p>Colour and layering become a refined visual system that echoes through later textile taste.</p>
+      <aside class="mag-aside">
+        <div class="mag-note">
+          <h3>Collector’s note</h3>
+          <p>Sei Shōnagon wrote of garments not for their cost, but for their harmony:
+
+            「すべて衣は色の重なりこそをかしけれ」 “It is the layering of colours in robes that is truly beautiful.” — Makura no Sōshi (The Pillow Book)
+
+            To collect kimono fabric is therefore to collect quiet intention. Subtle dye work, restrained colour, and seasonal motifs were valued more than display. Each bolt preserves an aesthetic code shaped by poetry, ceremony, and daily life.
+
+            What survives today is not fashion, but an inherited visual language.</p>
+        </div>
+
+        <figure class="mag-figure">
+          <div class="img-placeholder img-placeholder--tall">
+            <span>Image slot (portrait)</span>
+          </div>
+          <figcaption>Detail caption slot.</figcaption>
+        </figure>
+      </aside>
+    </section>
+
+    <!-- PULL QUOTE -->
+    <section class="mag-quote">
+      <blockquote>“Kimono fabric doesn’t just show taste. It shows time.”</blockquote>
+      <p class="mag-quote__byline">Anarchy &amp; Lace</p>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="mag-timeline">
+      <h2>Timeline: eras and technique</h2>
+
+      <div class="timeline">
+        <div class="timeline__item">
+          <div class="timeline__date">Heian period (794–1185)</div>
+          <div class="timeline__content">
+            <h3>Layering, harmony, and court aesthetics</h3>
+            <p>Kimono fabric emerged as a language of court life. Colour layering followed precise seasonal rules (kasane no irome), and garments expressed emotion as clearly as poetry. In court literature, fabric is judged for harmony rather than cost:
+
+              「衣の色目、心にくくをかし」 “The harmony of the robe’s colours was subtly and deeply beautiful.” — Genji Monogatari Reference: Murasaki Shikibu, The Tale of Genji
+
+              Silk was not decoration alone. It signalled rank, sensitivity, and cultural refinement.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__date">Edo period (1603–1868)</div>
+          <div class="timeline__content">
+            <h3>Urban craft and controlled luxury</h3>
+            <p>Kimono fabric became a canvas for artisan skill. Dyeing techniques such as yūzen and shibori allowed landscapes, water, and clouds to appear across silk. Sumptuary laws encouraged restraint, leading to quiet luxury and hidden pattern.
+
+              Poetry and cloth shared the same imagery:
+
+              「わが衣 手に取り持ちて 春霞」 “Holding my robe in my hands, like spring mist…” — Man’yōshū, poem 91
+
+              Motifs became visual metaphors: flowing water for continuity, cranes for longevity, blossoms for renewal.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__date">Meiji onward (1868+)</div>
+          <div class="timeline__content">
+            <h3>New dyes, new industry, enduring schools</h3>
+            <p>With the arrival of Western dress, kimono fabric shifted from everyday wear to ceremonial and artistic use. Antique bolts preserved seasonal codes and symbolic patterns as textile heritage. Craft moved from necessity to preservation. What endured was not fashion, but meaning. Each design remained tied to inherited imagery shaped by poetry and tradition.</p>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="timeline__item">
-        <div class="timeline__date">Edo period</div>
-        <div class="timeline__content">
-          <h3>Urban craft and controlled luxury</h3>
-          <p>Merchant culture expands craft. Bold pattern thrives alongside restraint and technical finesse.</p>
+    <!-- IMAGE STRIP -->
+    <section class="mag-strip">
+      <figure class="mag-figure">
+        <div class="img-placeholder">
+          <span>Image slot</span>
         </div>
-      </div>
-
-      <div class="timeline__item">
-        <div class="timeline__date">Meiji onward</div>
-        <div class="timeline__content">
-          <h3>New dyes, new industry, enduring schools</h3>
-          <p>Modernisation introduces new production methods while traditional techniques adapt and persist.</p>
+        <figcaption>Motif close-up</figcaption>
+      </figure>
+      <figure class="mag-figure">
+        <div class="img-placeholder">
+          <span>Image slot</span>
         </div>
+        <figcaption>Weave close-up</figcaption>
+      </figure>
+      <figure class="mag-figure">
+        <div class="img-placeholder">
+          <span>Image slot</span>
+        </div>
+        <figcaption>Drape / full panel</figcaption>
+      </figure>
+    </section>
+
+    <!-- OUTRO -->
+    <section class="mag-grid mag-grid--end">
+      <div class="mag-body">
+        <h2>Why it matters here</h2>
+        <p>For Anarchy &amp; Lace, kimono fabric is both material and story: it lets a garment carry history without shouting. As your collection grows, this page can become a visual archive with technique notes and provenance.</p>
       </div>
-    </div>
-  </section>
 
-  <!-- IMAGE STRIP -->
-  <section class="mag-strip">
-    <figure class="mag-figure">
-      <div class="img-placeholder"><span>Image slot</span></div>
-      <figcaption>Motif close-up</figcaption>
-    </figure>
-    <figure class="mag-figure">
-      <div class="img-placeholder"><span>Image slot</span></div>
-      <figcaption>Weave close-up</figcaption>
-    </figure>
-    <figure class="mag-figure">
-      <div class="img-placeholder"><span>Image slot</span></div>
-      <figcaption>Drape / full panel</figcaption>
-    </figure>
-  </section>
-
-  <!-- OUTRO -->
-  <section class="mag-grid mag-grid--end">
-    <div class="mag-body">
-      <h2>Why it matters here</h2>
-      <p>
-        For Anarchy &amp; Lace, kimono fabric is both material and story: it lets a garment carry history without shouting.
-        As your collection grows, this page can become a visual archive with technique notes and provenance.
-      </p>
-    </div>
-
-    <aside class="mag-aside">
-      <div class="mag-note mag-note--cta">
-        <h3>Built for images</h3>
-        <p>Add your kimono silk shots into the placeholders. The layout adapts automatically.</p>
-      </div>
-    </aside>
-  </section>
-
-</article>
+      <aside class="mag-aside">
+        <div class="mag-note mag-note--cta">
+          <h3>Built for images</h3>
+          <p>Add your kimono silk shots into the placeholders. The layout adapts automatically.</p>
+        </div>
+      </aside>
+    </section>
+  </article>
 {% endblock %}
