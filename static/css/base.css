@@ -1292,3 +1292,28 @@ textarea{
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
+.mag-quote-inline{
+  margin: 1rem 0;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--panel-border);
+  background: rgb(var(--panel-base) / 10%);
+}
+
+.mag-quote-inline p{
+  margin: 0;
+  color: var(--ink);
+}
+
+.mag-quote-inline footer{
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.mag-quote-inline footer span{
+  display: block;
+  margin-top: 2px;
+  opacity: 0.9;
+}
