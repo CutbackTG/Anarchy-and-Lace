@@ -1186,9 +1186,9 @@ textarea{
   background:
     radial-gradient(
       120% 120% at 50% 40%,
-      rgb(var(--panel-base) / 12%) 5%,
-      rgb(var(--panel-base) / 8%) 45%,
-      rgb(var(--panel-base) / 2%) 100%
+      rgb(var(--panel-base) / 18%) 5%,
+      rgb(var(--panel-base) / 14%) 45%,
+      rgb(var(--panel-base) / 8%) 100%
     );
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
