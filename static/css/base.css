@@ -385,6 +385,87 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
   filter: saturate(1.05) contrast(1.02);
 }
 
+.image_button{
+  width: 64px;
+  height: 64px;
+  margin: 10px 0 6px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25),
+              0 4px 10px rgba(0,0,0,0.12);
+
+  opacity: 0.9;
+}
+
+/* Keep it subtle on hover */
+.hero-card:hover .image_button{
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* Mobile: even smaller */
+@media (max-width: 768px){
+  .image_button{
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.image_button{
+  filter: saturate(1.1) contrast(1.05);
+  mix-blend-mode: multiply;
+}
+
+.image_button{
+  width: 64px;
+  height: 64px;
+  margin: 10px 0 6px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25),
+              0 4px 10px rgba(0,0,0,0.12);
+
+  opacity: 0.9;
+
+  /* animation */
+  animation: silkFloat 6s ease-in-out infinite;
+}
+
+/* Subtle hover polish */
+.hero-card:hover .image_button{
+  opacity: 1;
+}
+
+/* Mobile smaller */
+@media (max-width: 768px){
+  .image_button{
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@keyframes silkFloat{
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+
+.hero-card:hover .image_button{
+  animation-play-state: paused;
+}
+
 /* =========================================================
    KINTSUGI LINE
    ========================================================= */
