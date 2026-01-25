@@ -32,7 +32,7 @@ urlpatterns = [
     path("orders/", include("orders.urls")),
 
     # Reviews
-    path("reviews/", include("reviews.urls")),
+    path("reviews/", include("reviews.urls", namespace="reviews")),
 
 ]
 

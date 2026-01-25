@@ -1,22 +1,27 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Review
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+
 from catalog.models import Product
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from .forms import ReviewForm
+from .models import Review
 
-def product_detail(request, product_id):
+
+@login_required
+def review_product(request, product_id: int):
     product = get_object_or_404(Product, id=product_id)
-    reviews = product.reviews.all()
 
-    if request.method == 'POST':
-        text = request.POST.get('text')
-        rating = int(request.POST.get('rating'))
-        Review.objects.create(
-            product=product,
-            user=request.user,
-            text=text,
-            rating=rating
-        )
-        return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
+    # One review per user per product (edit if exists)
+    review = Review.objects.filter(product=product, user=request.user).first()
 
-    return render(request, 'product_detail.html', {'product': product, 'reviews': reviews})
+    if request.method == "POST":
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.product = product
+            obj.user = request.user
+            obj.save()
+            return redirect("catalog:product_detail", slug=product.id)
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, "reviews/review_form.html", {"product": product, "form": form})
