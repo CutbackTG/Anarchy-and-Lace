@@ -273,6 +273,23 @@ a{
   color: var(--ink);
 }
 
+.nav-desktop{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-mobile{
+  display: none;
+  position: relative;
+}
+
+@media (max-width: 900px){
+  .nav-desktop{ display: none; }
+  .nav-mobile{ display: block; }
+}
+
 /* Theme toggle */
 .theme-toggle{
   width: 40px;

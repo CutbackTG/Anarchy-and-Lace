@@ -1,6 +1,4 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/base.css' %}" />
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,10 +41,10 @@
 
   <body>
     <header class="topbar fixed-top">
-      <div class="container d-flex justify-content-between align-items-center py-3">
+      <div class="container d-flex justify-content-between align-items-center py-3 nav-wrap">
+        <!-- Brand -->
         <a href="{% url 'home:home' %}" class="brand text-decoration-none">
           <img class="brand-logo" src="{% static 'logos/anarchy_and_lace_logo_plain_black.png' %}" alt="Anarchy &amp; Lace" />
-
           <span class="brand-text">
             <span class="brand-mark">Anarchy</span>
             <span class="brand-amp">&amp;</span>
@@ -54,31 +52,53 @@
           </span>
         </a>
 
-        <nav class="d-flex gap-2 gap-md-3 align-items-center flex-wrap justify-content-end">
-          <a href="{% url 'catalog:product_list' %}" class="nav-link nav-link--gold">Shop</a>
-          <a href="{% url 'home:kimono_history' %}" class="nav-link nav-link--gold">Kimono Fabric</a>
-          <a href="{% url 'home:contact' %}" class="nav-link nav-link--gold">Contact</a>
+        <!-- Desktop nav -->
+        <div class="nav-desktop">
+          <a class="nav-link" href="{% url 'shop' %}">Shop</a>
+          <a class="nav-link" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
+          <a class="nav-link" href="{% url 'home:contact' %}">Contact</a>
 
           {% if user.is_authenticated %}
-            <a href="{% url 'orders:my_orders' %}"class="nav-link nav-link--gold">My Orders</a>
-          {% endif %}
-
-          {% if request.user.is_authenticated %}
-            <a href="{% url 'cart:cart' %}" class="nav-link nav-link--gold">Cart</a>
-          {% endif %}
-
-          {% if request.user.is_authenticated and perms.catalog.change_product %}
-            <a href="/manager/" class="nav-link nav-link--gold">Manager</a>
-          {% endif %}
-
-          {% if request.user.is_authenticated %}
-            <a href="/accounts/logout/" class="nav-link nav-link--gold">Sign out</a>
+            <a class="nav-link" href="{% url 'orders:my_orders' %}">My Orders</a>
+            <a class="nav-link" href="{% url 'cart:cart_detail' %}">Cart</a>
+            <a class="nav-link" href="{% url 'account_logout' %}">Sign out</a>
           {% else %}
-            <a href="/accounts/login/" class="nav-link nav-link--gold">Sign in</a>
+            <a class="nav-link" href="{% url 'account_login' %}">Sign in</a>
           {% endif %}
 
-          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"><span class="theme-toggle__icon" aria-hidden="true">☾</span></button>
-        </nav>
+          <button class="theme-toggle" type="button" aria-label="Toggle theme"><span class="theme-toggle__icon">☾</span></button>
+        </div>
+
+        <!-- Mobile menu -->
+        <details class="nav-mobile">
+          <summary class="nav-mobile__trigger">
+            <span class="nav-mobile__icon">☰</span>
+            <span class="nav-mobile__label">Menu</span>
+          </summary>
+
+          <div class="nav-mobile__panel glass-panel">
+            <a class="nav-link nav-link--block" href="{% url 'shop' %}">Shop</a>
+            <a class="nav-link nav-link--block" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
+            <a class="nav-link nav-link--block" href="{% url 'home:contact' %}">Contact</a>
+
+            <div class="nav-mobile__divider"></div>
+
+            {% if user.is_authenticated %}
+              <a class="nav-link nav-link--block" href="{% url 'orders:my_orders' %}">My Orders</a>
+              <a class="nav-link nav-link--block" href="{% url 'cart:cart_detail' %}">Cart</a>
+              <a class="nav-link nav-link--block" href="{% url 'account_logout' %}">Sign out</a>
+            {% else %}
+              <a class="nav-link nav-link--block" href="{% url 'account_login' %}">Sign in</a>
+            {% endif %}
+
+            <div class="nav-mobile__divider"></div>
+
+            <button class="theme-toggle nav-mobile__theme" type="button">
+              <span class="theme-toggle__icon">☾</span>
+              <span class="nav-mobile__theme-text">Theme</span>
+            </button>
+          </div>
+        </details>
       </div>
 
       <div class="kintsugi-line"></div>
