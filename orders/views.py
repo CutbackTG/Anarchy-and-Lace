@@ -1,15 +1,20 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from catalog.models import Product
-from .models import Order
+from django.db.models import Prefetch
 
+from .models import Order
+from reviews.models import Review
 
 @login_required
 def my_orders(request):
     orders = (
         Order.objects.filter(user=request.user)
         .order_by("-created_at")
-        .prefetch_related("items")
+        .prefetch_related(
+            "items__product",
+            Prefetch("items__product__reviews", queryset=Review.objects.filter(user=request.user)),
+        )
     )
     return render(request, "orders/my_orders.html", {"orders": orders})
 

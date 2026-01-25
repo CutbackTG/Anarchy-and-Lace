@@ -19,7 +19,7 @@
 
     <div class="product-grid">
       {% for product in products %}
-        <a class="product-card" href="{% url 'catalog:product_detail' product.slug %}">
+        <a class="product-card" href="{% url 'catalog:product_detail' slug=product.slug %}">
           <div class="product-media">
             {% with img=product.images.all|first %}
               {% if img and img.image %}

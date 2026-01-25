@@ -79,7 +79,7 @@ def cart_add(request, product_id: int):
     product = get_object_or_404(Product, id=product_id)
 
     cart = _get_cart(request.session)
-    key = str(product.id)
+    key = str(product.slug)
 
     cart[key] = int(cart.get(key, 0)) + 1
     request.session.modified = True

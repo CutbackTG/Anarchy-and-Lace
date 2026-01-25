@@ -65,7 +65,7 @@
       {% endif %}
     </ul>
 
-    <form method="post" action="{% url 'cart:add' product.id %}">
+    <form method="post" action="{% url 'cart:add' product.slug %}">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.get_full_path }}">
       <div class="pd-actions">
@@ -74,19 +74,6 @@
         </button>
       </div>
     </form>
-
-    <!-- REVIEW CTA -->
-    <div style="margin-top:18px;">
-      {% if user.is_authenticated %}
-        <a class="button button--gold" href="{% url 'reviews:review_product' product.id %}">
-          Write / edit review
-        </a>
-      {% else %}
-        <p style="opacity:.85;">
-          <a href="{% url 'account_login' %}">Log in</a> to leave a review.
-        </p>
-      {% endif %}
-    </div>
 
     <!-- REVIEWS -->
     <div style="margin-top:24px;">

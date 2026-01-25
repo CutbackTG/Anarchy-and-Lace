@@ -18,7 +18,7 @@ def product_image_delete(request, product_id, image_id):
 
     image.delete()
     messages.success(request, "Image deleted.")
-    return redirect("manager:product_edit", pk=product.id)
+    return redirect("manager:product_edit", pk=product.slug)
 
 
 class StaffOnlyAuthenticationForm(AuthenticationForm):
@@ -61,7 +61,7 @@ def product_create(request):
         if form.is_valid():
             product = form.save()
             messages.success(request, "Product created.")
-            return redirect("manager:product_edit", pk=product.id)
+            return redirect("manager:product_edit", pk=product.slug)
     else:
         form = ProductForm()
 
@@ -88,7 +88,7 @@ def product_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Product updated.")
-            return redirect("manager:product_edit", pk=product.id)
+            return redirect("manager:product_edit", pk=product.slug)
     else:
         form = ProductForm(instance=product)
 

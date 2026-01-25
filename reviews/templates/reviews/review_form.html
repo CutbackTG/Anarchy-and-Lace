@@ -35,7 +35,7 @@
       <!-- Submit Button and Cancel Link -->
       <div style="margin-top:14px;">
         <button class="button button--gold" type="submit">Save review</button>
-        <a class="button" href="{% url 'catalog:product_detail' product.id %}">Cancel</a>
+        <a class="button" href="{% url 'catalog:product_detail' slug=product.slug %}">Cancel</a>
       </div>
     </form>
   </div>

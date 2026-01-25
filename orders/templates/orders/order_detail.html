@@ -21,7 +21,7 @@
 
           {% if item.product %}
             <div style="margin-top:8px;">
-              <a class="button" href="{% url 'catalog:product_detail' item.product.id %}">View product</a>
+              <a class="button" href="{% url 'catalog:product_detail' item.product.slug %}">View product</a>
             </div>
           {% endif %}
         </li>
