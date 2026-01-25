@@ -18,7 +18,10 @@
       <div class="glass-panel hero-card">
         <h3 class="hero-card__title">Authentic, Vintage Japanese Kimono Silk</h3>
         <p>Preserving historic beauty and art through fashion</p>
-        <div class="image_button" style="background-image:url('{% static "img/kimono/kimono_button.webp" %}');"></div>
+        <a href="{% url 'home:kimono_history' %}"
+        class="image_button image_button--link"
+        style="background-image:url('{% static "img/kimono/kimono_button.webp" %}');">
+        </a>
         <a class="nav-link hero-card__link" href="{% url 'home:kimono_history' %}">Kimono Fabric →</a>
       </div>
 
