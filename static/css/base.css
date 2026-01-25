@@ -1343,7 +1343,7 @@ textarea{
 
 .mag-figure img{
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   border-radius: 18px;
   border: 1px solid var(--panel-border);
