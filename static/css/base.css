@@ -1145,7 +1145,7 @@ textarea{
 /* IMPORTANT: clip only the image, not the caption
    Wrap your img with <div class="mag-hero__frame"> ... </div> */
 .mag-hero__frame{
-  max-height: 520px;
+  max-height: 880px;
   overflow: hidden;
   border-radius: 22px;
   border: 1px solid var(--panel-border);
@@ -1343,7 +1343,7 @@ textarea{
 
 .mag-figure img{
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
   border-radius: 18px;
   border: 1px solid var(--panel-border);
