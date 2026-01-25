@@ -386,7 +386,7 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
 }
 
 .image_button{
-  width: 112px;
+  width: 196px;
   height: 96px;
   margin: 14px auto 10px;
 
@@ -412,8 +412,8 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
 /* Mobile: even smaller */
 @media (max-width: 768px){
   .image_button{
-    width: 72px;
-    height: 72px;
+    width: 112px;
+    height: 96px;
   }
 }
 
