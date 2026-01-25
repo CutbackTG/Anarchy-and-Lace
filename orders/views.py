@@ -22,3 +22,15 @@ def order_detail(request, order_number: str):
         order_number=order_number,
     )
     return render(request, "orders/order_detail.html", {"order": order})
+
+import logging
+logger = logging.getLogger(__name__)
+
+def product_detail(request, product_slug):
+    try:
+        # Your normal product detail code here
+        product = Product.objects.get(slug=product_slug)
+        return render(request, 'product_detail.html', {'product': product})
+    except Exception as e:
+        logger.exception("Error rendering product detail for %s", product_slug)
+        raise e  # Re-raise the exception after logging
