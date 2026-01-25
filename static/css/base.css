@@ -1242,3 +1242,45 @@ textarea{
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(8px);
 }
+
+/* Glass panel treatment for kimono page content */
+
+.mag-body,
+.mag-note,
+.mag-quote,
+.timeline__item {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-radius: 20px;
+  padding: 1.3rem 1.4rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+/* Slightly softer panels for image captions */
+.mag-figure figcaption {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 0.4rem 0.6rem;
+  display: inline-block;
+}
+
+/* Timeline spacing cleanup */
+.timeline__item {
+  margin-bottom: 1rem;
+}
+
+/* Pull quote special treatment */
+.mag-quote {
+  text-align: center;
+}
+
+/* Dark-mode friendly (if your site uses it) */
+body.dark .mag-body,
+body.dark .mag-note,
+body.dark .mag-quote,
+body.dark .timeline__item {
+  background: rgba(20, 20, 24, 0.55);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
