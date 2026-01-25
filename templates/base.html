@@ -55,11 +55,11 @@
         </a>
 
         <nav class="d-flex gap-2 gap-md-3 align-items-center flex-wrap justify-content-end">
-          <a href="{% url 'catalog:product_list' %}" class="nav-link">Shop</a>
-          <a href="{% url 'home:contact' %}" class="nav-link">Contact</a>
+          <a href="{% url 'catalog:product_list' %}" class="nav-link nav-link--gold">Shop</a>
+          <a href="{% url 'home:contact' %}" class="nav-link nav-link--gold">Contact</a>
 
           {% if user.is_authenticated %}
-            <a href="{% url 'orders:my_orders' %}">My Orders</a>
+            <a href="{% url 'orders:my_orders' %}"class="nav-link nav-link--gold">My Orders</a>
           {% endif %}
 
           {% if request.user.is_authenticated %}

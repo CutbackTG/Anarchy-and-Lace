@@ -288,3 +288,20 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 
 STRIPE_SHIPPING_RATE_STANDARD = os.environ.get("STRIPE_SHIPPING_RATE_STANDARD", "")
 STRIPE_SHIPPING_RATE_TRACKED24 = os.environ.get("STRIPE_SHIPPING_RATE_TRACKED24", "")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+        },
+    },
+}
+
