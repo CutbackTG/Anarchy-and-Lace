@@ -1462,3 +1462,11 @@ textarea{
   justify-content: center;
 }
 
+/* menu alignment fix */
+.nav-desktop {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
