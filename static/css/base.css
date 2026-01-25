@@ -1393,3 +1393,18 @@ textarea{
     padding: 18px;
   }
 }
+
+.mag-outro{
+  max-width: 80ch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px; /* gives breathing room so button sits lower */
+}
+
+.mag-outro-action{
+  margin-top: 1.6rem;
+  display: flex;
+  justify-content: center;
+}
+
