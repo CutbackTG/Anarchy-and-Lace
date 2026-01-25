@@ -1082,6 +1082,15 @@ textarea{
   margin-bottom: 2rem;
 }
 
+.mag-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 22px;
+  max-height: 520px;
+  overflow: hidden;
+}
+
 .mag-hero__image figcaption {
   font-size: 0.85rem;
   opacity: 0.75;
@@ -1218,4 +1227,18 @@ textarea{
   .mag-note--cta {
     position: static;
   }
+}
+
+.mag-hero__text {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.mag-meta .mag-tag {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
 }
