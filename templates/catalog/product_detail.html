@@ -65,7 +65,7 @@
       {% endif %}
     </ul>
 
-    <form method="post" action="{% url 'cart:add' product.slug %}">
+    <form method="post" action="{% url 'cart:add' product.id %}">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.get_full_path }}">
       <div class="pd-actions">
