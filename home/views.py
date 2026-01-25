@@ -25,3 +25,7 @@ def contact(request):
         return redirect("home:contact")
 
     return render(request, "home/contact.html")
+
+def kimono_history(request):
+    """Magazine-style history page for kimono textiles."""
+    return render(request, "home/kimono_history.html")
