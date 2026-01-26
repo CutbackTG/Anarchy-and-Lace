@@ -56,7 +56,7 @@ DEBUG = env_bool("DJANGO_DEBUG", False)
 # Heroku can route via randomized hostnames like:
 # anarchy-and-lace-staging-<hash>.herokuapp.com
 # so we allow the whole herokuapp.com domain in non-debug.
-ALLOWED_HOSTS = ["anarchy-and-lace.herokuapp.com","localhost","127.0.0.1",]
+ALLOWED_HOSTS = ["anarchy-and-lace.herokuapp.com","localhost","127.0.0.1",'anarchy-and-lace-0b8e43b4f722.herokuapp.com']
 ALLOWED_HOSTS += env_list("DJANGO_ALLOWED_HOSTS")
 
 # CSRF trusted origins (recommended for login/forms on custom domains)
