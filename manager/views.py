@@ -41,19 +41,16 @@ def dashboard(request):
     product_count = Product.objects.count()
     low_stock = Product.objects.filter(stock_qty__lte=2)
     order_count = Order.objects.count()
-    pending_orders = Order.objects.filter(status="Pending").order_by("-created_at")[:10]
+    pending_orders = Order.objects.filter(status="Pending")
 
-    return render(
-        request,
-        "manager/dashboard.html",
-        {
-            "product_count": product_count,
-            "low_stock": low_stock,
-            "order_count": order_count,
-            "pending_orders": pending_orders,
-            "active_menu_item": "dashboard",
-        },
-    )
+    return render(request, "manager/dashboard.html", {
+        "product_count": product_count,
+        "low_stock": low_stock,
+        "order_count": order_count,
+        "pending_orders": pending_orders,
+        "active_menu_item": "dashboard",
+    })
+
 
 
 # ----------------------------

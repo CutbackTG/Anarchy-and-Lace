@@ -1,18 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
+
 <section class="glass-panel">
-    <h1>Shop Dashboard</h1>
-    <p>{{ product_count }} products</p>
+    <h1>Manager Dashboard</h1>
+
+    <div class="dashboard-stats">
+        <p><strong>{{ product_count }}</strong> products</p>
+        <p><strong>{{ order_count }}</strong> total orders</p>
+    </div>
 
     {% if low_stock %}
-        <h3>Low stock</h3>
+        <h3>Low stock products</h3>
         <ul>
             {% for product in low_stock %}
-                <li>{{ product.name }} ({{ product.stock_qty }})</li>
+                <li>
+                    {{ product.name }} ({{ product.stock_qty }})
+                    <a href="{% url 'manager:product_edit' product.pk %}">Edit</a>
+                </li>
             {% endfor %}
         </ul>
+    {% else %}
+        <p>All stock levels look healthy.</p>
     {% endif %}
 
-    <a href="{% url 'manager:product_list' %}" class="button">Manage products</a>
+    {% if pending_orders %}
+        <h3>Pending orders</h3>
+        <ul>
+            {% for order in pending_orders %}
+                <li>
+                    Order #{{ order.id }} – {{ order.status }}
+                    <a href="{% url 'manager:order_detail' order.pk %}">View</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No pending orders.</p>
+    {% endif %}
+
+    <div class="dashboard-actions">
+        <a href="{% url 'manager:product_list' %}" class="button">Manage products</a>
+        <a href="{% url 'manager:order_list' %}" class="button">View all orders</a>
+    </div>
 </section>
+
 {% endblock %}
