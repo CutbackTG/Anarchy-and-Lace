@@ -9,7 +9,6 @@
     {% endblock %}
 
     {% block extra_meta %}
-
     {% endblock %}
 
     {% block corecss %}
@@ -21,7 +20,6 @@
     {% endblock %}
 
     {% block extra_css %}
-
     {% endblock %}
 
     {% block corejs %}
@@ -29,12 +27,10 @@
     {% endblock %}
 
     {% block extra_js %}
-
     {% endblock %}
 
     <title>
       Anarchy &amp; Lace{% block extra_title %}
-
       {% endblock %}
     </title>
   </head>
@@ -54,16 +50,16 @@
 
         <!-- Desktop nav -->
         <div class="nav-desktop">
-          <a class="nav-link" href="{% url 'catalog:product_list' %}">Shop</a>
-          <a class="nav-link" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
-          <a class="nav-link" href="{% url 'home:contact' %}">Contact</a>
+          <a class="nav-link {% if active_menu_item == 'product_list' %}active{% endif %}" href="{% url 'catalog:product_list' %}">Shop</a>
+          <a class="nav-link {% if active_menu_item == 'kimono_history' %}active{% endif %}" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
+          <a class="nav-link {% if active_menu_item == 'contact' %}active{% endif %}" href="{% url 'home:contact' %}">Contact</a>
 
           {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'orders:my_orders' %}">My Orders</a>
-            <a class="nav-link" href="{% url 'cart:cart' %}">Cart</a>
+            <a class="nav-link {% if active_menu_item == 'my_orders' %}active{% endif %}" href="{% url 'orders:my_orders' %}">My Orders</a>
+            <a class="nav-link {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart</a>
             <a class="nav-link" href="{% url 'account_logout' %}">Sign out</a>
           {% else %}
-            <a class="nav-link" href="{% url 'account_login' %}">Sign in</a>
+            <a class="nav-link {% if active_menu_item == 'account_login' %}active{% endif %}" href="{% url 'account_login' %}">Sign in</a>
           {% endif %}
         </div>
 
@@ -75,18 +71,18 @@
           </summary>
 
           <div class="nav-mobile__panel glass-panel">
-            <a class="nav-link nav-link--block" href="{% url 'catalog:product_list' %}">Shop</a>
-            <a class="nav-link nav-link--block" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
-            <a class="nav-link nav-link--block" href="{% url 'home:contact' %}">Contact</a>
+            <a class="nav-link nav-link--block {% if active_menu_item == 'product_list' %}active{% endif %}" href="{% url 'catalog:product_list' %}">Shop</a>
+            <a class="nav-link nav-link--block {% if active_menu_item == 'kimono_history' %}active{% endif %}" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
+            <a class="nav-link nav-link--block {% if active_menu_item == 'contact' %}active{% endif %}" href="{% url 'home:contact' %}">Contact</a>
 
             <div class="nav-mobile__divider"></div>
 
             {% if user.is_authenticated %}
-              <a class="nav-link nav-link--block" href="{% url 'orders:my_orders' %}">My Orders</a>
-              <a class="nav-link nav-link--block" href="{% url 'cart:cart' %}">Cart</a>
+              <a class="nav-link nav-link--block {% if active_menu_item == 'my_orders' %}active{% endif %}" href="{% url 'orders:my_orders' %}">My Orders</a>
+              <a class="nav-link nav-link--block {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart</a>
               <a class="nav-link nav-link--block" href="{% url 'account_logout' %}">Sign out</a>
             {% else %}
-              <a class="nav-link nav-link--block" href="{% url 'account_login' %}">Sign in</a>
+              <a class="nav-link nav-link--block {% if active_menu_item == 'account_login' %}active{% endif %}" href="{% url 'account_login' %}">Sign in</a>
             {% endif %}
 
             <div class="nav-mobile__divider"></div>
@@ -110,12 +106,10 @@
     </div>
 
     {% block page_header %}
-
     {% endblock %}
 
     <main class="container page">
       {% block content %}
-
       {% endblock %}
     </main>
 

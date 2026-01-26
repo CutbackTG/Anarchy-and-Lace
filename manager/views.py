@@ -45,13 +45,17 @@ def dashboard(request):
     return render(request, "manager/dashboard.html", {
         "product_count": product_count,
         "low_stock": low_stock,
+        "active_menu_item": "dashboard",  # Active menu item tracking
     })
 
 
 @staff_required
 def product_list(request):
     products = Product.objects.all().order_by("-created_at")
-    return render(request, "manager/product_list.html", {"products": products})
+    return render(request, "manager/product_list.html", {
+        "products": products,
+        "active_menu_item": "product_list",  # Active menu item tracking
+    })
 
 
 @staff_required
@@ -68,6 +72,7 @@ def product_create(request):
     return render(request, "manager/product_form.html", {
         "form": form,
         "mode": "create",
+        "active_menu_item": "product_create",  # Active menu item tracking
     })
 
 
@@ -81,9 +86,9 @@ def product_edit(request, pk):
         try:
             if "image" in request.FILES:
                 ProductImage.objects.create(
-            product=product,
-            image=request.FILES["image"]
-        )
+                    product=product,
+                    image=request.FILES["image"]
+                )
         except Exception as e:
             messages.error(request, f"Error uploading image: {str(e)}")
             return redirect("manager:product_edit", pk=product.pk)
@@ -99,6 +104,7 @@ def product_edit(request, pk):
         "form": form,
         "product": product,
         "mode": "edit",
+        "active_menu_item": "product_edit",  # Active menu item tracking
     })
 
 
@@ -111,4 +117,7 @@ def product_delete(request, pk):
         messages.success(request, "Product deleted.")
         return redirect("manager:product_list")
 
-    return render(request, "manager/product_confirm_delete.html", {"product": product})
+    return render(request, "manager/product_confirm_delete.html", {
+        "product": product,
+        "active_menu_item": "product_delete",  # Active menu item tracking
+    })
