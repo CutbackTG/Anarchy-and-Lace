@@ -123,8 +123,17 @@
       {% block content %}{% endblock %}
     </main>
 
-    {% block postloadjs %}
+        {% block postloadjs %}
       <script src="{% static 'js/theme.js' %}" defer></script>
     {% endblock %}
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span class="footer-brand">Anarchy &amp; Lace</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-copy">Handcrafted garments from reclaimed Japanese textiles</span>
+      </div>
+    </footer>
   </body>
 </html>
+
