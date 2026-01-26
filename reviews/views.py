@@ -7,34 +7,39 @@ from catalog.models import Product
 from orders.models import OrderItem
 from .forms import ReviewForm
 from .models import Review
+from django.contrib import messages
 
 
 @login_required
-def review_product(request, slug: str):
-    product = get_object_or_404(Product, slug=slug)
+def add_review_from_order(request, order_number: str, product_id: int):
+    """
+    Allow a user to leave a review/testimonial for a product they purchased in a given order.
+    """
+    order = get_object_or_404(Order, order_number=order_number, user=request.user)
 
-    # Only allow reviews if the user bought this product on a PAID order
-    has_bought = OrderItem.objects.filter(
-        order__user=request.user,
-        order__status="paid",
-        product=product,
-    ).exists()
+    # Ensure this product is actually in the order
+    has_product = order.items.filter(product_id=product_id).exists()
+    if not has_product:
+        messages.error(request, "You can only review items you’ve purchased.")
+        return redirect("orders:order_detail", order_number=order_number)
 
-    if not has_bought:
-        return redirect("catalog:product_detail", slug=product.slug)
-
-    # One review per user per product (edit if exists)
-    review = Review.objects.filter(product=product, user=request.user).first()
+    # Prevent duplicate reviews for same user + same product (optional but recommended)
+    if Review.objects.filter(user=request.user, product_id=product_id).exists():
+        messages.info(request, "You’ve already left a review for this item.")
+        return redirect("orders:order_detail", order_number=order_number)
 
     if request.method == "POST":
-        form = ReviewForm(request.POST, instance=review)
+        form = ReviewForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.product = product
-            obj.user = request.user
-            obj.save()
-            return redirect("catalog:product_detail", slug=product.slug)
-    else:
-        form = ReviewForm(instance=review)
+            review = form.save(commit=False)
+            review.user = request.user
+            review.product_id = product_id
+            review.featured = False  # users cannot set featured
+            review.save()
 
-    return render(request, "reviews/review_form.html", {"product": product, "form": form})
+            messages.success(request, "Thank you! Your testimonial has been added.")
+            return redirect("orders:order_detail", order_number=order_number)
+    else:
+        form = ReviewForm()
+
+    return render(request, "reviews/review_form.html", {"form": form, "order": order})

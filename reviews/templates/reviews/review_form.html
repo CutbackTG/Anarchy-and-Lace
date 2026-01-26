@@ -53,13 +53,13 @@
       </div>
 
       <div style="margin-top:18px;">
-        <label style="display:block; font-weight:700; margin-bottom:8px;">Text (optional)</label>
-        {{ form.text }}
+        <label style="display:block; font-weight:700; margin-bottom:8px;">Comment (optional)</label>
+        {{ form.comment }}
         <div style="opacity:.75; font-size:.9rem; margin-top:6px;">Max 300 characters.</div>
 
-        {% if form.text.errors %}
+        {% if form.comment.errors %}
           <div style="margin-top:8px; color:#ffb3b3;">
-            {{ form.text.errors }}
+            {{ form.comment.errors }}
           </div>
         {% endif %}
       </div>
