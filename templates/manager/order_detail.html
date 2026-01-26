@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+  <h1>Order #{{ order.id }} Details</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h4>Customer Information</h4>
+    <p><strong>Name:</strong> {{ order.customer.get_full_name }}</p>
+    <p><strong>Email:</strong> {{ order.customer.email }}</p>
+    <p><strong>Phone:</strong> {{ order.customer.phone_number }}</p>
+
+    <h4>Order Status</h4>
+    <p>{{ order.status }}</p>
+
+    <h4>Order Items</h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.total_price }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h4>Order Summary</h4>
+    <p><strong>Total:</strong> {{ order.total }}</p>
+    <p><strong>Date Placed:</strong> {{ order.date_placed|date:"Y-m-d H:i" }}</p>
+  </div>
+{% endblock %}

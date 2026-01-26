@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from catalog.models import Product, ProductImage
+from orders.models import Order
 from .decorators import staff_required
 from .forms import ProductForm
 
@@ -121,3 +122,27 @@ def product_delete(request, pk):
         "product": product,
         "active_menu_item": "product_delete",  # Active menu item tracking
     })
+
+@staff_required
+def dashboard(request):
+    product_count = Product.objects.count()
+    low_stock = Product.objects.filter(stock_qty__lte=2)
+    order_count = Order.objects.count()  # Assuming you have an Order model
+    pending_orders = Order.objects.filter(status='Pending')  # You can modify this based on your order statuses
+
+    return render(request, "manager/dashboard.html", {
+        "product_count": product_count,
+        "low_stock": low_stock,
+        "order_count": order_count,
+        "pending_orders": pending_orders,
+    })
+
+@staff_required
+def order_list(request):
+    orders = Order.objects.all()  # Or filter by whatever criteria you want
+    return render(request, "manager/order_list.html", {"orders": orders})
+
+@staff_required
+def order_detail(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    return render(request, "manager/order_detail.html", {"order": order})

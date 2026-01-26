@@ -9,6 +9,7 @@
     {% endblock %}
 
     {% block extra_meta %}
+
     {% endblock %}
 
     {% block corecss %}
@@ -20,6 +21,7 @@
     {% endblock %}
 
     {% block extra_css %}
+
     {% endblock %}
 
     {% block corejs %}
@@ -27,10 +29,12 @@
     {% endblock %}
 
     {% block extra_js %}
+
     {% endblock %}
 
     <title>
       Anarchy &amp; Lace{% block extra_title %}
+
       {% endblock %}
     </title>
   </head>
@@ -78,11 +82,19 @@
             <div class="nav-mobile__divider"></div>
 
             {% if user.is_authenticated %}
+              {% if user.is_staff %}
+              <!-- "Orders" tab for managers -->
+               <a class="nav-link" href="{% url 'manager:order_list' %}">Orders</a>
+               {% else %}
+                <!-- "My Orders" tab for regular users -->
               <a class="nav-link nav-link--block {% if active_menu_item == 'my_orders' %}active{% endif %}" href="{% url 'orders:my_orders' %}">My Orders</a>
               <a class="nav-link nav-link--block {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart</a>
               <a class="nav-link nav-link--block" href="{% url 'account_logout' %}">Sign out</a>
             {% else %}
               <a class="nav-link nav-link--block {% if active_menu_item == 'account_login' %}active{% endif %}" href="{% url 'account_login' %}">Sign in</a>
+            {% endif %}
+            {% if user.is_authenticated and user.is_staff %}
+              <a class="nav-link" href="{% url 'manager:dashboard' %}">Manager</a>
             {% endif %}
 
             <div class="nav-mobile__divider"></div>
@@ -106,10 +118,12 @@
     </div>
 
     {% block page_header %}
+
     {% endblock %}
 
     <main class="container page">
       {% block content %}
+
       {% endblock %}
     </main>
 
