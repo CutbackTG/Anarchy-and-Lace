@@ -64,7 +64,7 @@ def product_list(request):
         "manager/product_list.html",
         {
             "products": products,
-            "active_menu_item": "product_list",
+            "active_menu_item": "product_list_manager",
         },
     )
 
