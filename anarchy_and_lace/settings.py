@@ -129,6 +129,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",  # allauth needs this
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'anarchy_and_lace.context_processors.cart_count'
             ],
         },
     },
