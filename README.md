@@ -81,6 +81,7 @@ Python — Core programming language used for application logic and server-side 
 Django — High-level web framework providing URL routing, view handling, authentication, and ORM-based database management.
 Django Allauth — Handles user authentication, registration, and account management using email-based login.
 Stripe API — Integrated to provide secure, real-world payment processing for online purchases.
+Gunicorn: WSGI HTTP server used to serve the Django application in production (via Heroku).
 
 Frontend
 
@@ -98,6 +99,7 @@ Hosting & Deployment
 Heroku — Cloud platform used to host the application, manage environment variables, and handle deployment.
 Gunicorn — WSGI HTTP server used to serve the Django application in production.
 Whitenoise — Serves static files efficiently within the Heroku environment.
+Procfile: Specifies gunicorn as the web server for the application.
 
 Development & Tooling
 
@@ -236,9 +238,81 @@ Area	Test	Expected Result
 
 ## Installation & Deployment
 
+Prerequisites
+
+Ensure you have the following installed:
+Python 3.12 or higher
+pip (Python package manager)
+Git
+A code editor (VS Code, PyCharm, etc.)
+
+Setup Instructions
+
+Clone the repository:
+
+git clone https://github.com/CutbackTG/Anarchy-and-Lace.git
+cd Anarchy-and-Lace
+
+
+Create a virtual environment:
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+
+Setup environment variables:
+Create a .env file with the following settings:
+
+DJANGO_SECRET_KEY=your-secret-key
+STRIPE_PUBLIC_KEY=your-public-key
+STRIPE_SECRET_KEY=your-secret-key
+DEBUG=True
+
+
+Run migrations:
+
+python manage.py migrate
+
+
+Run the development server:
+
+python manage.py runserver
+
+
+Visit: http://127.0.0.1:8000
 
 ## Contribution Guidelines
 
+Fork the repository and clone your fork:
+
+git clone https://github.com/YOUR-USERNAME/Anarchy-and-Lace.git
+
+
+Create a feature branch:
+
+git checkout -b feature/your-feature-name
+
+
+Commit your changes:
+
+git commit -m "Add: description of your feature"
+
+
+Push to your fork:
+
+git push origin feature/your-feature-name
+
+
+Create a pull request with a clear description of your changes.
 
 ## Credits & Acknowledgements
 
+Stripe: Payment gateway integration.
+Django: For providing a scalable web framework.
+Gunicorn: WSGI server for production.
+Bootstrap 5: Responsive UI framework.
