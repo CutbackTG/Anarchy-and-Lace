@@ -1,10 +1,20 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
+
+from reviews.models import Review
 
 
 def index(request):
     """Landing page."""
-    return render(request, "home/index.html")
+    featured_reviews = (
+        Review.objects.filter(featured=True)
+        .select_related("product", "user")
+        .order_by("-created_at")[:3]
+    )
+    return render(request, "home/index.html", {
+        "featured_reviews": featured_reviews,
+        "active_menu_item": "home",
+    })
 
 
 def contact(request):
@@ -19,13 +29,14 @@ def contact(request):
 
         if not name or not email or not message:
             messages.error(request, "Please fill in your name, email, and message.")
-            return render(request, "home/contact.html")
+            return render(request, "home/contact.html", {"active_menu_item": "contact"})
 
         messages.success(request, "Message sent. We’ll get back to you soon ✨")
         return redirect("home:contact")
 
-    return render(request, "home/contact.html")
+    return render(request, "home/contact.html", {"active_menu_item": "contact"})
+
 
 def kimono_history(request):
     """Magazine-style history page for kimono textiles."""
-    return render(request, "home/kimono_history.html")
+    return render(request, "home/kimono_history.html", {"active_menu_item": "kimono_history"})

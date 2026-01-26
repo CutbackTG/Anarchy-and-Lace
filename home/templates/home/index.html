@@ -1,49 +1,68 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-<!-- HERO FABRIC GALLERY PANEL -->
-    <div class="glass-panel hero__panel hero__panel--gallery">
-         <div class="fabric-card__img" style="background-image:url('{% static "background_images/fabrics/kimono_fabric.png" %}');"></div>
+  <!-- HERO FABRIC GALLERY PANEL -->
+  <div class="glass-panel hero__panel hero__panel--gallery">
+    <div class="fabric-card__img" style="background-image:url('{% static 'background_images/fabrics/kimono_fabric.png' %}');"></div>
+  </div>
+
+  <div class="hero__grid">
+    <div class="glass-panel hero-card">
+      <h3 class="hero-card__title">Shop our exclusive range</h3>
+      <p>Curated pieces with a strong silhouette and a soft footprint</p>
+
+      <a href="{% url 'catalog:product_list' %}" class="image_button image_button--link" style="background-image:url('{% static 'img/range/shop_button.webp' %}');"></a>
+
+      <a class="nav-link hero-card__link" href="{% url 'catalog:product_list' %}">Browse products →</a>
     </div>
 
-    <div class="hero__grid">
-        
-      <div class="glass-panel hero-card">
-        <h3 class="hero-card__title">Shop our exclusive range</h3>
-        <p>Curated pieces with a strong silhouette and a soft footprint</p>
-        <a href="{% url 'catalog:product_list' %}"
-        class="image_button image_button--link"
-        style="background-image:url('{% static "img/range/shop_button.webp" %}');">
-        </a>
-        <a class="nav-link hero-card__link" href="{% url 'catalog:product_list' %}">Browse products →</a>
-      </div>
+    <div class="glass-panel hero-card">
+      <h3 class="hero-card__title">Authentic, Vintage Japanese Kimono Silk</h3>
+      <p>Preserving historic beauty and art through fashion</p>
 
-      <div class="glass-panel hero-card">
-        <h3 class="hero-card__title">Authentic, Vintage Japanese Kimono Silk</h3>
-        <p>Preserving historic beauty and art through fashion</p>
-        <a href="{% url 'home:kimono_history' %}"
-        class="image_button image_button--link"
-        style="background-image:url('{% static "img/kimono/kimono_button.webp" %}');">
-        </a>
-        <a class="nav-link hero-card__link" href="{% url 'home:kimono_history' %}">Kimono Fabric →</a>
-      </div>
+      <a href="{% url 'home:kimono_history' %}" class="image_button image_button--link" style="background-image:url('{% static 'img/kimono/kimono_button.webp' %}');"></a>
 
-      <div class="glass-panel hero-card">
-        <h3 class="hero-card__title">Bespoke Commissions</h3>
-        <p>Have an idea for a personal piece, custom project or special event?</p>
-        <a href="{% url 'home:contact' %}"
-        class="image_button image_button--link"
-        style="background-image:url('{% static "img/commissions/commissions_button.webp" %}');">
-        </a>
-        <a class="nav-link hero-card__link" href="{% url 'home:contact' %}">Share your vision →</a>
-      </div>
+      <a class="nav-link hero-card__link" href="{% url 'home:kimono_history' %}">Kimono Fabric →</a>
+    </div>
+
+    <div class="glass-panel hero-card">
+      <h3 class="hero-card__title">Bespoke Commissions</h3>
+      <p>Have an idea for a personal piece, custom project or special event?</p>
+
+      <a href="{% url 'home:contact' %}" class="image_button image_button--link" style="background-image:url('{% static 'img/commissions/commissions_button.webp' %}');"></a>
+
+      <a class="nav-link hero-card__link" href="{% url 'home:contact' %}">Share your vision →</a>
     </div>
   </div>
+
+  {% if featured_reviews %}
+    <section class="glass-panel reviews-section">
+      <h2>What our customers say</h2>
+
+      <div class="reviews-grid">
+        {% for review in featured_reviews %}
+          <div class="review-card">
+            <p class="review-stars">
+              {% for _ in ''|ljust:review.rating %}
+                ★
+              {% endfor %}
+            </p>
+            <p class="review-text">“{{ review.comment }}”</p>
+
+            <p class="review-author">
+              — {{ review.name_for_display }}
+              {% if review.product %}
+                <span class="review-product">on {{ review.product.name }}</span>
+              {% endif %}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
 
   <div class="hero__footer">
     <div class="kintsugi-line"></div>
-    </div>
   </div>
-</section>
 {% endblock %}
