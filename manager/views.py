@@ -41,16 +41,19 @@ def dashboard(request):
     product_count = Product.objects.count()
     low_stock = Product.objects.filter(stock_qty__lte=2)
     order_count = Order.objects.count()
-    pending_orders = Order.objects.filter(status="Pending")
+    pending_orders = Order.objects.filter(status="Pending").order_by("-created_at")[:10]
 
-    return render(request, "manager/dashboard.html", {
-        "product_count": product_count,
-        "low_stock": low_stock,
-        "order_count": order_count,
-        "pending_orders": pending_orders,
-        "active_menu_item": "dashboard",
-    })
-
+    return render(
+        request,
+        "manager/dashboard.html",
+        {
+            "product_count": product_count,
+            "low_stock": low_stock,
+            "order_count": order_count,
+            "pending_orders": pending_orders,
+            "active_menu_item": "dashboard",
+        },
+    )
 
 
 # ----------------------------
@@ -64,7 +67,7 @@ def product_list(request):
         "manager/product_list.html",
         {
             "products": products,
-            "active_menu_item": "product_list_manager",
+            "active_menu_item": "manager_products",
         },
     )
 
@@ -86,7 +89,7 @@ def product_create(request):
         {
             "form": form,
             "mode": "create",
-            "active_menu_item": "product_create",
+            "active_menu_item": "manager_products",
         },
     )
 
@@ -98,11 +101,9 @@ def product_edit(request, pk):
     if request.method == "POST":
         form = ProductForm(request.POST, instance=product)
 
-        # Save product fields first
         if form.is_valid():
             form.save()
 
-            # Optional image upload
             if "image" in request.FILES:
                 try:
                     ProductImage.objects.create(product=product, image=request.FILES["image"])
@@ -113,7 +114,6 @@ def product_edit(request, pk):
                 messages.success(request, "Product updated.")
 
             return redirect("manager:product_edit", pk=product.pk)
-
     else:
         form = ProductForm(instance=product)
 
@@ -124,7 +124,7 @@ def product_edit(request, pk):
             "form": form,
             "product": product,
             "mode": "edit",
-            "active_menu_item": "product_edit",
+            "active_menu_item": "manager_products",
         },
     )
 
@@ -143,7 +143,7 @@ def product_delete(request, pk):
         "manager/product_confirm_delete.html",
         {
             "product": product,
-            "active_menu_item": "product_delete",
+            "active_menu_item": "manager_products",
         },
     )
 

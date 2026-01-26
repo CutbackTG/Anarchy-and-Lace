@@ -1,24 +1,30 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<section class="glass-panel">
+  <section class="glass-panel">
+    <p>
+      <a href="{% url 'manager:dashboard' %}">← Back to dashboard</a>
+    </p>
     <h1>Products</h1>
     <a href="{% url 'manager:product_create' %}" class="button">Add product</a>
 
     <table>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th></th>
+      </tr>
+      {% for product in products %}
         <tr>
-            <th>Name</th><th>Price</th><th>Stock</th><th></th>
+          <td>{{ product.name }}</td>
+          <td>£{{ product.price }}</td>
+          <td>{{ product.stock_qty }}</td>
+          <td>
+            <a href="{% url 'manager:product_edit' product.pk %}">Edit</a> |
+            <a href="{% url 'manager:product_delete' product.pk %}">Delete</a>
+          </td>
         </tr>
-        {% for product in products %}
-        <tr>
-            <td>{{ product.name }}</td>
-            <td>£{{ product.price }}</td>
-            <td>{{ product.stock_qty }}</td>
-            <td>
-                <a href="{% url 'manager:product_edit' product.pk %}">Edit</a> |
-                <a href="{% url 'manager:product_delete' product.pk %}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
+      {% endfor %}
     </table>
-</section>
+  </section>
 {% endblock %}
