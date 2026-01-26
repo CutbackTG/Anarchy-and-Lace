@@ -58,6 +58,7 @@ DEBUG = env_bool("DJANGO_DEBUG", False)
 # so we allow the whole herokuapp.com domain in non-debug.
 ALLOWED_HOSTS = ["anarchy-and-lace.herokuapp.com","localhost","127.0.0.1",'anarchy-and-lace-0b8e43b4f722.herokuapp.com']
 ALLOWED_HOSTS += env_list("DJANGO_ALLOWED_HOSTS")
+CORS_ALLOW_ALL_ORIGINS = True
 
 # CSRF trusted origins (recommended for login/forms on custom domains)
 # You can also set DJANGO_CSRF_TRUSTED_ORIGINS="https://example.com,https://www.example.com"
