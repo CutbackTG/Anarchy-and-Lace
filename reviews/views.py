@@ -8,6 +8,7 @@ from orders.models import OrderItem
 from .forms import ReviewForm
 from .models import Review
 from django.contrib import messages
+from orders.models import Order
 
 
 @login_required
