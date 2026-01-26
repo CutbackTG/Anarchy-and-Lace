@@ -1488,6 +1488,46 @@ textarea{
   color: rgba(255,255,255,0.25);
 }
 
+.reviews-section {
+  margin-top: 3rem;
+}
+
+.reviews-section h2 {
+  margin-bottom: 1.5rem;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.review-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.review-text {
+  font-style: italic;
+  line-height: 1.5;
+  margin: 1rem 0;
+}
+
+.review-author {
+  margin-top: auto;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* =========================================================
    Footer
