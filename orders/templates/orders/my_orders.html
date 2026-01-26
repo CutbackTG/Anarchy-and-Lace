@@ -35,7 +35,7 @@
 
                           {# Because your view prefetched only THIS user's reviews, .first will be their review or nothing #}
                           {% with my_review=item.product.reviews.first %}
-                            <a class="button button--gold" href="{% url 'reviews:review_product' item.product.slug %}">
+                            <a class="button button--gold" href="{% url 'reviews:add_from_order' order.order_number item.product.id %}">
                               {% if my_review %}
                                 Edit review
                               {% else %}
