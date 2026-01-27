@@ -299,6 +299,12 @@ Present a premium, editorial boutique aesthetic that communicates craftsmanship 
 - Reinforce the “one-off bespoke” value through subtle scarcity cues and artisan notes rather than aggressive sales techniques.  
 - Ensure every interaction feels deliberate and tailored, with smooth hover states, visible focus indicators, and touch-friendly controls.
 
+## Anarchy and Lace Entity Relationship Diagram
+
+<img src= static/img/readme/relationships.png  alt ="A diagram mapping the relaationships at work on the Anarchy and Lace website" width= 600>
+
+
+
 ## Accessibility Considerations
 
 Anarchy & Lace emphasises general accessibility and universal use as a basic assumption in developing the site for as many users who may be unable to navigate traditional tools, such as those with visual or cognitive impairments.

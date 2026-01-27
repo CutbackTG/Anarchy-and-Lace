@@ -1733,3 +1733,201 @@ textarea{
     padding-left: 14px;
   }
 }
+
+/* =========================================================
+   RESPONSIVE FINAL AUTHORITY LAYER (drop-in at bottom)
+   ========================================================= */
+
+/* 1) Smarter global sizing + mobile viewport correctness */
+html{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body{
+  /* helps prevent random horizontal scroll on tiny devices */
+  overflow-x: hidden;
+}
+
+/* Use dynamic viewport units when supported (prevents iOS address-bar jump) */
+.page{
+  min-height: 100svh;
+}
+@supports (min-height: 100dvh){
+  .page{ min-height: 100dvh; }
+}
+
+/* 2) Responsive tokens: container + header offset + radius scale */
+:root{
+  /* keep your container but make it adapt */
+  --container-pad: clamp(14px, 3.5vw, 24px);
+  --container-max: 1100px;
+
+  /* header gap should shrink a touch on small screens */
+  --header-gap: clamp(4.75rem, 9vw, 6.25rem);
+
+  /* soften radius slightly on tiny screens */
+  --radius: clamp(14px, 2vw, 18px);
+  --radius-sm: clamp(10px, 1.6vw, 12px);
+}
+
+/* Apply padding token consistently */
+.shell,
+.shop,
+.pd,
+.mag-page{
+  width: min(1200px, calc(100% - (var(--container-pad) * 2)));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 3) Typography that doesn’t blow up or shrink awkwardly */
+h1{ font-size: clamp(1.6rem, 4vw, 2.4rem); }
+h2{ font-size: clamp(1.25rem, 3vw, 1.8rem); }
+p, li, td, th, label, small{
+  font-size: clamp(0.95rem, 1.4vw, 1rem);
+}
+
+/* 4) NAV: prevent collisions + guarantee the theme toggle stays tappable */
+.topbar .container{
+  /* Your last rule hard-codes padding-right:48px which can be tight on some widths */
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.nav-wrap{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0; /* allows children to shrink */
+}
+
+/* Ensure brand never forces right-side controls off-screen */
+.brand{
+  min-width: 0;
+  max-width: 60%;
+}
+
+/* Make sure the theme toggle is always visible and has a bigger hit area */
+.theme-toggle{
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-color: color-mix(in srgb, var(--gold) 28%, var(--panel-border));
+}
+
+.theme-toggle__icon{
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Mobile: keep menu + theme toggle grouped and aligned */
+@media (max-width: 900px){
+  .nav-wrap{
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  /* Brand area adapts */
+  .brand-logo{ height: 48px; }
+  .brand-text{ font-size: 1.1rem; }
+
+  /* Right-side cluster */
+  .nav-mobile{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    position: relative;
+  }
+
+  /* If your HTML has theme toggle outside nav-mobile,
+     this still ensures it doesn’t shrink away */
+  .theme-toggle{ flex: 0 0 auto; }
+}
+
+/* Very small screens: hide brand text sooner and tighten spacing */
+@media (max-width: 420px){
+  .brand-text{ display: none; }
+  .nav-link{ padding: 8px 9px; }
+}
+
+/* 5) FLASH: safe width + no overlap on tiny screens */
+.flash-stack{
+  width: min(900px, calc(100% - (var(--container-pad) * 2)));
+}
+
+/* 6) HERO grid: currently jumps from 3 cols to 1 at 900px.
+      Add an intermediate 2-col breakpoint for nicer tablet layouts. */
+.hero__grid{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px){
+  .hero__grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px){
+  .hero__grid{ grid-template-columns: 1fr; }
+}
+
+/* 7) PRODUCT GRID: stop cards feeling cramped or tiny.
+      Your grid is good, but max-width:300 on .product-card can cause odd gaps.
+      Let cards breathe on wide screens, but still cap them nicely. */
+.product-grid{
+  gap: clamp(14px, 2vw, 20px);
+  padding: 18px 0 6px;
+}
+
+.product-card{
+  max-width: min(360px, 100%);
+}
+
+/* Make product media adapt to screen size */
+.product-media{
+  min-height: clamp(220px, 40vw, 320px);
+}
+
+/* 8) PRODUCT DETAIL: on mid screens, allow a more balanced split */
+.pd{
+  gap: clamp(16px, 2.2vw, 26px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+@media (max-width: 1024px){
+  .pd{ grid-template-columns: 1fr; }
+  .pd-main{ aspect-ratio: 4 / 5; } /* nicer on mobile than 1/1 */
+}
+
+/* Thumbs: prevent microscopic tiles */
+.pd-thumbs{
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+}
+
+/* 9) MAG page: make big paddings less chunky on phones */
+.mag-page{
+  padding: clamp(1.4rem, 4vw, 2.2rem) var(--container-pad) clamp(2rem, 5vw, 3rem);
+}
+
+@media (max-width: 900px){
+  .mag-hero__frame{ max-height: 520px; }
+}
+
+/* 10) TABLES: allow horizontal scroll on small screens instead of breaking layout */
+.table{
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 11) FOOTER: stack nicely on small screens */
+.footer-inner{
+  flex-wrap: wrap;
+  padding: 0 var(--container-pad);
+  text-align: center;
+}
+
+/* 12) Quality-of-life: images don’t overflow their containers */
+img, video, canvas{
+  max-width: 100%;
+  height: auto;
+}
