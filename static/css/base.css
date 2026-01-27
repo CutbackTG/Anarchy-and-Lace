@@ -1703,3 +1703,33 @@ textarea{
 .nav-mobile__panel{
   border-radius: var(--radius);
 }
+/* Mobile: keep menu + theme toggle visible and spaced */
+@media (max-width: 900px){
+  .nav-wrap{
+    justify-content: space-between;
+  }
+
+  /* Give the right side breathing room */
+  .nav-mobile{
+    margin-left: auto;
+    margin-right: 8px; /* space between menu + theme */
+  }
+
+  /* Make the toggle read as a button (not a smudge) */
+  .theme-toggle{
+    border-color: color-mix(in srgb, var(--gold) 28%, var(--panel-border));
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+
+  .theme-toggle__icon{
+    font-size: 18px;      /* a touch bigger */
+    line-height: 1;
+    opacity: 0.95;
+  }
+}
+@media (max-width: 900px){
+  .topbar .container{
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+}
