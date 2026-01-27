@@ -1,8 +1,8 @@
 # Anarchy-and-Lace
 High fashion apparel website featuring one-off bespoke items and a stripe payment system
 
-<img src= static/img/readme/site_white.png  alt ="Am I responsive image portraying lightmode website view on multiple devices" width= 400>
-<img src= static/img/readme/site_black.png  alt ="Am I responsive image portraying darkmode website view on multiple devices" width= 400>
+<img src= static/img/readme/site_white.png  alt ="Am I responsive image portraying lightmode website view on multiple devices" width= 800>
+<img src= static/img/readme/site_black.png  alt ="Am I responsive image portraying darkmode website view on multiple devices" width= 800>
 
 ### GitHub: @CutbackTG
 ### Project Link: https://github.com/CutbackTG/Anarchy-and-Lace
@@ -169,30 +169,137 @@ so that I can appreciate the materials and craftsmanship behind the garments bef
 
 ## UI & UX Design
 
+Anarchy and Lace’s user interface (UI) and user experience (UX) share their philosophy and their material origins with the garments. Instead of using the traditional commercial aesthetic to create its UI, Anarchy and Lace needed to draw heavily on Japanese design traditions for its visual language, which include restraint, symbolism, and material honesty. Anarchy and Lace wanted to create an environment that feels more like a carefully curated gallery versus a conventional online store where the garments are represented as crafted objects that have a history and have been created for a specific purpose.
+
+Anarchy and Lace’s design was also influenced by a number of cultural and visual cues, including Kintsugi, the Japanese art of joining broken pottery back together using gold lacquer. The use of highlighted accent lines throughout the UI is inspired by the Kintsugi philosophy and expresses the belief that history and imperfection add to the value of an object's importance rather than diminish it. This philosophy mirrors Anarchy and Lace’s practice of repurposing vintage kimono fabrics when crafting its bespoke garments. 
+
+The layered design of samurai armour influenced the way that content blocks and cards are framed, segmented, and visually grouped together to create a feeling of strength and protection. These structured forms are softened through the use of rounded corners and subtle shadows, inspired by smooth river pebbles, creating a soft and calming counterpoint to the sharper geometric shapes that make up Anarchy and Lace’s navigation and grid structure.
+
+The overall navigation and user flow were structured to follow a narrative journey rather than a purely transactional one.The first thing visitors will see are storytelling elements and highlighted fabrics that encourage visitors to explore and create curiosity about those items - after that, visitors move on to curated collections of various products as well as how the fabric has evolved through history for each item. 
+The product detail pages contain images of the item, along with information about the item, including where it came from and what it's made of - visitors can then complete their purchase using an easy checkout system from Stripe's safe platform; this lessens the chances of getting lost in the checkout process and helps visitors to maintain the connection they built throughout the shopping experience right up until they actually make their purchase. The flow of the shopping experience is engineered to transition from appreciation to ownership with a focus on the slow fashion movement and making purchasing decisions with consideration.
+
+The design of the interface allows for two different visual designs to be integrated within the automated theme management tool. The first design features light and is inspired by pearl lacquer, parchment, and viewing fabrics in full daylight - this design places an emphasis on presenting products as clearly as possible with an accurate representation of the colours of the fabrics and the ability to view them in a magazine-type layout. 
+
+The second design features dark and is inspired by ink, charcoal, and nighttime views used near night markets - this design provides a more personal, intimate, gallery-like feel for browsing and reflecting on products. The two themes correspond with traditional Japan's concept of "dualities" (i.e. sun vs. moon; day vs. night; light vs. shade), and visitors can switch between the two themes whenever they like; their theme choice is remembered by the interface for future visits.
+
+The purpose of designing garments as an art object rather than a commodity is to allow the customer an opportunity to interact and appreciate the clothing before purchasing it. By creating a balance between aesthetic beauty and e-commerce usability, the digital interface conveys a sense of calmness while providing the best possible platform for consumers to buy high-end products. The digital space reflects the artisan craftsmanship, respect for cultural heritage, and unique approach of one-of-a-kind custom clothing. This creates a relationship between digital and physical experiences so that they can be related to and understood together.
+
 ## Strategy Plane
 
+**Target Audience:**  
+Anarchy & Lace is aimed at design-conscious consumers who value craftsmanship, sustainability, and cultural provenance in fashion. The primary audience includes customers interested in one-off, bespoke garments made from vintage Japanese kimono fabrics, as well as those drawn to slow fashion and ethically minded purchasing. A secondary audience consists of boutique owners, collectors, and design enthusiasts who appreciate material storytelling and limited-edition pieces rather than mass-produced clothing.
 
-Target Audience:
-Business Goal: 
-Scope Plane
-Goal:
+**Business Goal:**  
+The primary business goal is to create a premium digital boutique that showcases and sells bespoke garments while communicating the artistic and cultural value of the materials used. The platform is intended to demonstrate a fully functional Django-based e-commerce system, integrating secure authentication, product management, and online payments. From a technical perspective, the project aims to evidence competency in full-stack development, data-driven design, and third-party service integration, while from a brand perspective it seeks to establish trust, credibility, and emotional engagement with the customer.
 
-Must-have Features: 
-Should-have Features: 
-Could-have Features: 
-Structure Plane
-Goal: 
+---
+
+## Scope Plane
+
+**Goal:**  
+Define and prioritise the functional and content requirements of the application to ensure a balance between aesthetic presentation and practical e-commerce usability.
+
+**Must-have Features:**  
+- Public browsing of the product catalogue without requiring an account.  
+- Secure user registration and authentication.  
+- Product detail pages with imagery, descriptions, and pricing.  
+- Shopping cart functionality with add, update, and remove actions.  
+- Stripe-integrated checkout for secure online payments.  
+- Administrative interface for creating, editing, and managing products.  
+
+**Should-have Features:**  
+- Order confirmation and basic order history for authenticated users.  
+- Fabric gallery and informational content describing material provenance.  
+- Responsive design across desktop, tablet, and mobile devices.  
+- Light and dark theme support for accessibility and personal preference.  
+
+**Could-have Features:**  
+- Wishlist functionality for saving items of interest.  
+- Customer reviews and ratings for purchased products.  
+- Commission request forms for bespoke garment enquiries.  
+- Advanced filtering and search for fabrics and garments.  
+
+---
+
+## Structure Plane
+
+**Goal:**  
+Organise information and interactions in a way that feels intuitive, narrative-driven, and consistent with the boutique identity of the brand.
+
+- Content is structured around a progression from discovery to purchase: introduction and storytelling, product exploration, detailed product views, and finally checkout.  
+- Navigation follows a clear hierarchy separating public content (home, shop, fabric gallery) from user-specific functionality (cart, orders, account) and staff-only management tools.  
+- Related content is grouped logically, such as pairing product pages with fabric history and care information, to support informed decision-making.  
+- The overall structure is designed to minimise cognitive load while reinforcing the sense of browsing a curated collection rather than a generic catalogue.
 
 ## Skeleton Plane
-Goal: 
+
+**Goal:**  
+Design a clear, low-friction interface that allows users to browse high-value garments, understand fabric provenance, and complete checkout with minimal effort and cognitive load.
+
+**Layout & Structure:**
+- **Global Navigation:**  
+  - Sticky header with brand mark and primary navigation (Shop, Fabric Gallery, About, Contact).  
+  - Account and cart icons with live item count for immediate feedback.
+
+- **Homepage:**  
+  - Hero section combining brand identity with material storytelling.  
+  - Featured product grid and rotating fabric spotlight panels.  
+  - Trust cues such as secure checkout messaging and “one-off item” indicators.  
+  - Footer with legal links, contact details, and social presence.
+
+- **Product Listing (Shop):**  
+  - Grid-based product cards with consistent image ratios.  
+  - Clear price display and scarcity markers (e.g. one-off or low stock).  
+  - Filtering by category, size, and price range with optional sorting.
+
+- **Product Detail Pages:**  
+  - Prominent image gallery with zoom support.  
+  - Structured content: price, availability, product story, fabric notes, and care guidance.  
+  - Strong call-to-action for adding to cart and links to related items.
+
+- **Cart & Checkout Flow:**  
+  - Line-item summary with quantity controls and removal options.  
+  - Transparent subtotal and total pricing.  
+  - Redirect to Stripe Checkout for secure payment, returning to an order confirmation page.
+
+- **Account Area:**  
+  - Profile overview and saved preferences.  
+  - Wishlist and order history (future roadmap feature).
+
+- **Manager / Admin Interface:**  
+  - Separate navigation for staff users.  
+  - Clear CRUD forms for product creation, editing, stock control, and order handling.
 
 ## Surface Plane
-Goal: 
 
-Theme: 
-Typography: 
-Colour Palette: 
-Visual Goal: 
+**Goal:**  
+Present a premium, editorial boutique aesthetic that communicates craftsmanship and rarity while maintaining readability and accessibility across devices.
+
+**Theme:**  
+- Modern boutique minimalism with a glass-inspired UI language.  
+- Frosted panels, soft depth effects, and deliberate spacing.  
+- Visual restraint influenced by Japanese design principles: balance, calm composition, and emphasis on texture.
+
+**Typography:**  
+- **Headings:**  
+  - A refined serif or high-contrast display typeface to convey luxury and editorial tone.  
+- **Body Text:**  
+  - A clean, highly legible sans-serif font for descriptions, navigation, and form inputs.  
+- **Hierarchy:**  
+  - Clear H1–H3 structure with consistent spacing and rhythm.  
+  - Distinct styling for prices, calls-to-action, and metadata (fabric type, size, condition).
+
+**Colour Palette:**  
+- **Base tones:** Ink black and soft charcoal for text and dark mode foundations.  
+- **Light mode:** Pearl white and warm off-white backgrounds with translucent layers.  
+- **Accent tones:** Muted gold or antique brass for premium highlights (buttons, dividers, star ratings).  
+- **Supporting hues:** Deep plum, indigo, or forest green used sparingly to complement kimono fabrics.  
+- **Functional colours:** Accessible success and error states meeting WCAG contrast guidelines.
+
+**Visual Goal:**  
+- Present each garment as if curated in a gallery: consistent framing, high-quality imagery, and calm UI composition.  
+- Reinforce the “one-off bespoke” value through subtle scarcity cues and artisan notes rather than aggressive sales techniques.  
+- Ensure every interaction feels deliberate and tailored, with smooth hover states, visible focus indicators, and touch-friendly controls.
 
 ## Accessibility Considerations
 
@@ -213,34 +320,68 @@ Visual Goal:
 
 ## Url to View Map
 
+The following table outlines the main URL patterns used within the Anarchy & Lace application and their corresponding purposes. This provides a clear overview of site navigation, feature access, and responsibility separation between public users and administrative staff.
+
+| URL Pattern | App | View Name | Purpose / Description |
+|-------------|-----|-----------|------------------------|
+| `/` | home | home | Landing page displaying featured products and brand introduction. |
+| `/accounts/` | allauth | login / logout / signup | User authentication routes provided by Django Allauth. |
+| `/shop/` | catalog | product_list | Displays the full product catalogue available for purchase. |
+| `/shop/<slug>/` | catalog | product_detail | Shows detailed information for a single product, including imagery and description. |
+| `/cart/` | cart | cart | Displays current shopping cart contents. |
+| `/cart/add/<int:product_id>/` | cart | add | Adds a selected product to the cart. |
+| `/cart/set/<int:product_id>/` | cart | set_qty | Updates the quantity of a product in the cart. |
+| `/cart/remove/<int:product_id>/` | cart | remove | Removes a product from the cart. |
+| `/cart/clear/` | cart | clear | Clears all items from the cart. |
+| `/payments/create/` | payments | create | Creates a Stripe Checkout session for payment processing. |
+| `/payments/success/` | payments | success | Displays confirmation page after successful Stripe payment. |
+| `/payments/cancel/` | payments | cancel | Displays cancellation page if Stripe checkout is aborted. |
+| `/orders/` | orders | order_list | Displays user order history (if authenticated). |
+| `/orders/<order_number>/` | orders | order_detail | Displays full details for a specific completed order. |
+| `/reviews/add/<order_number>/<int:product_id>/` | reviews | add_from_order | Allows verified purchasers to leave a review for a product. |
+| `/manager/` | manager | dashboard | Staff-only dashboard for managing products and orders. |
+| `/admin/` | admin | admin_site | Django administration panel for site management and data control. |
+
+This URL structure ensures:
+- Clear separation between public browsing, authenticated user actions, and administrative functions.
+- Predictable routing patterns that support maintainability and scalability.
+- Secure access control for sensitive routes such as order history, reviews, and management interfaces.
+
 ## Defensive Design & Security
 
+| Check | Action | Expected Result |
+|-------|--------|-----------------|
+| CSRF protection | Submit POST without token | Rejected |
+| Auth gating | Hit wishlist/review endpoints logged out | Redirect to login |
+| Object ownership | Try editing another user’s review/order | Denied |
+| Admin protection | Access /admin/ without staff | Denied |
+| Secrets | Confirm no keys committed | .env ignored, keys only in config vars |
+| DEBUG off | Production environment | DEBUG=False, no stack traces exposed |
 
-## Authentication & Access Control
 
-## Test Documentation
+### Test Documentation
 
 ## Test Runs
 
 | Area | Scenario | Steps | Expected Result | Result | Notes / Fix if Fails |
 |------|----------|-------|-----------------|--------|----------------------|
-| Auth | Register account | Register via signup form | User created, redirected, session active | ✅/❌ | Check allauth config, email backend, templates |
-| Auth | Login/logout | Login, logout, hit restricted page | Restricted page redirects to login | ✅/❌ | Verify LOGIN_URL, decorators/mixins |
-| Catalog | Product list loads | Open shop/catalog page | Products render, images load | ✅/❌ | Check Cloudinary config + template context |
-| Catalog | Product detail page | Click a product | Correct item details, price, imagery | ✅/❌ | Ensure slug/PK routing matches URLs |
-| Cart | Add to cart | Add product from detail page | Cart count increases, item appears in cart | ✅/❌ | Check session/cart persistence logic |
-| Cart | Update quantity | Increase/decrease qty in cart | Totals update, no negative qty | ✅/❌ | Validate form + server-side constraints |
-| Cart | Remove item | Remove from cart | Item removed, totals recalculated | ✅/❌ | Confirm item key/ID mapping |
-| Checkout | Create Stripe session | Click checkout | Redirects to Stripe Checkout | ✅/❌ | Check STRIPE keys + success/cancel URLs |
-| Checkout | Successful payment | Use Stripe test card | Redirect to success page, order recorded, cart cleared | ✅/❌ | Confirm webhook/order creation flow |
-| Checkout | Cancel payment | Cancel on Stripe | Redirect to cancel page, cart intact | ✅/❌ | Ensure cancel_url returns safely |
-| Orders | Order creation | Complete payment | Order created with line items + totals | ✅/❌ | Confirm db models + signals/webhook |
-| Reviews | Submit review | Post review as logged-in user | Review saved + displayed (or moderated) | ✅/❌ | Confirm permissions + validation |
-| Wishlist | Add/remove wishlist | Toggle wishlist button | Wishlist updates for user | ✅/❌ | Ensure login required + unique constraints |
-| Admin | Product CRUD | Admin add/edit/delete product | Changes reflect on frontend | ✅/❌ | Ensure staff-only access + correct model admin |
-| Security | Access control | Try editing admin/manager views as user | Denied or redirected | ✅/❌ | Check decorators, staff checks, middleware |
-| Static/Media | Static files | Load site CSS/JS | Styling works in production | ✅/❌ | Whitenoise, collectstatic, STATIC settings |
-| Responsive | Mobile layout | Test at 375px/768px | Nav usable, cards don’t overflow | ✅/❌ | Fix breakpoints, long titles, image scaling |
+| Auth | Register account | Register via signup form | User created, redirected, session active |-| Check allauth config, email backend, templates |
+| Auth | Login/logout | Login, logout, hit restricted page | Restricted page redirects to login |-| Verify LOGIN_URL, decorators/mixins |
+| Catalog | Product list loads | Open shop/catalog page | Products render, images load |-| Check Cloudinary config + template context |
+| Catalog | Product detail page | Click a product | Correct item details, price, imagery |-| Ensure slug/PK routing matches URLs |
+| Cart | Add to cart | Add product from detail page | Cart count increases, item appears in cart |-| Check session/cart persistence logic |
+| Cart | Update quantity | Increase/decrease qty in cart | Totals update, no negative qty |-| Validate form + server-side constraints |
+| Cart | Remove item | Remove from cart | Item removed, totals recalculated |-| Confirm item key/ID mapping |
+| Checkout | Create Stripe session | Click checkout | Redirects to Stripe Checkout |-| Check STRIPE keys + success/cancel URLs |
+| Checkout | Successful payment | Use Stripe test card | Redirect to success page, order recorded, cart cleared |-| Confirm webhook/order creation flow |
+| Checkout | Cancel payment | Cancel on Stripe | Redirect to cancel page, cart intact |-| Ensure cancel_url returns safely |
+| Orders | Order creation | Complete payment | Order created with line items + totals |-| Confirm db models + signals/webhook |
+| Reviews | Submit review | Post review as logged-in user | Review saved + displayed (or moderated) |-| Confirm permissions + validation |
+| Wishlist | Add/remove wishlist | Toggle wishlist button | Wishlist updates for user |-| Ensure login required + unique constraints |
+| Admin | Product CRUD | Admin add/edit/delete product | Changes reflect on frontend |-| Ensure staff-only access + correct model admin |
+| Security | Access control | Try editing admin/manager views as user | Denied or redirected |-| Check decorators, staff checks, middleware |
+| Static/Media | Static files | Load site CSS/JS | Styling works in production |-| Whitenoise, collectstatic, STATIC settings |
+| Responsive | Mobile layout | Test at 375px/768px | Nav usable, cards don’t overflow |-| Fix breakpoints, long titles, image scaling |
 
 
 ## Lighthouse Scores & W3C Validation checks
@@ -258,11 +399,11 @@ Visual Goal:
 
 | Test Category | Tool | Coverage Focus | Result |
 |---------------|------|----------------|--------|
-| Django unit tests | django.test.TestCase | Models, views, forms, permissions | ✅/❌ |
-| Stripe/webhook logic | TestCase + mocks | Signature verify, order creation, cart clearing | ✅/❌ |
-| URL resolution | reverse() | Named routes correct, status codes | ✅/❌ |
-| Form validation | TestCase | Rating bounds, required fields, qty rules | ✅/❌ |
-| Linting (optional) | Flake8 | Style + obvious mistakes | ✅/❌ |
+| Django unit tests | django.test.TestCase | Models, views, forms, permissions | PASS |
+| Stripe/webhook logic | TestCase + mocks | Signature verify, order creation, cart clearing | PASS |
+| URL resolution | reverse() | Named routes correct, status codes | PASS |
+| Form validation | TestCase | Rating bounds, required fields, qty rules | PASS |
+| Linting (optional) | Flake8 | Style + obvious mistakes | PASS
 
 ## Automated Test Cases (Models)
 
@@ -293,18 +434,6 @@ Visual Goal:
 | Cart | cart/tests/test_cart.py | Add/update/remove cart actions update session state correctly |
 | Reviews | reviews/tests/test_reviews.py | Login required for review submission; rating validation works |
 | Payments | payments/tests/test_stripe_checkout.py | Stripe checkout session creation is called (mocked) without external requests |
-
-## Manual Security & Defensive Design Checks
-
-| Check | Action | Expected Result |
-|-------|--------|-----------------|
-| CSRF protection | Submit POST without token | Rejected |
-| Auth gating | Hit wishlist/review endpoints logged out | Redirect to login |
-| Object ownership | Try editing another user’s review/order | Denied |
-| Admin protection | Access /admin/ without staff | Denied |
-| Secrets | Confirm no keys committed | .env ignored, keys only in config vars |
-| DEBUG off | Production environment | DEBUG=False, no stack traces exposed |
-
 
 ## Installation & Deployment
 
