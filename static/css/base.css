@@ -273,22 +273,16 @@ a{
   color: var(--ink);
 }
 
-.nav-desktop{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
 .nav-mobile{
   display: none;
   position: relative;
 }
 
 @media (max-width: 900px){
-  .nav-desktop{ display: none; }
+  .nav-desktop{ display: none !important; }
   .nav-mobile{ display: block; }
 }
+
 
 /* Theme toggle */
 .theme-toggle{
@@ -1462,13 +1456,16 @@ textarea{
   justify-content: center;
 }
 
-/* menu alignment fix */
-.nav-desktop {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+/* menu alignment fix (DESKTOP ONLY) */
+@media (min-width: 901px){
+  .nav-desktop{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 }
+
 
 /* =========================================================
    STARS
@@ -1554,5 +1551,145 @@ textarea{
 
 .footer-copy {
   font-style: italic;
+}
+
+.nav-mobile__trigger{
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  color: var(--ink);
+}
+
+.nav-mobile summary::-webkit-details-marker{ display:none; }
+
+.nav-mobile__panel{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(320px, calc(100vw - 24px));
+  padding: 12px;
+  z-index: 3000;
+}
+
+.nav-link--block{
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.nav-mobile__divider{
+  height: 1px;
+  margin: 10px 4px;
+  background: color-mix(in srgb, var(--gold) 35%, transparent);
+  opacity: 0.6;
+}
+
+/* =========================
+   NAV: final authority layer
+   (put at VERY BOTTOM)
+   ========================= */
+
+/* Keep header row tidy */
+.nav-wrap{
+  gap: 10px;
+}
+
+/* Desktop vs Mobile visibility */
+@media (min-width: 901px){
+  .nav-desktop{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .nav-mobile{ display: none; }
+}
+
+@media (max-width: 900px){
+  .nav-desktop{ display: none !important; }
+  .nav-mobile{ display: block; }
+}
+
+/* Mobile: keep controls on one line and stop wrapping */
+@media (max-width: 900px){
+  .nav-wrap{
+    flex-wrap: nowrap;
+  }
+
+  /* Brand can shrink without pushing menu down */
+  .brand{
+    min-width: 0;
+  }
+  .brand-logo{
+    height: 52px; /* slightly smaller on mobile */
+  }
+
+  /* Park the mobile menu + theme button as a right-side cluster */
+  .nav-mobile{
+    margin-left: auto;         /* pushes it to the right */
+    flex: 0 0 auto;
+  }
+  .theme-toggle{
+    flex: 0 0 auto;
+  }
+}
+
+/* Mobile dropdown styling */
+.nav-mobile__trigger{
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  color: var(--ink);
+  user-select: none;
+}
+.nav-mobile summary::-webkit-details-marker{ display: none; }
+
+.nav-mobile[open] .nav-mobile__trigger{
+  border-color: var(--gold-soft);
+  box-shadow: var(--focus);
+}
+
+/* Panel anchors to the right edge of the menu button */
+.nav-mobile__panel{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(320px, calc(100vw - 24px));
+  padding: 12px;
+  z-index: 3000;
+}
+
+/* Make links fill the panel */
+.nav-link--block{
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.nav-mobile__divider{
+  height: 1px;
+  margin: 10px 6px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gold) 55%, transparent),
+    transparent
+  );
+  opacity: 0.75;
 }
 

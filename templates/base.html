@@ -9,6 +9,7 @@
     {% endblock %}
 
     {% block extra_meta %}
+
     {% endblock %}
 
     {% block corecss %}
@@ -20,6 +21,7 @@
     {% endblock %}
 
     {% block extra_css %}
+
     {% endblock %}
 
     {% block corejs %}
@@ -27,10 +29,12 @@
     {% endblock %}
 
     {% block extra_js %}
+
     {% endblock %}
 
     <title>
       Anarchy &amp; Lace{% block extra_title %}
+
       {% endblock %}
     </title>
   </head>
@@ -49,23 +53,30 @@
         </a>
 
         <!-- Desktop nav -->
-        <div class="nav-desktop">
+        <nav class="nav-desktop" aria-label="Primary">
           <a class="nav-link {% if active_menu_item == 'product_list' %}active{% endif %}" href="{% url 'catalog:product_list' %}">Shop</a>
           <a class="nav-link {% if active_menu_item == 'kimono_history' %}active{% endif %}" href="{% url 'home:kimono_history' %}">Kimono Fabric</a>
           <a class="nav-link {% if active_menu_item == 'contact' %}active{% endif %}" href="{% url 'home:contact' %}">Contact</a>
 
+          <a class="nav-link {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart ({{ cart_count|default:0 }})</a>
 
           {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <a class="nav-link {% if active_menu_item == 'dashboard' %}active{% endif %}" href="{% url 'manager:dashboard' %}">Dashboard</a>
+              <a class="nav-link {% if active_menu_item == 'orders' %}active{% endif %}" href="{% url 'manager:order_list' %}">Orders</a>
+              <a class="nav-link {% if active_menu_item == 'manager_products' %}active{% endif %}" href="{% url 'manager:product_list' %}">Products</a>
+            {% else %}
+              <a class="nav-link {% if active_menu_item == 'my_orders' %}active{% endif %}" href="{% url 'orders:my_orders' %}">My Orders</a>
+            {% endif %}
             <a class="nav-link" href="{% url 'account_logout' %}">Sign out</a>
           {% else %}
             <a class="nav-link {% if active_menu_item == 'account_login' %}active{% endif %}" href="{% url 'account_login' %}">Sign in / Sign up</a>
           {% endif %}
-          <a class="nav-link {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart ({{ cart_count }})</a>
-        </div>
+        </nav>
 
         <!-- Mobile menu -->
         <details class="nav-mobile">
-          <summary class="nav-mobile__trigger">
+          <summary class="nav-mobile__trigger" aria-label="Open menu">
             <span class="nav-mobile__icon">☰</span>
             <span class="nav-mobile__label">Menu</span>
           </summary>
@@ -77,14 +88,20 @@
 
             <div class="nav-mobile__divider"></div>
 
+            <a class="nav-link nav-link--block {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart ({{ cart_count|default:0 }})</a>
+
             {% if user.is_authenticated %}
+              {% if user.is_staff %}
+                <a class="nav-link nav-link--block {% if active_menu_item == 'dashboard' %}active{% endif %}" href="{% url 'manager:dashboard' %}">Dashboard</a>
+                <a class="nav-link nav-link--block {% if active_menu_item == 'orders' %}active{% endif %}" href="{% url 'manager:order_list' %}">Orders</a>
+                <a class="nav-link nav-link--block {% if active_menu_item == 'manager_products' %}active{% endif %}" href="{% url 'manager:product_list' %}">Products</a>
+              {% else %}
+                <a class="nav-link nav-link--block {% if active_menu_item == 'my_orders' %}active{% endif %}" href="{% url 'orders:my_orders' %}">My Orders</a>
+              {% endif %}
               <a class="nav-link nav-link--block" href="{% url 'account_logout' %}">Sign out</a>
             {% else %}
               <a class="nav-link nav-link--block {% if active_menu_item == 'account_login' %}active{% endif %}" href="{% url 'account_login' %}">Sign in / Sign up</a>
             {% endif %}
-            <a class="nav-link nav-link--block {% if active_menu_item == 'cart' %}active{% endif %}" href="{% url 'cart:cart' %}">Cart ({{ cart_count }})</a>
-
-            <div class="nav-mobile__divider"></div>
           </div>
         </details>
 
@@ -105,10 +122,12 @@
     </div>
 
     {% block page_header %}
+
     {% endblock %}
 
     <main class="container page">
       {% block content %}
+
       {% endblock %}
     </main>
 
