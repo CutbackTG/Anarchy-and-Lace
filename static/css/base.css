@@ -1693,3 +1693,13 @@ textarea{
   opacity: 0.75;
 }
 
+.nav-mobile__panel.glass-panel{
+  background: color-mix(in srgb, var(--panel-bg) 96%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, var(--panel-border));
+  box-shadow: 0 22px 60px rgba(0,0,0,0.35);
+}
+.nav-mobile__panel{
+  border-radius: var(--radius);
+}

@@ -217,6 +217,29 @@ Visual Goal:
 
 ## Test Documentation
 
+## Test Runs
+
+| Area | Scenario | Steps | Expected Result | Result | Notes / Fix if Fails |
+|------|----------|-------|-----------------|--------|----------------------|
+| Auth | Register account | Register via signup form | User created, redirected, session active | ✅/❌ | Check allauth config, email backend, templates |
+| Auth | Login/logout | Login, logout, hit restricted page | Restricted page redirects to login | ✅/❌ | Verify LOGIN_URL, decorators/mixins |
+| Catalog | Product list loads | Open shop/catalog page | Products render, images load | ✅/❌ | Check Cloudinary config + template context |
+| Catalog | Product detail page | Click a product | Correct item details, price, imagery | ✅/❌ | Ensure slug/PK routing matches URLs |
+| Cart | Add to cart | Add product from detail page | Cart count increases, item appears in cart | ✅/❌ | Check session/cart persistence logic |
+| Cart | Update quantity | Increase/decrease qty in cart | Totals update, no negative qty | ✅/❌ | Validate form + server-side constraints |
+| Cart | Remove item | Remove from cart | Item removed, totals recalculated | ✅/❌ | Confirm item key/ID mapping |
+| Checkout | Create Stripe session | Click checkout | Redirects to Stripe Checkout | ✅/❌ | Check STRIPE keys + success/cancel URLs |
+| Checkout | Successful payment | Use Stripe test card | Redirect to success page, order recorded, cart cleared | ✅/❌ | Confirm webhook/order creation flow |
+| Checkout | Cancel payment | Cancel on Stripe | Redirect to cancel page, cart intact | ✅/❌ | Ensure cancel_url returns safely |
+| Orders | Order creation | Complete payment | Order created with line items + totals | ✅/❌ | Confirm db models + signals/webhook |
+| Reviews | Submit review | Post review as logged-in user | Review saved + displayed (or moderated) | ✅/❌ | Confirm permissions + validation |
+| Wishlist | Add/remove wishlist | Toggle wishlist button | Wishlist updates for user | ✅/❌ | Ensure login required + unique constraints |
+| Admin | Product CRUD | Admin add/edit/delete product | Changes reflect on frontend | ✅/❌ | Ensure staff-only access + correct model admin |
+| Security | Access control | Try editing admin/manager views as user | Denied or redirected | ✅/❌ | Check decorators, staff checks, middleware |
+| Static/Media | Static files | Load site CSS/JS | Styling works in production | ✅/❌ | Whitenoise, collectstatic, STATIC settings |
+| Responsive | Mobile layout | Test at 375px/768px | Nav usable, cards don’t overflow | ✅/❌ | Fix breakpoints, long titles, image scaling |
+
+
 ## Lighthouse Scores & W3C Validation checks
 
 ### Performance & Accessibility
@@ -227,13 +250,57 @@ Visual Goal:
 
 ### index.html W3C valiadation check
 
+
 ## Summary of Automated Testing
 
-### Django Unit Tests	pytest / TestCase	
-### Test Runs
+| Test Category | Tool | Coverage Focus | Result |
+|---------------|------|----------------|--------|
+| Django unit tests | django.test.TestCase | Models, views, forms, permissions | ✅/❌ |
+| Stripe/webhook logic | TestCase + mocks | Signature verify, order creation, cart clearing | ✅/❌ |
+| URL resolution | reverse() | Named routes correct, status codes | ✅/❌ |
+| Form validation | TestCase | Rating bounds, required fields, qty rules | ✅/❌ |
+| Linting (optional) | Flake8 | Style + obvious mistakes | ✅/❌ |
 
-### Automated Test Cases (Django / Pytest)
-Area	Test	Expected Result
+## Automated Test Cases (Models)
+
+| Area | Test | Steps | Expected Result |
+|------|------|-------|-----------------|
+| Catalog Product | Create product | Create Product instance | Saves correctly, slug/fields valid |
+| Order | Create order with totals | Create Order + OrderLineItem(s) | Totals computed correctly |
+| Review | Rating validation | Create Review with rating outside bounds | Validation fails / form errors |
+| Wishlist | Unique constraint | Add same product twice | Only one entry exists / prevented |
+
+## Automated Test Cases (Views & Permissions)
+
+| Area | Test | Steps | Expected Result |
+|------|------|-------|-----------------|
+| Catalog list | Public access | GET product list | 200 OK, template used |
+| Product detail | Public access | GET detail route | 200 OK, correct object |
+| Cart add | Auth required (if applicable) | POST add-to-cart | Redirect/login OR success |
+| Checkout start | Auth required | GET checkout session creation | Redirects to Stripe |
+| Review submit | Login required | POST review | 302 to login if anonymous; saves if logged-in |
+| Manager/admin pages | Staff-only | GET manager routes as non-staff | 403 or redirect |
+
+### Django Unit Tests	pytest / TestCase	
+
+| Area | Test File | What It Verifies |
+|------|----------|------------------|
+| Smoke | core/tests/test_smoke.py | Key pages return 200 and render expected templates |
+| Catalog | catalog/tests/test_catalog_views.py | Product list and detail pages load and show product content |
+| Cart | cart/tests/test_cart.py | Add/update/remove cart actions update session state correctly |
+| Reviews | reviews/tests/test_reviews.py | Login required for review submission; rating validation works |
+| Payments | payments/tests/test_stripe_checkout.py | Stripe checkout session creation is called (mocked) without external requests |
+
+## Manual Security & Defensive Design Checks
+
+| Check | Action | Expected Result |
+|-------|--------|-----------------|
+| CSRF protection | Submit POST without token | Rejected |
+| Auth gating | Hit wishlist/review endpoints logged out | Redirect to login |
+| Object ownership | Try editing another user’s review/order | Denied |
+| Admin protection | Access /admin/ without staff | Denied |
+| Secrets | Confirm no keys committed | .env ignored, keys only in config vars |
+| DEBUG off | Production environment | DEBUG=False, no stack traces exposed |
 
 
 ## Installation & Deployment
