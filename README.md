@@ -174,20 +174,25 @@ Anarchy and Lace’s design was also influenced by a number of cultural and visu
 The layered design of samurai armour influenced the way that content blocks and cards are framed, segmented, and visually grouped together to create a feeling of strength and protection. These structured forms are softened through the use of rounded corners and subtle shadows, inspired by smooth river pebbles, creating a soft and calming counterpoint to the sharper geometric shapes that make up Anarchy and Lace’s navigation and grid structure.
 
 The overall navigation and user flow were structured to follow a narrative journey rather than a purely transactional one.The first thing visitors will see are storytelling elements and highlighted fabrics that encourage visitors to explore and create curiosity about those items - after that, visitors move on to curated collections of various products as well as how the fabric has evolved through history for each item. 
-The product detail pages contain images of the item, along with information about the item, including where it came from and what it's made of - visitors can then complete their purchase using an easy checkout system from Stripe's safe platform; this lessens the chances of getting lost in the checkout process and helps visitors to maintain the connection they built throughout the shopping experience right up until they actually make their purchase. The flow of the shopping experience is engineered to transition from appreciation to ownership with a focus on the slow fashion movement and making purchasing decisions with consideration.
+
+The product detail pages contain images of the item, along with information about the item, including where it came from and what it's made of - visitors can then complete their purchase using an easy checkout system from Stripe's safe platform; this lessens the chances of getting lost in the checkout process and helps visitors to maintain the connection they built throughout the shopping experience right up until they actually make their purchase.
 
 The design of the interface allows for two different visual designs to be integrated within the automated theme management tool. The first design features light and is inspired by pearl lacquer, parchment, and viewing fabrics in full daylight - this design places an emphasis on presenting products as clearly as possible with an accurate representation of the colours of the fabrics and the ability to view them in a magazine-type layout. 
 
-The second design features dark and is inspired by ink, charcoal, and nighttime views used near night markets - this design provides a more personal, intimate, gallery-like feel for browsing and reflecting on products. The two themes correspond with traditional Japan's concept of "dualities" (i.e. sun vs. moon; day vs. night; light vs. shade), and visitors can switch between the two themes whenever they like; their theme choice is remembered by the interface for future visits.
+The second design features dark and is inspired by ink, charcoal, and night markets - this design provides a more personal, intimate, gallery-like feel for browsing and reflecting on products. The two themes correspond with traditional Japan's concept of "dualities" (i.e. sun vs. moon; day vs. night; light vs. shade), and visitors can switch between the two themes whenever they like; their theme choice is remembered by the interface for future visits.
 
-The purpose of designing garments as an art object rather than a commodity is to allow the customer an opportunity to interact and appreciate the clothing before purchasing it. By creating a balance between aesthetic beauty and e-commerce usability, the digital interface conveys a sense of calmness while providing the best possible platform for consumers to buy high-end products. The digital space reflects the artisan craftsmanship, respect for cultural heritage, and unique approach of one-of-a-kind custom clothing. This creates a relationship between digital and physical experiences so that they can be related to and understood together.
+The purpose of designing garments as an art object rather than a commodity is to allow the customer an opportunity to interact and appreciate the clothing before purchasing it. By creating a balance between aesthetic beauty and e-commerce usability, the digital interface conveys a sense of calmness while providing the best possible platform for consumers to buy high-end products. 
+
+The digital space reflects the artisan craftsmanship, respect for cultural heritage, and unique approach of one-of-a-kind custom clothing. This creates a relationship between digital and physical experiences so that they can be related to and understood together.
 
 ## Strategy Plane
 
 **Target Audience:**  
+
 Anarchy & Lace is aimed at design-conscious consumers who value craftsmanship, sustainability, and cultural provenance in fashion. The primary audience includes customers interested in one-off, bespoke garments made from vintage Japanese kimono fabrics, as well as those drawn to slow fashion and ethically minded purchasing. A secondary audience consists of boutique owners, collectors, and design enthusiasts who appreciate material storytelling and limited-edition pieces rather than mass-produced clothing.
 
 **Business Goal:**  
+
 The primary business goal is to create a premium digital boutique that showcases and sells bespoke garments while communicating the artistic and cultural value of the materials used. The platform is intended to demonstrate a fully functional Django-based e-commerce system, integrating secure authentication, product management, and online payments. From a technical perspective, the project aims to evidence competency in full-stack development, data-driven design, and third-party service integration, while from a brand perspective it seeks to establish trust, credibility, and emotional engagement with the customer.
 
 ---
@@ -232,62 +237,78 @@ Organise information and interactions in a way that feels intuitive, narrative-d
 ## Skeleton Plane
 
 **Goal:**  
+
 Design a clear, low-friction interface that allows users to browse high-value garments, understand fabric provenance, and complete checkout with minimal effort and cognitive load.
 
 **Layout & Structure:**
+
 - **Global Navigation:**  
+
   - Sticky header with brand mark and primary navigation (Shop, Fabric Gallery, About, Contact).  
   - Account and cart icons with live item count for immediate feedback.
 
 - **Homepage:**  
+
   - Hero section combining brand identity with material storytelling.  
   - Featured product grid and rotating fabric spotlight panels.  
   - Trust cues such as secure checkout messaging and “one-off item” indicators.  
   - Footer with legal links, contact details, and social presence.
 
 - **Product Listing (Shop):**  
+
   - Grid-based product cards with consistent image ratios.  
   - Clear price display and scarcity markers (e.g. one-off or low stock).  
   - Filtering by category, size, and price range with optional sorting.
 
 - **Product Detail Pages:**  
+
   - Prominent image gallery with zoom support.  
   - Structured content: price, availability, product story, fabric notes, and care guidance.  
   - Strong call-to-action for adding to cart and links to related items.
 
 - **Cart & Checkout Flow:**  
+
   - Line-item summary with quantity controls and removal options.  
   - Transparent subtotal and total pricing.  
   - Redirect to Stripe Checkout for secure payment, returning to an order confirmation page.
 
 - **Account Area:**  
+
   - Profile overview and saved preferences.  
   - Wishlist and order history (future roadmap feature).
 
 - **Manager / Admin Interface:**  
+
   - Separate navigation for staff users.  
   - Clear CRUD forms for product creation, editing, stock control, and order handling.
 
 ## Surface Plane
 
 **Goal:**  
+
 Present a premium, editorial boutique aesthetic that communicates craftsmanship and rarity while maintaining readability and accessibility across devices.
 
 **Theme:**  
+
 - Modern boutique minimalism with a glass-inspired UI language.  
 - Frosted panels, soft depth effects, and deliberate spacing.  
 - Visual restraint influenced by Japanese design principles: balance, calm composition, and emphasis on texture.
 
 **Typography:**  
+
 - **Headings:**  
+
   - A refined serif or high-contrast display typeface to convey luxury and editorial tone.  
 - **Body Text:**  
+
   - A clean, highly legible sans-serif font for descriptions, navigation, and form inputs.  
 - **Hierarchy:**  
+
   - Clear H1–H3 structure with consistent spacing and rhythm.  
   - Distinct styling for prices, calls-to-action, and metadata (fabric type, size, condition).
 
 **Colour Palette:**  
+
 - **Base tones:** Ink black and soft charcoal for text and dark mode foundations.  
 - **Light mode:** Pearl white and warm off-white backgrounds with translucent layers.  
 - **Accent tones:** Muted gold or antique brass for premium highlights (buttons, dividers, star ratings).  
@@ -295,6 +316,7 @@ Present a premium, editorial boutique aesthetic that communicates craftsmanship 
 - **Functional colours:** Accessible success and error states meeting WCAG contrast guidelines.
 
 **Visual Goal:**  
+
 - Present each garment as if curated in a gallery: consistent framing, high-quality imagery, and calm UI composition.  
 - Reinforce the “one-off bespoke” value through subtle scarcity cues and artisan notes rather than aggressive sales techniques.  
 - Ensure every interaction feels deliberate and tailored, with smooth hover states, visible focus indicators, and touch-friendly controls.
