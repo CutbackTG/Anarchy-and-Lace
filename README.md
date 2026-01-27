@@ -382,54 +382,39 @@ This URL structure ensures:
 | Responsive | Mobile layout | Test at 375px/768px | Nav usable, cards don’t overflow |-| Fix breakpoints, long titles, image scaling |
 
 
-## Lighthouse Scores & W3C Validation checks
+## Lighthouse Scores
 
 ### Homepage index.html
 
-
+<img src= static/img/readme/index.png  alt ="Index.html" width= 600>
 
 ### index.html lighthouse score
 
 <img src= static/img/readme/index_lighthouse.png  alt ="Index.html Lighthouse score" width= 600>
 
-### index.html W3C validation check
-
-
-
 ### Kimono History Page
 
-
+<img src= static/img/readme/kimono.png  alt ="kimono_history.html" width= 600>
 
 ### kimono_history.html Lighthouse score
 
 <img src= static/img/readme/kimono_lighthouse.png  alt ="kimono_history.html Lighthouse score" width= 600>
 
-### index.html W3C validation check
-
-
-
 ### Shop product_list.html
 
-
+<img src= static/img/readme/shop.png  alt ="product_list.html" width= 600>
 
 ### product_list.html lighthouse score
 
 <img src= static/img/readme/shop_lighthouse.png  alt ="product_list.html Lighthouse score" width= 600>
 
-### product_list.html W3C validation check
-
-
-
 ### Sign-in/ Sign-up Page
 
-
+<img src= static/img/readme/signin.png  alt ="login.html" width= 600>
 
 ### login.html Lighthouse score
 
 <img src= static/img/readme/signin_lighthouse.png  alt ="login.html Lighthouse score" width= 600>
-
-### login.html W3C validation check
-
 
 
 ## Summary of Automated Testing
