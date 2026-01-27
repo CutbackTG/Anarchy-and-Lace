@@ -137,13 +137,11 @@ As an interested customer,
 I want to create an account using my email address,
 so that I can save my details, and return easily in the future.
 
-
 ### 3. Returning Customer — Shopping
 
 As a returning customer,
 I want to log in and access my saved shopping cart,
 so that I can continue shopping without losing items I previously selected.
-
 
 ### 4. Boutique Owner / Manager — Managing Products
 
@@ -386,13 +384,52 @@ This URL structure ensures:
 
 ## Lighthouse Scores & W3C Validation checks
 
-### Performance & Accessibility
-
 ### Homepage index.html
+
+
 
 ### index.html lighthouse score
 
-### index.html W3C valiadation check
+<img src= static/img/readme/index_lighthouse.png  alt ="Index.html Lighthouse score" width= 600>
+
+### index.html W3C validation check
+
+
+
+### Kimono History Page
+
+
+
+### kimono_history.html Lighthouse score
+
+<img src= static/img/readme/kimono_lighthouse.png  alt ="kimono_history.html Lighthouse score" width= 600>
+
+### index.html W3C validation check
+
+
+
+### Shop product_list.html
+
+
+
+### product_list.html lighthouse score
+
+<img src= static/img/readme/shop_lighthouse.png  alt ="product_list.html Lighthouse score" width= 600>
+
+### product_list.html W3C validation check
+
+
+
+### Sign-in/ Sign-up Page
+
+
+
+### login.html Lighthouse score
+
+<img src= static/img/readme/signin_lighthouse.png  alt ="login.html Lighthouse score" width= 600>
+
+### login.html W3C validation check
+
 
 
 ## Summary of Automated Testing
@@ -448,21 +485,21 @@ A code editor (VS Code, PyCharm, etc.)
 Setup Instructions
 
 Clone the repository:
-
+``` bash
 git clone https://github.com/CutbackTG/Anarchy-and-Lace.git
 cd Anarchy-and-Lace
-
+```
 
 Create a virtual environment:
-
+``` bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-
+```
 
 Install dependencies:
-
+``` bash
 pip install -r requirements.txt
-
+```
 
 Setup environment variables:
 Create a .env file with the following settings:
@@ -474,38 +511,38 @@ DEBUG=True
 
 
 Run migrations:
-
+``` bash
 python manage.py migrate
-
+```
 
 Run the development server:
-
+``` bash
 python manage.py runserver
-
+```
 
 Visit: http://127.0.0.1:8000
 
 ## Contribution Guidelines
 
 Fork the repository and clone your fork:
-
+``` bash
 git clone https://github.com/YOUR-USERNAME/Anarchy-and-Lace.git
-
+```
 
 Create a feature branch:
-
+``` bash
 git checkout -b feature/your-feature-name
-
+```
 
 Commit your changes:
-
+``` bash
 git commit -m "Add: description of your feature"
-
+```
 
 Push to your fork:
-
+``` bash
 git push origin feature/your-feature-name
-
+```
 
 Create a pull request with a clear description of your changes.
 
