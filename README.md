@@ -301,9 +301,14 @@ Present a premium, editorial boutique aesthetic that communicates craftsmanship 
 
 ## Anarchy and Lace Entity Relationship Diagram
 
-<img src= static/img/readme/relationships.png  alt ="A diagram mapping the relaationships at work on the Anarchy and Lace website" width= 600>
+<img src= static/img/readme/user_relationships.png  alt ="A diagram mapping the relaationships at work on the Anarchy and Lace website" width= 600>
+<img src= static/img/readme/staff_relationships.png  alt ="A diagram mapping the relaationships at work on the Anarchy and Lace website" width= 600>
 
+Users and shopping data:
+A regular user account is the core entity for customers. Each user can have multiple related records such as addresses, orders, and wishlist items. An order belongs to exactly one user, but a user can place many orders over time (one-to-many). Orders link to products through an order line or product reference, meaning a product can appear in many orders and an order can contain multiple products (many-to-many via a join table or order item model). Wishlist works the same way: it is a many-to-many relationship between users and products, allowing users to save multiple products and allowing products to appear in many wishlists. Products themselves can belong to multiple categories, implemented as a many-to-many relationship between Product and Category.
 
+Staff roles (Admin and Shop Manager):
+Admin and Shop Manager accounts are specialised user roles rather than separate systems. Both are still users at the database level, but they are distinguished by role flags (for example is_staff or a role field). Admin users have full control over the system, including managing users, products, and orders. Shop Managers typically have permission to manage products and orders but not core system settings or user accounts. Orders still belong to customer users, not staff, but staff users interact with them operationally (viewing, updating status, fulfilling). This keeps business logic clean: customer data is owned by Users, product and order management is handled by staff roles, and permissions control what each role can access rather than duplicating tables.
 
 ## Accessibility Considerations
 

@@ -1,7 +1,17 @@
+/* =========================================================
+   Anarchy & Lace — base.css (REWRITTEN)
+   Mobile-first, tight-to-viewport gutters, clean breakpoints,
+   and one final authority layer (no duplicate fighting rules).
+   ========================================================= */
+
+/* =========================================================
+   THEME TOKENS
+   ========================================================= */
+
 :root{
   /* Background */
   --bg-image: url("/static/background_images/anarchylace_background_white.webp");
-  --bg-overlay: rgba(255, 255, 255, 0.856);
+  --bg-overlay: rgba(255,255,255,0.856);
 
   /* Text */
   --ink: #141414;
@@ -16,7 +26,7 @@
   --gold: #c8a14a;
   --gold-soft: rgba(200,161,74,0.20);
 
-  /* Shape + depth */
+  /* Depth + shape */
   --shadow: 0 20px 50px rgba(20,20,20,0.10);
   --radius: 18px;
   --radius-sm: 12px;
@@ -25,8 +35,21 @@
   --focus: 0 0 0 4px var(--gold-soft);
 
   /* Layout */
-  --header-gap: 6.25rem; /* fixed header offset */
   --container-max: 1100px;
+
+  /* Tight-to-screen gutters (mobile-first) */
+  --container-pad: 12px;
+
+  /* Fixed header offset (shrinks on small screens) */
+  --header-gap: clamp(4.75rem, 9vw, 6.25rem);
+}
+
+/* Gutters scale up */
+@media (min-width: 480px){
+  :root{ --container-pad: 16px; }
+}
+@media (min-width: 900px){
+  :root{ --container-pad: 24px; }
 }
 
 /* System dark mode */
@@ -93,23 +116,30 @@ html[data-theme="dark"]{
 html, body{ min-height: 100%; }
 
 html{
-  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   background:
     linear-gradient(var(--bg-overlay), var(--bg-overlay)),
     var(--bg-image) center / cover no-repeat fixed;
 }
 
 body{
-  min-height: 100%;
   background: transparent;
+  overflow-x: hidden;
 }
 
-/* Reduce jank on mobile */
+/* Reduce background-attachment jank on mobile */
 @media (max-width: 768px){
   html{ background-attachment: scroll; }
 }
 
-/* Accessibility */
+/* Images never overflow */
+img, video, canvas{
+  max-width: 100%;
+  height: auto;
+}
+
+/* Accessibility focus */
 a:focus,
 button:focus,
 input:focus,
@@ -120,23 +150,42 @@ textarea:focus{
 }
 
 /* =========================================================
-   FLASH MESSAGES (always visible under fixed navbar)
+   LAYOUT HELPERS
+   ========================================================= */
+
+.page{
+  padding-top: var(--header-gap);
+  padding-bottom: 64px;
+  min-height: 100svh;
+}
+@supports (min-height: 100dvh){
+  .page{ min-height: 100dvh; }
+}
+
+.shell{
+  width: min(var(--container-max), calc(100% - (var(--container-pad) * 2)));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================================================
+   FLASH MESSAGES (fixed under navbar)
    ========================================================= */
 
 .flash-stack{
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  top: calc(var(--header-gap) + 10px); /* sits just below navbar */
-  width: min(900px, calc(100% - 28px));
-  z-index: 2000; /* above navbar + panels */
+  top: calc(var(--header-gap) + 10px);
+  width: min(900px, calc(100% - (var(--container-pad) * 2)));
+  z-index: 2000;
   display: grid;
   gap: 10px;
-  pointer-events: none; /* clicks pass through background */
+  pointer-events: none;
 }
 
 .flash{
-  pointer-events: auto; /* but the toast itself can be clicked if needed */
+  pointer-events: auto;
   padding: 12px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid color-mix(in srgb, var(--gold) 35%, var(--panel-border));
@@ -147,17 +196,15 @@ textarea:focus{
   font-weight: 600;
 }
 
-/* Optional: different tones by tag */
 .flash--error,
 .flash--danger{
   color: #b44545;
-  border-color: rgba(180, 69, 69, 0.35);
+  border-color: rgba(180,69,69,0.35);
 }
 
 .flash--success{
-  color: var(--gold); /* keep success as gold, per your request */
+  color: var(--gold);
 }
-
 
 /* =========================================================
    TYPOGRAPHY
@@ -179,9 +226,9 @@ a{
   text-decoration: none;
 }
 
-/* =========================
+/* =========================================================
    DJANGO MESSAGES
-   ========================= */
+   ========================================================= */
 
 .messages{
   display: grid;
@@ -197,31 +244,25 @@ a{
   color: var(--ink);
   box-shadow: var(--shadow);
   font-size: 14px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Success → gold instead of green */
 .message.success{
   border-color: var(--gold-soft);
   background: color-mix(in srgb, var(--gold) 18%, transparent);
   color: var(--ink);
 }
 
-/* Error still red */
 .message.error{
   border-color: rgba(180,50,50,0.4);
   background: rgba(180,50,50,0.15);
   color: var(--ink);
 }
 
-/* Info / warning fallback */
 .message.info,
 .message.warning{
   border-color: var(--panel-border);
   background: var(--panel-bg);
-}
-
-.message{
-  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .message-hide{
@@ -229,32 +270,87 @@ a{
   transform: translateY(-6px);
 }
 
-
 /* =========================================================
-   LAYOUT HELPERS
-   ========================================================= */
-
-.page{
-  padding-top: var(--header-gap);
-  padding-bottom: 64px;
-}
-
-.shell{
-  width: min(var(--container-max), calc(100% - 48px));
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* =========================================================
-   TOP BAR / NAV
+   NAV BAR / TOPBAR
    ========================================================= */
 
 .topbar{
   background: rgba(255,255,255,0.01);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--panel-border);
 }
 
+/* If you're using a framework .container inside header/topbar */
+.topbar .container{
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* This is the flex row that contains:
+   brand | nav-desktop OR nav-mobile | theme-toggle */
+.nav-wrap{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: nowrap;             /* critical: stop wrapping on mobile */
+}
+
+/* Brand stays left and can shrink */
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;                /* allow brand to give up space */
+}
+
+/* Desktop nav sits after brand, before toggle */
+.nav-desktop{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  margin-left: auto;
+  flex-wrap: wrap;               /* desktop can wrap safely */
+}
+
+/* Mobile menu sits on the right cluster */
+.nav-mobile{
+  display: none;
+  position: relative;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Theme toggle always far right */
+.theme-toggle{
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--gold) 28%, var(--panel-border));
+  background: var(--panel-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+
+.theme-toggle:hover{
+  border-color: var(--gold-soft);
+}
+
+.theme-toggle__icon{
+  font-size: 18px;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.95;
+}
+
+/* Link base */
 .nav-link{
   font-size: 14px;
   padding: 8px 10px;
@@ -267,45 +363,108 @@ a{
   color: var(--ink);
 }
 
-.nav-link--gold{
+/* Active state (your template adds .active) */
+.nav-link.active{
   border: 1px solid var(--gold-soft);
-  background: color-mix(in srgb, var(--gold) 18%, transparent);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
   color: var(--ink);
 }
 
-.nav-mobile{
-  display: none;
-  position: relative;
+/* Mobile: burger trigger */
+.nav-mobile__trigger{
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  color: var(--ink);
+  user-select: none;
 }
+
+.nav-mobile summary::-webkit-details-marker{ display: none; }
+
+.nav-mobile[open] .nav-mobile__trigger{
+  border-color: var(--gold-soft);
+  box-shadow: var(--focus);
+}
+
+/* Dropdown panel */
+.nav-mobile__panel{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(320px, calc(100vw - (var(--container-pad) * 2)));
+  padding: 12px;
+  z-index: 3000;
+  border-radius: var(--radius);
+}
+
+/* Panel glass override */
+.nav-mobile__panel.glass-panel{
+  background: color-mix(in srgb, var(--panel-bg) 96%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, var(--panel-border));
+  box-shadow: 0 22px 60px rgba(0,0,0,0.30);
+}
+
+/* Links inside panel */
+.nav-link--block{
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* Divider */
+.nav-mobile__divider{
+  height: 1px;
+  margin: 10px 6px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gold) 55%, transparent),
+    transparent
+  );
+  opacity: 0.75;
+}
+
+/* =========================================================
+   RESPONSIVE SWITCH
+   ========================================================= */
 
 @media (max-width: 900px){
   .nav-desktop{ display: none !important; }
   .nav-mobile{ display: block; }
+
+  /* keep right-side controls visible + tight */
+  .nav-wrap{
+    gap: 8px;
+  }
+
+  /* On tiny screens, brand gives up even more room */
+  .brand{
+    max-width: 55%;
+  }
+
+  .brand-logo{
+    height: 48px;
+  }
 }
 
-
-/* Theme toggle */
-.theme-toggle{
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--panel-border);
-  background: var(--panel-bg);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+@media (max-width: 420px){
+  .brand-text{ display: none; }
+  .nav-mobile__label{ display: none; } /* optional: ☰ only, super tight */
+  .nav-mobile__trigger{ gap: 0; }
 }
 
-.theme-toggle:hover{ border-color: var(--gold-soft); }
-
-.theme-toggle__icon{
-  font-size: 16px;
-  color: var(--ink);
-}
 
 /* =========================================================
-   BRAND / LOGO (FIXED)
+   BRAND / LOGO
    ========================================================= */
 
 .brand{
@@ -314,6 +473,8 @@ a{
   gap: 10px;
   font-weight: 600;
   letter-spacing: 0.2px;
+  min-width: 0;
+  max-width: 60%;
 }
 
 .brand-amp{
@@ -321,7 +482,6 @@ a{
   margin: 0 4px;
 }
 
-/* Image logo */
 .brand-logo{
   height: 60px;
   width: auto;
@@ -338,83 +498,22 @@ a{
   font-size: x-large;
   letter-spacing: 0.2px;
 }
+.brand-mark{ color: var(--ink); }
 
-.brand-mark{
-  color: var(--ink);
-}
-
+/* Hide text on very small screens */
 @media (max-width: 480px){
   .brand-text{ display: none; }
+  .brand-logo{ height: 48px; }
 }
 
-/* System dark mode: invert the IMAGE only, text follows --ink */
+/* Invert the IMAGE only in dark mode */
 @media (prefers-color-scheme: dark){
   .brand-logo{ filter: invert(1) hue-rotate(180deg); }
 }
-
-/* Manual theme override wins */
 html[data-theme="dark"] .brand-logo{ filter: invert(1) hue-rotate(180deg); }
 html[data-theme="light"] .brand-logo{ filter: none; }
-
-/* brand-mark is text: it already tracks --ink via variables.
-   This keeps it explicit (and prevents future overrides). */
-html[data-theme="dark"] .brand-mark{ color: var(--ink); }
+html[data-theme="dark"] .brand-mark,
 html[data-theme="light"] .brand-mark{ color: var(--ink); }
-
-/* =========================================================
-   HERO FABRIC GALLERY (RESTORED)
-   ========================================================= */
-
-.hero__panel--gallery{
-  padding: 22px;
-  padding-top: clamp(6px, 1.2vw, 12px);
-  border-color: rgba(200,161,74,0.55);
-}
-
-/* This is the one you lost. If your landing page uses it, it must exist. */
-.fabric-card__img{
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  filter: saturate(1.05) contrast(1.02);
-}
-
-.image_button{
-  width: 196px;
-  height: 96px;
-  margin: 14px auto 10px;
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  border-radius: 14px;
-  border: 1px solid var(--panel-border);
-
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25),
-              0 6px 14px rgba(0,0,0,0.14);
-
-  opacity: 0.9;
-}
-
-/* Keep it subtle on hover */
-.hero-card:hover .image_button{
-  opacity: 1;
-  transform: scale(1.02);
-}
-
-/* Mobile */
-@media (max-width: 768px){
-  .image_button{
-    width: 300px;
-    height: 150px;
-  }
-}
-
-.image_button{
-  filter: saturate(1.1) contrast(1.05);
-  mix-blend-mode: multiply;
-}
 
 /* =========================================================
    KINTSUGI LINE
@@ -446,7 +545,13 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 22px;
+}
+
+/* Tighten padding on very small screens (keeps everything “tight to the screen”) */
+@media (max-width: 480px){
+  .glass-panel{ padding: 14px; }
 }
 
 /* Buttons */
@@ -462,7 +567,6 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
   cursor: pointer;
   color: var(--ink);
 }
-
 .button:hover{ border-color: var(--gold-soft); }
 
 .button--gold{
@@ -486,6 +590,15 @@ html[data-theme="light"] .brand-mark{ color: var(--ink); }
   overflow: hidden;
   border: 1px solid var(--panel-border);
   background: rgb(var(--panel-base) / 10%);
+}
+
+/* Allow horizontal scrolling on small devices instead of breaking layout */
+@media (max-width: 700px){
+  .table{
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .table th,
@@ -553,7 +666,7 @@ textarea{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(24px, 6vw, 64px);
+  padding: clamp(18px, 5vw, 64px);
 }
 
 .auth-panel{
@@ -563,7 +676,7 @@ textarea{
 }
 
 .auth-inner{
-  padding: clamp(24px, 4vw, 40px);
+  padding: clamp(20px, 4vw, 40px);
 }
 
 .auth-inner form{ width: 100%; }
@@ -600,7 +713,6 @@ textarea{
   background: var(--panel-bg);
   color: var(--ink);
 }
-
 .provider-btn:hover{ border-color: var(--gold-soft); }
 
 .provider-icon{
@@ -624,8 +736,35 @@ textarea{
   color: var(--ink-muted);
 }
 
+.site-footer{
+  margin-top: 4rem;
+  padding: 1.5rem 0;
+  background: rgba(0,0,0,0.04);
+  border-top: 1px solid rgba(0,0,0,0.08);
+  font-size: 0.9rem;
+}
+
+.footer-inner{
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  opacity: 0.8;
+  flex-wrap: wrap;
+  padding: 0 var(--container-pad);
+  text-align: center;
+}
+
+.footer-brand{
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.footer-copy{
+  font-style: italic;
+}
+
 /* =========================================================
-   LANDING PAGE
+   LANDING PAGE (HERO)
    ========================================================= */
 
 .hero{
@@ -635,7 +774,7 @@ textarea{
 .hero__panel{
   margin-top: 10px;
   margin-bottom: clamp(22px, 3vw, 36px);
-  padding: clamp(22px, 3vw, 36px);
+  padding: clamp(18px, 3vw, 36px);
   border-color: #fcd078;
 }
 
@@ -673,7 +812,7 @@ textarea{
   right: 0;
   bottom: 0.10em;
   height: 0.18em;
-  background: rgba(205, 164, 92, 0.22);
+  background: rgba(205,164,92,0.22);
   border-radius: 999px;
   z-index: -1;
 }
@@ -692,11 +831,19 @@ textarea{
   margin-bottom: 18px;
 }
 
+/* Grid: 3 -> 2 -> 1 for better tablet feel */
 .hero__grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
   align-items: stretch;
+}
+
+@media (max-width: 1100px){
+  .hero__grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px){
+  .hero__grid{ grid-template-columns: 1fr; }
 }
 
 .hero-card{
@@ -729,30 +876,12 @@ textarea{
   color: var(--ink-muted);
   transition: color 0.2s ease, transform 0.2s ease;
 }
+.hero .glass-panel a:hover{ color: var(--gold); }
+.hero .glass-panel a::after{ transition: transform 0.2s ease; }
+.hero .glass-panel a:hover::after{ transform: translateX(2px); }
+.hero .glass-panel:hover .hero-card__title{ color: var(--gold); }
 
-.hero .glass-panel a:hover{
-  color: var(--gold);
-}
-
-.hero .glass-panel a::after{
-  transition: transform 0.2s ease;
-}
-
-.hero .glass-panel a:hover::after{
-  transform: translateX(2px);
-}
-
-.hero .glass-panel:hover .hero-card__title{
-  color: var(--gold);
-}
-
-@media (max-width: 900px){
-  .hero__grid{ grid-template-columns: 1fr; }
-}
-
-.hero__footer{
-  margin-top: 18px;
-}
+.hero__footer{ margin-top: 18px; }
 
 .hero__fineprint{
   display: flex;
@@ -763,8 +892,72 @@ textarea{
   color: var(--ink-muted);
   padding: 12px 2px 0;
 }
-
 .hero__dot{ opacity: 0.6; }
+
+/* =========================================================
+   HERO FABRIC GALLERY (RESTORED)
+   ========================================================= */
+
+.hero__panel--gallery{
+  padding: 22px;
+  padding-top: clamp(6px, 1.2vw, 12px);
+  border-color: rgba(200,161,74,0.55);
+}
+
+@media (max-width: 480px){
+  .hero__panel--gallery{ padding: 14px; }
+}
+
+/* Card image */
+.fabric-card__img{
+  height: clamp(160px, 46vw, 220px);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.02);
+  border-radius: 14px;
+}
+
+/* Image buttons */
+.image_button{
+  width: 196px;
+  height: 96px;
+  margin: 14px auto 10px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 14px;
+  border: 1px solid var(--panel-border);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.25),
+    0 6px 14px rgba(0,0,0,0.14);
+
+  opacity: 0.9;
+  filter: saturate(1.1) contrast(1.05);
+  mix-blend-mode: multiply;
+
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero-card:hover .image_button{
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px){
+  .image_button{
+    width: 300px;
+    height: 150px;
+  }
+}
+@media (max-width: 420px){
+  .image_button{
+    width: min(300px, 100%);
+    height: 140px;
+  }
+}
 
 /* =========================================================
    CONTACT PAGE
@@ -777,18 +970,16 @@ textarea{
 }
 
 /* =========================================================
-   SHOP (single, consistent block)
+   SHOP
    ========================================================= */
 
 .shop{
-  width: min(1200px, calc(100% - 40px));
+  width: min(1200px, calc(100% - (var(--container-pad) * 2)));
   margin: 0 auto;
   padding: 2rem 0;
 }
 
-.shop-header{
-  margin-bottom: 1.25rem;
-}
+.shop-header{ margin-bottom: 1.25rem; }
 
 /* Shop “hero” panel behind title + filters */
 .shop-top{
@@ -796,18 +987,14 @@ textarea{
   margin: 0 0 18px;
 }
 
-.shop-header h1{
-  margin: 0 0 6px;
+@media (max-width: 480px){
+  .shop-top{ padding: 16px 14px 14px; }
 }
 
-.shop-header p{
-  margin: 0;
-}
+.shop-header h1{ margin: 0 0 6px; }
+.shop-header p{ margin: 0; }
 
-/* tighten collections spacing inside the panel */
-.shop-top .collections{
-  margin: 14px 0 0;
-}
+.shop-top .collections{ margin: 14px 0 0; }
 
 .collections{
   display: flex;
@@ -842,7 +1029,7 @@ textarea{
 .product-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  gap: clamp(14px, 2vw, 20px);
   padding: 18px 0 6px;
   align-items: stretch;
 }
@@ -850,8 +1037,8 @@ textarea{
 .product-card{
   display: block;
   width: 100%;
-  max-width: 300px;   /* 👈 controls card size */
-  margin: 0 auto;     /* 👈 centers when only 1 product */
+  max-width: min(360px, 100%);
+  margin: 0 auto;
 
   border-radius: var(--radius);
   overflow: hidden;
@@ -870,7 +1057,6 @@ textarea{
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
-
 .product-card:hover{
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--gold) 35%, var(--panel-border));
@@ -880,8 +1066,9 @@ textarea{
 .product-media{
   width: 100%;
   aspect-ratio: 4 / 5;
-  min-height: 240px;
+  min-height: clamp(220px, 40vw, 320px);
   overflow: hidden;
+  position: relative;
   background: rgb(var(--panel-base) / 6%);
   border-bottom: 1px solid var(--panel-border);
 }
@@ -891,9 +1078,13 @@ textarea{
   height: 100%;
   display: block;
   object-fit: cover;
+  opacity: 1 !important;
+  visibility: visible !important;
   transform: scale(1.001);
   filter: saturate(1.05) contrast(1.03);
   transition: transform 220ms ease, filter 220ms ease;
+  position: relative;
+  z-index: 1;
 }
 
 .product-card:hover .product-img{
@@ -928,54 +1119,31 @@ textarea{
 }
 
 /* =========================================================
-   SHOP IMAGE VISIBILITY OVERRIDE (put at very bottom)
+   PRODUCT DETAIL (viewer)
    ========================================================= */
 
-.product-media{
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  min-height: 280px;          /* ensures a visible box even if aspect-ratio fails */
-  overflow: hidden;
-  position: relative;
-  background: rgb(var(--panel-base) / 6%);
-}
-
-.product-img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none;            /* removes any accidental transforms */
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================
-   PRODUCT DETAIL (Amazon-style viewer)
-   ========================= */
-
 .pd{
-  width: min(1200px, calc(100% - 40px));
+  width: min(1200px, calc(100% - (var(--container-pad) * 2)));
   margin: 0 auto;
   padding: 2rem 0;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 22px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(16px, 2.2vw, 26px);
   align-items: start;
 }
 
-@media (max-width: 900px){
+@media (max-width: 1024px){
   .pd{ grid-template-columns: 1fr; }
 }
 
 /* Gallery card */
-.pd-gallery{
-  padding: 18px;
+.pd-gallery{ padding: 18px; }
+
+@media (max-width: 480px){
+  .pd-gallery{ padding: 14px; }
 }
 
-/* Viewer header row (Fit/Fill/Zoom buttons) */
+/* Viewer header row */
 .pd-viewerbar{
   display: flex;
   gap: 10px;
@@ -1019,6 +1187,11 @@ textarea{
   position: relative;
 }
 
+/* More natural on narrow screens */
+@media (max-width: 1024px){
+  .pd-main{ aspect-ratio: 4 / 5;  }
+}
+
 /* The image itself (default = FIT) */
 .pd-main-img{
   max-width: 100%;
@@ -1031,7 +1204,7 @@ textarea{
   padding: 14px;
 }
 
-/* Mode: FILL (cover, can crop) */
+/* Mode: FILL */
 .pd-main.is-fill .pd-main-img{
   width: 100%;
   height: 100%;
@@ -1041,20 +1214,16 @@ textarea{
   padding: 0;
 }
 
-/* Placeholder */
-.pd-main-placeholder{
-  color: var(--ink-muted);
-}
+.pd-main-placeholder{ color: var(--ink-muted); }
 
 /* Thumbnails row */
 .pd-thumbs{
   margin-top: 14px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
   gap: 10px;
 }
 
-/* Thumbnail button */
 .pd-thumb{
   border: 1px solid var(--panel-border);
   background: rgb(var(--panel-base) / 8%);
@@ -1086,7 +1255,7 @@ textarea{
 .mag-page{
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 2.2rem 1.2rem 3rem;
+  padding: clamp(1.4rem, 4vw, 2.2rem) var(--container-pad) clamp(2rem, 5vw, 3rem);
 }
 
 /* Type */
@@ -1122,10 +1291,7 @@ textarea{
   color: var(--ink);
 }
 
-/* =========================================================
-   Shared glass panel base for this page
-   ========================================================= */
-
+/* Shared glass base */
 .mag-glass{
   background:
     radial-gradient(
@@ -1141,10 +1307,7 @@ textarea{
   -webkit-backdrop-filter: blur(12px) saturate(120%);
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
-
+/* Hero */
 .mag-hero{
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -1176,22 +1339,11 @@ textarea{
   color: var(--ink-muted);
 }
 
-/* Now that .mag-dek contains multiple <p> and blockquotes */
-.mag-dek p{
-  margin: 0 0 0.9rem;
-}
+.mag-dek p{ margin: 0 0 0.9rem; }
+.mag-dek p:last-child{ margin-bottom: 0; }
 
-.mag-dek p:last-child{
-  margin-bottom: 0;
-}
+.mag-hero__image{ margin: 0; }
 
-/* Hero figure */
-.mag-hero__image{
-  margin: 0; /* remove default figure margins */
-}
-
-/* IMPORTANT: clip only the image, not the caption
-   Wrap your img with <div class="mag-hero__frame"> ... </div> */
 .mag-hero__frame{
   max-height: 880px;
   overflow: hidden;
@@ -1214,10 +1366,7 @@ textarea{
   line-height: 1.5;
 }
 
-/* =========================================================
-   TWO-COLUMN SECTIONS
-   ========================================================= */
-
+/* Two column sections */
 .mag-grid{
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -1246,39 +1395,26 @@ textarea{
 }
 
 .mag-body h2,
-.mag-body h3{
-  margin-top: 0;
-}
-
-.mag-body p{
-  max-width: 100%;
-}
+.mag-body h3{ margin-top: 0; }
 
 .mag-list{
   padding-left: 1.1rem;
   margin: 0.6rem 0 0;
 }
 
-.mag-aside{
-  position: relative;
-}
+.mag-aside{ position: relative; }
 
-/* Featured note styling */
 .mag-note--featured{
   border-left: 3px solid var(--gold);
   padding-left: 1.4rem;
 }
 
-/* Sticky CTA note */
 .mag-note--cta{
   position: sticky;
   top: 1.2rem;
 }
 
-/* =========================================================
-   INLINE QUOTES (small pull cards inside text)
-   ========================================================= */
-
+/* Inline quotes */
 .mag-quote-inline{
   margin: 1rem 0;
   padding: 14px 16px;
@@ -1305,10 +1441,7 @@ textarea{
   opacity: 0.9;
 }
 
-/* =========================================================
-   PULL QUOTE (full-width)
-   ========================================================= */
-
+/* Pull quote */
 .mag-quote{
   margin: 2.4rem 0;
   text-align: center;
@@ -1327,13 +1460,8 @@ textarea{
   font-size: 0.9rem;
 }
 
-/* =========================================================
-   TIMELINE
-   ========================================================= */
-
-.mag-timeline h2{
-  margin-bottom: 1rem;
-}
+/* Timeline */
+.mag-timeline h2{ margin-bottom: 1rem; }
 
 .timeline{
   display: grid;
@@ -1356,10 +1484,7 @@ textarea{
   margin: 0 0 0.35rem;
 }
 
-/* =========================================================
-   FIGURES + IMAGE STRIP
-   ========================================================= */
-
+/* Figures + image strip */
 .mag-strip{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1367,7 +1492,6 @@ textarea{
   margin: 2.2rem 0;
 }
 
-/* Avoid collision with the shop .img-placeholder */
 .mag-page .img-placeholder{
   border-radius: var(--radius);
   border: 1px dashed color-mix(in srgb, var(--panel-border) 60%, transparent);
@@ -1381,13 +1505,9 @@ textarea{
   background: rgb(var(--panel-base) / 6%);
 }
 
-.mag-page .img-placeholder--tall{
-  min-height: 420px;
-}
+.mag-page .img-placeholder--tall{ min-height: 420px; }
 
-.mag-figure{
-  margin: 0; /* figures can add margin by default in some resets */
-}
+.mag-figure{ margin: 0; }
 
 .mag-figure img{
   width: 100%;
@@ -1410,36 +1530,20 @@ textarea{
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* End section spacing */
-.mag-grid--end{
-  margin-top: 2.6rem;
-}
+.mag-grid--end{ margin-top: 2.6rem; }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
+/* Responsive for magazine */
 @media (max-width: 900px){
   .mag-hero,
-  .mag-grid{
-    grid-template-columns: 1fr;
-  }
+  .mag-grid{ grid-template-columns: 1fr; }
 
-  .timeline__item{
-    grid-template-columns: 1fr;
-  }
+  .timeline__item{ grid-template-columns: 1fr; padding: 18px; }
 
-  .mag-strip{
-    grid-template-columns: 1fr;
-  }
+  .mag-strip{ grid-template-columns: 1fr; }
 
-  .mag-note--cta{
-    position: static;
-  }
+  .mag-note--cta{ position: static; }
 
-  .timeline__item{
-    padding: 18px;
-  }
+  .mag-hero__frame{ max-height: 520px; }
 }
 
 .mag-outro{
@@ -1447,7 +1551,7 @@ textarea{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 220px; /* gives breathing room so button sits lower */
+  min-height: 220px;
 }
 
 .mag-outro-action{
@@ -1456,478 +1560,57 @@ textarea{
   justify-content: center;
 }
 
-/* menu alignment fix (DESKTOP ONLY) */
-@media (min-width: 901px){
-  .nav-desktop{
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-}
-
-
 /* =========================================================
-   STARS
+   STARS + REVIEWS
    ========================================================= */
-   .review-stars {
+
+.review-stars{
   margin-bottom: 0.6rem;
   font-size: 1.15rem;
   letter-spacing: 2px;
 }
 
-.star--on {
+.star--on{
   color: #d4af37;
   text-shadow: 0 0 10px rgba(212,175,55,0.25);
 }
 
-.star--off {
+.star--off{
   color: rgba(255,255,255,0.25);
 }
 
-.reviews-section {
-  margin-top: 3rem;
-}
+.reviews-section{ margin-top: 3rem; }
 
-.reviews-section h2 {
-  margin-bottom: 1.5rem;
-}
+.reviews-section h2{ margin-bottom: 1.5rem; }
 
-.reviews-grid {
+.reviews-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
-.review-card {
+.review-card{
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.review-text {
+.review-text{
   font-style: italic;
   line-height: 1.5;
   margin: 1rem 0;
 }
 
-.review-author {
+.review-author{
   margin-top: auto;
   opacity: 0.85;
   font-size: 0.95rem;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .reviews-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* =========================================================
-   Footer
-   ========================================================= */
-   .site-footer {
-  margin-top: 4rem;
-  padding: 1.5rem 0;
-  background: rgba(0, 0, 0, 0.04);
-  border-top: 1px solid rgba(0,0,0,0.08);
-  font-size: 0.9rem;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  opacity: 0.8;
-}
-
-.footer-brand {
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-
-.footer-copy {
-  font-style: italic;
-}
-
-.nav-mobile__trigger{
-  list-style: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--panel-border);
-  background: var(--panel-bg);
-  color: var(--ink);
-}
-
-.nav-mobile summary::-webkit-details-marker{ display:none; }
-
-.nav-mobile__panel{
-  position: absolute;
-  right: 0;
-  top: calc(100% + 10px);
-  width: min(320px, calc(100vw - 24px));
-  padding: 12px;
-  z-index: 3000;
-}
-
-.nav-link--block{
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-}
-
-.nav-mobile__divider{
-  height: 1px;
-  margin: 10px 4px;
-  background: color-mix(in srgb, var(--gold) 35%, transparent);
-  opacity: 0.6;
-}
-
-/* =========================
-   NAV: final authority layer
-   (put at VERY BOTTOM)
-   ========================= */
-
-/* Keep header row tidy */
-.nav-wrap{
-  gap: 10px;
-}
-
-/* Desktop vs Mobile visibility */
-@media (min-width: 901px){
-  .nav-desktop{
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .nav-mobile{ display: none; }
-}
-
-@media (max-width: 900px){
-  .nav-desktop{ display: none !important; }
-  .nav-mobile{ display: block; }
-}
-
-/* Mobile: keep controls on one line and stop wrapping */
-@media (max-width: 900px){
-  .nav-wrap{
-    flex-wrap: nowrap;
-  }
-
-  /* Brand can shrink without pushing menu down */
-  .brand{
-    min-width: 0;
-  }
-  .brand-logo{
-    height: 52px; /* slightly smaller on mobile */
-  }
-
-  /* Park the mobile menu + theme button as a right-side cluster */
-  .nav-mobile{
-    margin-left: auto;         /* pushes it to the right */
-    flex: 0 0 auto;
-  }
-  .theme-toggle{
-    flex: 0 0 auto;
-  }
-}
-
-/* Mobile dropdown styling */
-.nav-mobile__trigger{
-  list-style: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--panel-border);
-  background: var(--panel-bg);
-  color: var(--ink);
-  user-select: none;
-}
-.nav-mobile summary::-webkit-details-marker{ display: none; }
-
-.nav-mobile[open] .nav-mobile__trigger{
-  border-color: var(--gold-soft);
-  box-shadow: var(--focus);
-}
-
-/* Panel anchors to the right edge of the menu button */
-.nav-mobile__panel{
-  position: absolute;
-  right: 0;
-  top: calc(100% + 10px);
-  width: min(320px, calc(100vw - 24px));
-  padding: 12px;
-  z-index: 3000;
-}
-
-/* Make links fill the panel */
-.nav-link--block{
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-}
-
-.nav-mobile__divider{
-  height: 1px;
-  margin: 10px 6px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--gold) 55%, transparent),
-    transparent
-  );
-  opacity: 0.75;
-}
-
-.nav-mobile__panel.glass-panel{
-  background: color-mix(in srgb, var(--panel-bg) 96%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid color-mix(in srgb, var(--gold) 30%, var(--panel-border));
-  box-shadow: 0 22px 60px rgba(0,0,0,0.35);
-}
-.nav-mobile__panel{
-  border-radius: var(--radius);
-}
-/* Mobile: keep menu + theme toggle visible and spaced */
-@media (max-width: 900px){
-  .nav-wrap{
-    justify-content: space-between;
-  }
-
-  /* Give the right side breathing room */
-  .nav-mobile{
-    margin-left: auto;
-    margin-right: 8px; /* space between menu + theme */
-  }
-
-  /* Make the toggle read as a button (not a smudge) */
-  .theme-toggle{
-    border-color: color-mix(in srgb, var(--gold) 28%, var(--panel-border));
-    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-  }
-
-  .theme-toggle__icon{
-    font-size: 18px;      /* a touch bigger */
-    line-height: 1;
-    opacity: 0.95;
-  }
-}
-@media (max-width: 900px){
-  .topbar .container{
-    padding-right: 48px;
-    padding-left: 14px;
-  }
-}
-
-/* =========================================================
-   RESPONSIVE FINAL AUTHORITY LAYER (drop-in at bottom)
-   ========================================================= */
-
-/* 1) Smarter global sizing + mobile viewport correctness */
-html{
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
-body{
-  /* helps prevent random horizontal scroll on tiny devices */
-  overflow-x: hidden;
-}
-
-/* Use dynamic viewport units when supported (prevents iOS address-bar jump) */
-.page{
-  min-height: 100svh;
-}
-@supports (min-height: 100dvh){
-  .page{ min-height: 100dvh; }
-}
-
-/* 2) Responsive tokens: container + header offset + radius scale */
-:root{
-  /* keep your container but make it adapt */
-  --container-pad: clamp(14px, 3.5vw, 24px);
-  --container-max: 1100px;
-
-  /* header gap should shrink a touch on small screens */
-  --header-gap: clamp(4.75rem, 9vw, 6.25rem);
-
-  /* soften radius slightly on tiny screens */
-  --radius: clamp(14px, 2vw, 18px);
-  --radius-sm: clamp(10px, 1.6vw, 12px);
-}
-
-/* Apply padding token consistently */
-.shell,
-.shop,
-.pd,
-.mag-page{
-  width: min(1200px, calc(100% - (var(--container-pad) * 2)));
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* 3) Typography that doesn’t blow up or shrink awkwardly */
-h1{ font-size: clamp(1.6rem, 4vw, 2.4rem); }
-h2{ font-size: clamp(1.25rem, 3vw, 1.8rem); }
-p, li, td, th, label, small{
-  font-size: clamp(0.95rem, 1.4vw, 1rem);
-}
-
-/* 4) NAV: prevent collisions + guarantee the theme toggle stays tappable */
-.topbar .container{
-  /* Your last rule hard-codes padding-right:48px which can be tight on some widths */
-  padding-left: var(--container-pad);
-  padding-right: var(--container-pad);
-}
-
-.nav-wrap{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0; /* allows children to shrink */
-}
-
-/* Ensure brand never forces right-side controls off-screen */
-.brand{
-  min-width: 0;
-  max-width: 60%;
-}
-
-/* Make sure the theme toggle is always visible and has a bigger hit area */
-.theme-toggle{
-  width: 42px;
-  height: 42px;
-  flex: 0 0 auto;
-  border-color: color-mix(in srgb, var(--gold) 28%, var(--panel-border));
-}
-
-.theme-toggle__icon{
-  font-size: 18px;
-  line-height: 1;
-}
-
-/* Mobile: keep menu + theme toggle grouped and aligned */
-@media (max-width: 900px){
-  .nav-wrap{
-    justify-content: space-between;
-    flex-wrap: nowrap;
-  }
-
-  /* Brand area adapts */
-  .brand-logo{ height: 48px; }
-  .brand-text{ font-size: 1.1rem; }
-
-  /* Right-side cluster */
-  .nav-mobile{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-    position: relative;
-  }
-
-  /* If your HTML has theme toggle outside nav-mobile,
-     this still ensures it doesn’t shrink away */
-  .theme-toggle{ flex: 0 0 auto; }
-}
-
-/* Very small screens: hide brand text sooner and tighten spacing */
-@media (max-width: 420px){
-  .brand-text{ display: none; }
-  .nav-link{ padding: 8px 9px; }
-}
-
-/* 5) FLASH: safe width + no overlap on tiny screens */
-.flash-stack{
-  width: min(900px, calc(100% - (var(--container-pad) * 2)));
-}
-
-/* 6) HERO grid: currently jumps from 3 cols to 1 at 900px.
-      Add an intermediate 2-col breakpoint for nicer tablet layouts. */
-.hero__grid{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 @media (max-width: 1100px){
-  .hero__grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reviews-grid{ grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px){
-  .hero__grid{ grid-template-columns: 1fr; }
-}
-
-/* 7) PRODUCT GRID: stop cards feeling cramped or tiny.
-      Your grid is good, but max-width:300 on .product-card can cause odd gaps.
-      Let cards breathe on wide screens, but still cap them nicely. */
-.product-grid{
-  gap: clamp(14px, 2vw, 20px);
-  padding: 18px 0 6px;
-}
-
-.product-card{
-  max-width: min(360px, 100%);
-}
-
-/* Make product media adapt to screen size */
-.product-media{
-  min-height: clamp(220px, 40vw, 320px);
-}
-
-/* 8) PRODUCT DETAIL: on mid screens, allow a more balanced split */
-.pd{
-  gap: clamp(16px, 2.2vw, 26px);
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-}
-
-@media (max-width: 1024px){
-  .pd{ grid-template-columns: 1fr; }
-  .pd-main{ aspect-ratio: 4 / 5; } /* nicer on mobile than 1/1 */
-}
-
-/* Thumbs: prevent microscopic tiles */
-.pd-thumbs{
-  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
-}
-
-/* 9) MAG page: make big paddings less chunky on phones */
-.mag-page{
-  padding: clamp(1.4rem, 4vw, 2.2rem) var(--container-pad) clamp(2rem, 5vw, 3rem);
-}
-
-@media (max-width: 900px){
-  .mag-hero__frame{ max-height: 520px; }
-}
-
-/* 10) TABLES: allow horizontal scroll on small screens instead of breaking layout */
-.table{
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* 11) FOOTER: stack nicely on small screens */
-.footer-inner{
-  flex-wrap: wrap;
-  padding: 0 var(--container-pad);
-  text-align: center;
-}
-
-/* 12) Quality-of-life: images don’t overflow their containers */
-img, video, canvas{
-  max-width: 100%;
-  height: auto;
+  .reviews-grid{ grid-template-columns: 1fr; }
 }
