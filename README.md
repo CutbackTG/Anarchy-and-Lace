@@ -301,20 +301,49 @@ Present a premium, editorial boutique aesthetic that communicates craftsmanship 
 
 ## Accessibility Considerations
 
+Anarchy & Lace emphasises general accessibility and universal use as a basic assumption in developing the site for as many users who may be unable to navigate traditional tools, such as those with visual or cognitive impairments.
+
+As well as emulating WCAG 2.1 (Web Content Accessibility Guidelines) wherever applicable, semantic HTML5 elements were utilised throughout the website. Semantically structured markup helps provide useful document structure when using assistive technology (e.g. screen readers). For example, using semantic headings, titles according to logical levels, utilising proper navigation landmarks, pairing forms with appropriate identification labels (visible and programmatic), and so on.
+
+Colour and contrast have been taken into account when designing the website in light and dark themes. For example, the colour and contrast of text and interactive elements has been tested to ensure that they are sufficiently contrasting against their background to be legible under various types of lighting conditions. The dual-theme nature of the website allows users who experience visual light sensitivity to utilise the site in a more comfortable "moon" theme.
+
+All interactive components (navigation links, buttons, form inputs, theme buttons, etc.) have been designed to be usable with a keyboard. Visual focus is readily noticeable, making navigation via keyboard or assistive device easier for users to identify where they are in the interface.
+
+To assist users in accurately populating necessary fields on forms, they incorporate clear input labels, placeholder text, and validation feedback as well as utilize descriptive error messages located alongside relevant inputs in an effort to minimize ambiguity while enhancing usability for screen reader users.
+
+Additionally, product and editorial content uses images with descriptive alternative text if possible, ensuring that users who do not have visual access to images receive the equivalent of the product or garment context and content. Decorative images are designated correctly to mitigate extraneous auditory noise being produced by screen readers.
+
+As part of applying responsive design principles, desktop, tablet, and mobile device accessibility were considered when designing touch targets and providing sufficient spacing between layout elements to prevent accidental user interface interactions.
+
+Both motion and visual effects have been purposefully limited. The transitions occurring within the interface are designed intentionally and not exclusively animated in order to reduce any potential discomfort for users who may be sensitive to motion, while maintaining a calm and easy-to-read environment for users.
+
 ## Wireframes
 
-### Homepage
 ### Homepage wireframe concept
-### wireframe concept
-### Signup / Login
-### Signup/Login wireframe concept
-### wireframe concept
 
-## Colour Scheme
+<img src= static/img/readme/index_wireframe.png  alt ="Index.html wireframe" width= 600>
+
+### shop wireframe concept
+
+<img src= static/img/readme/shop_wireframe.png  alt ="product_detail.html wireframe" width= 600>
+
+### kimono history wireframe concept
+
+<img src= static/img/readme/kimono_wireframe.png  alt ="kimono_history.html wireframe" width= 600>
+
+### Signup/Login wireframe concept
+
+<img src= static/img/readme/signin_wireframe.png  alt ="login.html wireframe" width= 600>
+
+## Colour Scheme Inspirations
+
+<img src= static/img/readme/kintsugiwhite.jpg  alt ="white kintsugi porcelain" width= 400><img src= static/img/readme/kintsugiblack.webp  alt ="a black piece of kintsigi porcelain" width= 400>
+<img src= static/img/readme/anarchylace_background_white.webp  alt ="a light kintsugi themed background" width= 400><img src= static/img/readme/anarchylace_background_black.webp  alt ="a dark kintsugi themed background" width= 400>
+<img src= static/img/readme/zen_garden.png  alt ="A Japanese Zen garden" width= 600>
 
 ## Anarchy & Lace colour scheme
 
-## Testing colour scheme on Huemint.
+<img src= static/img/readme/pallette.png  alt ="Anarchy and Lace colour pallette" width= 600>
 
 ## Url to View Map
 
@@ -456,6 +485,13 @@ This URL structure ensures:
 | Cart | cart/tests/test_cart.py | Add/update/remove cart actions update session state correctly |
 | Reviews | reviews/tests/test_reviews.py | Login required for review submission; rating validation works |
 | Payments | payments/tests/test_stripe_checkout.py | Stripe checkout session creation is called (mocked) without external requests |
+
+### Problems
+
+Google Chrome flags the Heroku based project as "dangerous" even though our stripe system is in a dev sandbox state.
+Please see attached certificate for validation of Heroku as the source for this flag.
+
+<img src= static/img/readme/dangerous_cert.png  alt ="Google danger flag" width= 400>
 
 ## Installation & Deployment
 
