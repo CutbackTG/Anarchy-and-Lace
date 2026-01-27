@@ -321,7 +321,7 @@ Both motion and visual effects have been purposefully limited. The transitions o
 
 ### Homepage wireframe concept
 
-<img src= static/img/readme/index_wireframe.png  alt ="Index.html wireframe" width= 600>
+<img src= static/img/readme/index.wireframe.png  alt ="Index.html wireframe" width= 600>
 
 ### shop wireframe concept
 
@@ -338,7 +338,13 @@ Both motion and visual effects have been purposefully limited. The transitions o
 ## Colour Scheme Inspirations
 
 <img src= static/img/readme/kintsugiwhite.jpg  alt ="white kintsugi porcelain" width= 400><img src= static/img/readme/kintsugiblack.webp  alt ="a black piece of kintsigi porcelain" width= 400>
+
+From these pieces of traditional Kintsugi, I used the Nightcafe gen AI art programme to create the following high resolution background files and used Corel Paintshop pro to adjust lighting and apply vignette fading.
+
 <img src= static/img/readme/anarchylace_background_white.webp  alt ="a light kintsugi themed background" width= 400><img src= static/img/readme/anarchylace_background_black.webp  alt ="a dark kintsugi themed background" width= 400>
+
+The groomed sand and paper sliding doors of Japan, inspired the frosted glass panel design aesthetic used throughout the site, so the user feels like there is depth and a smooth gliding sensation over elements on the page.
+
 <img src= static/img/readme/zen_garden.png  alt ="A Japanese Zen garden" width= 600>
 
 ## Anarchy & Lace colour scheme
@@ -573,3 +579,11 @@ Stripe: Payment gateway integration.
 Django: For providing a scalable web framework.
 Gunicorn: WSGI server for production.
 Bootstrap 5: Responsive UI framework.
+
+## Creator Reflections
+
+The process of creating and developing the Anarchy & Lace application required extensive technical and creative effort on part of the design team. The most difficult challenge faced during development was bringing together multiple complex systems into an integrated solution. User Authentication, Persistent Shopping Carts, Stripe Payment Processing, and Admin Product Management worked well independently yet necessitated careful planning and execution for proper interaction and secure transmission. Debugging the boundaries between the Frontend, Backend Logic, and 3rd Party Services illustrated how important disciplined testing and concise separation of concern are in the Django design pattern.
+
+Additionally, the design uses a variety of layered glass panels, rich imagery, and transitions from bright to dark themes. To achieve the influences of these components while ensuring performance, accessibility, and responsive designs required careful optimization of assets and using caution when implementing visual effects. The contrast and usability of both themes, especially in pairing light cremes and golds with a deep lacquer background, was refined through an iterative process before finalizing the design.
+
+While it was challenging to create and execute this type of User Interface, creating a web application that feels as though it is focused on providing a distinctive user experience and engaging them with some aspect of their environment (through themed environments) is very rewarding. My desire to relate various cultural influences to the User Interface contributed to the Craft aspect of the application itself. To me, this project became more than just a case of building a usable product; instead, it became a means by which I could explore the relationships between cultural storytelling, culture, and user engagement in a highly defined and engaging web application.

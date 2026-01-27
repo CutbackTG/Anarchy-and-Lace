@@ -1729,7 +1729,7 @@ textarea{
 }
 @media (max-width: 900px){
   .topbar .container{
-    padding-right: 14px;
+    padding-right: 48px;
     padding-left: 14px;
   }
 }
